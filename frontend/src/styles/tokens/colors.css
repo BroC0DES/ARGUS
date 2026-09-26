@@ -1,0 +1,53 @@
+/* DESIGN.md §2 — the entire chromatic budget. Nothing outside --brand / --success
+   / --critical gets color; everything else is canvas/surface/ink grayscale. */
+:root{
+  /* Canvas & surface elevation ladder */
+  --canvas:#010102;
+  --surface-1:#0f1011;
+  --surface-2:#141516;
+  --surface-3:#18191a;
+  --surface-4:#191a1b;
+
+  /* Borders */
+  --hairline:#23252a;
+  --hairline-strong:#34343a;
+  --hairline-tertiary:#3e3e44;
+
+  /* Text */
+  --ink:#f7f8f8;
+  --ink-muted:#d0d6e0;
+  --ink-subtle:#8a8f98;
+  --ink-tertiary:#62666d;
+
+  /* Brand & semantic */
+  --brand:#5e6ad2;
+  --brand-hover:#828fff;
+  --brand-focus:#5e69d1;
+  --success:#27a644;
+  --critical:#eb5757;
+
+  /* Semantic aliases */
+  --bg-page:var(--canvas);
+  --surface-panel:var(--surface-1);
+  --surface-raised:var(--surface-2);
+  --surface-overlay:var(--surface-3);
+  --surface-modal:var(--surface-4);
+  --border-default:var(--hairline);
+  --border-active:var(--hairline-strong);
+  --border-nested:var(--hairline-tertiary);
+  --text-heading:var(--ink);
+  --text-body:var(--ink-muted);
+  --text-label:var(--ink-subtle);
+  --text-disabled:var(--ink-tertiary);
+  --interactive:var(--brand);
+  --interactive-hover:var(--brand-hover);
+  --focus-ring:var(--brand-focus);
+  --state-healthy:var(--success);
+  --state-rootcause:var(--critical);
+
+  /* Derived tints — the only place semantic color is used at partial alpha */
+  --tint-brand-10:color-mix(in srgb,var(--brand) 10%,transparent);
+  --tint-critical-08:color-mix(in srgb,var(--critical) 8%,transparent);
+  --tint-success-08:color-mix(in srgb,var(--success) 8%,transparent);
+  --glow-brand:0 0 12px -4px var(--brand);
+}

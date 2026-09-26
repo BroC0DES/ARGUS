@@ -1,0 +1,25 @@
+/* DESIGN.md §4 — eight values, no exceptions. If a value isn't here, round to the
+   nearest one that is. Panel padding floor is --space-lg. */
+:root{
+  --space-xxs:4px;
+  --space-xs:8px;
+  --space-sm:12px;
+  --space-md:16px;
+  --space-lg:24px;
+  --space-xl:32px;
+  --space-xxl:48px;
+  --space-section:96px;
+
+  /* Semantic aliases */
+  --pad-panel:var(--space-lg);      /* floor for any panel's internal padding */
+  --pad-input:var(--space-md);
+  --gap-intra:var(--space-xs);      /* label -> value inside one component */
+  --gap-inter:var(--space-lg);      /* between distinct components */
+  --gap-inter-loose:var(--space-xl);
+  --gap-zone:var(--space-lg);       /* between the app's major zones */
+  --gap-stat-grid:var(--space-md);
+  --gap-log-line:var(--space-sm);
+  --header-height:56px;
+  --detail-panel-width:360px;
+  --grid-dot-pitch:var(--space-lg); /* canvas dot grid is on the spacing scale */
+}

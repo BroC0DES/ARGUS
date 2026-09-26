@@ -1,0 +1,22 @@
+/* DESIGN.md §10 / §9.13 — one easing curve, no bounce. Only transform, opacity,
+   box-shadow and filter are animated. Every animation has a reduced-motion path. */
+:root{
+  --ease:cubic-bezier(0.16,1,0.3,1); /* @kind other */
+  --dur-chrome:120ms; /* @kind other */
+  --dur-hop:200ms; /* @kind other */
+  --dur-panel:220ms; /* @kind other */
+  --dur-pulse:1.6s; /* @kind other */
+  --stagger-card:80ms; /* @kind other */
+  --settled-node-opacity:0.4; /* @kind other */
+}
+
+@keyframes argus-pulse{0%,100%{opacity:.5}50%{opacity:1}}
+@keyframes argus-slide-in-right{from{transform:translateX(16px);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes argus-card-in{from{transform:translateY(8px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes argus-flash{0%,100%{background:transparent}30%{background:var(--tint-brand-10)}}
+
+.argus-pulse{animation:argus-pulse var(--dur-pulse) ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){
+  .argus-pulse{animation:none}
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+}

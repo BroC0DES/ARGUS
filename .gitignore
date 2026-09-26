@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+venv/
+.venv/
+
+# Secrets — never commit real env files; only *.example templates are tracked
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Runtime output
+backend/logs/
+*.log
+__pycache__/
+*.pyc
+
+# Build output / tooling
+dist/
+.vite/
+.claude/
+.DS_Store
+Thumbs.db

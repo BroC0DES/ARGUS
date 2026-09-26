@@ -1,0 +1,50 @@
+/* DESIGN.md §3 — Linear's scale trimmed to tool sizes. Marketing hero sizes
+   (80/56/40px) are deliberately absent. Never below --text-caption (12px). */
+:root{
+  --text-headline:28px;
+  --lh-headline:1.20; /* @kind other */
+  --ls-headline:-0.6px; /* @kind other */
+  --fw-headline:600; /* @kind other */
+
+  --text-card-title:22px;
+  --lh-card-title:1.25; /* @kind other */
+  --ls-card-title:-0.4px; /* @kind other */
+  --fw-card-title:500; /* @kind other */
+
+  --text-subhead:20px;
+  --lh-subhead:1.40; /* @kind other */
+  --ls-subhead:-0.2px; /* @kind other */
+  --fw-subhead:400; /* @kind other */
+
+  --text-body:16px;
+  --lh-body:1.50; /* @kind other */
+  --ls-body:-0.05px; /* @kind other */
+  --fw-body:400; /* @kind other */
+
+  --text-body-sm:14px;
+  --lh-body-sm:1.50; /* @kind other */
+  --fw-body-sm:400; /* @kind other */
+
+  --text-caption:12px;
+  --lh-caption:1.40; /* @kind other */
+  --fw-caption:400; /* @kind other */
+
+  --text-button:14px;
+  --lh-button:1.20; /* @kind other */
+  --fw-button:500; /* @kind other */
+
+  --text-mono:13px;
+  --lh-mono:1.50; /* @kind other */
+  --fw-mono:400; /* @kind other */
+
+  --measure-prose:70ch; /* @kind other */
+}
+
+/* Type role utilities — consumers may use these instead of re-declaring sizes. */
+.argus-headline{font:var(--fw-headline) var(--text-headline)/var(--lh-headline) var(--font-ui);letter-spacing:var(--ls-headline);color:var(--ink);margin:0}
+.argus-card-title{font:var(--fw-card-title) var(--text-card-title)/var(--lh-card-title) var(--font-ui);letter-spacing:var(--ls-card-title);color:var(--ink);margin:0}
+.argus-subhead{font:var(--fw-subhead) var(--text-subhead)/var(--lh-subhead) var(--font-ui);letter-spacing:var(--ls-subhead);color:var(--ink-muted);margin:0;max-width:var(--measure-prose)}
+.argus-body{font:var(--fw-body) var(--text-body)/var(--lh-body) var(--font-ui);letter-spacing:var(--ls-body);color:var(--ink-muted);margin:0;max-width:var(--measure-prose)}
+.argus-body-sm{font:var(--fw-body-sm) var(--text-body-sm)/var(--lh-body-sm) var(--font-ui);color:var(--ink-muted);margin:0}
+.argus-caption{font:var(--fw-caption) var(--text-caption)/var(--lh-caption) var(--font-ui);color:var(--ink-subtle);margin:0}
+.argus-mono{font:var(--fw-mono) var(--text-mono)/var(--lh-mono) var(--font-mono);color:var(--ink-muted);margin:0}

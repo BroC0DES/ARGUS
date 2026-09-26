@@ -1,0 +1,12 @@
+/* Minimal resets so a bare consumer page inherits the right ground and ink. */
+html{color-scheme:dark}
+body{margin:0;background:var(--canvas);color:var(--ink-muted);font:var(--fw-body) var(--text-body)/var(--lh-body) var(--font-ui);letter-spacing:var(--ls-body);-webkit-font-smoothing:antialiased;text-wrap:pretty}
+a{color:var(--brand);text-decoration:none}
+a:hover{color:var(--brand-hover)}
+:focus-visible{outline:2px solid var(--brand-focus);outline-offset:2px}
+code,pre,kbd{font-family:var(--font-mono)}
+::selection{background:var(--tint-brand-10)}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:var(--hairline);border-radius:var(--radius-pill);border:3px solid transparent;background-clip:content-box}
+::-webkit-scrollbar-thumb:hover{background:var(--hairline-strong);background-clip:content-box}
+::-webkit-scrollbar-track{background:transparent}

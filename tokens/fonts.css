@@ -1,0 +1,10 @@
+/* ARGUS webfonts. No binaries were supplied with the brief; Inter and JetBrains
+   Mono are the families named in DESIGN.md §3 and are loaded from Google Fonts'
+   static CDN. Swap these src URLs for self-hosted .woff2 when binaries exist. */
+@font-face{font-family:"Inter";font-style:normal;font-weight:400 700;font-display:swap;src:url("https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfAZ9hjp-Ek-_EeAmM.woff2") format("woff2")}
+@font-face{font-family:"JetBrains Mono";font-style:normal;font-weight:400 700;font-display:swap;src:url("https://fonts.gstatic.com/s/jetbrainsmono/v24/tDba2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKxjPVmUsaaDhw.woff2") format("woff2")}
+
+:root{
+  --font-ui:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"JetBrains Mono","SFMono-Regular",Menlo,Consolas,monospace;
+}
