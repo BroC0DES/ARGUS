@@ -63,13 +63,13 @@ def set_scenario(body: ScenarioBody):
     global active_scenario
     if body.name == "none":
         active_scenario = "none"
-        return {"active_scenario": active_scenario, "lines_written": 0}
+        return {"active_scenario": active_scenario, "lines_written": 0, "backed_up_to": None}
     try:
-        n = scenario_sim.replay(body.name, LOG_PATH)
+        n, backup_path = scenario_sim.replay(body.name, LOG_PATH)
     except scenario_sim.ScenarioError as e:
         raise HTTPException(status_code=400, detail=str(e))
     active_scenario = body.name
-    return {"active_scenario": active_scenario, "lines_written": n}
+    return {"active_scenario": active_scenario, "lines_written": n, "backed_up_to": backup_path}
 
 
 @app.get("/graph")

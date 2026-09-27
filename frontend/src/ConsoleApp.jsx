@@ -76,12 +76,20 @@ export default function ConsoleApp() {
   const availableScenarios = healthPoll.data ? healthPoll.data.available_scenarios : [];
   const [scenarioBusy, setScenarioBusy] = React.useState(null); // name currently switching to, or null
   const [scenarioError, setScenarioError] = React.useState(null);
+  const [scenarioNote, setScenarioNote] = React.useState(null);
   const onSelectScenario = async (name) => {
     if (scenarioBusy || name === activeScenario) return;
     setScenarioBusy(name);
     setScenarioError(null);
+    setScenarioNote(null);
     try {
-      await setScenario(name);
+      const r = await setScenario(name);
+      // Switching overwrites the live log file -- whatever was in it (real
+      // traffic, or a prior scenario) gets backed up first, never silently lost.
+      if (r.backed_up_to) {
+        setScenarioNote(`Previous log backed up to ${r.backed_up_to.split(/[/\\]/).pop()}`);
+        setTimeout(() => setScenarioNote((n) => (n && n.startsWith("Previous log") ? null : n)), 5000);
+      }
     } catch (e) {
       setScenarioError(e.message);
     } finally {
@@ -409,6 +417,7 @@ export default function ConsoleApp() {
                   </span>
                 </span>
                 {scenarioError && <span className="argus-caption" style={{ color: "var(--critical)" }}>{scenarioError}</span>}
+                {scenarioNote && <span className="argus-caption" style={{ color: "var(--ink-subtle)" }}>{scenarioNote}</span>}
               </div>
             )}
             <div style={{ position: "relative", flex: "1 1 auto", minHeight: 320, display: "flex" }}>
