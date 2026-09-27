@@ -141,9 +141,7 @@ def _call_model(context: str) -> dict:
         "format": REPORT_TOOL["input_schema"],  # constrains output to the report schema
         "options": {"temperature": 0, "num_ctx": 16384},
         "messages": [
-            {"role": "system", "content": SYSTEM + "
-
-Respond with a JSON object matching the report schema."},
+            {"role": "system", "content": SYSTEM + "\n\nRespond with a JSON object matching the report schema."},
             {"role": "user", "content": context},
         ],
     }).encode()
