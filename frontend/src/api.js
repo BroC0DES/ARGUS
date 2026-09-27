@@ -38,6 +38,7 @@ async function request(path, { method = "GET", body, timeoutMs = 10000 } = {}) {
 }
 
 export const getGraph = () => request("/graph");
+export const getHealth = () => request("/health");
 export const getLogs = (n = 60) => request(`/logs?n=${n}`).then((r) => r.lines);
 // /query runs retrieval + an LLM call, so it gets a much longer timeout than polls.
 export const postQuery = (question) => request("/query", { method: "POST", body: { question }, timeoutMs: 60000 });

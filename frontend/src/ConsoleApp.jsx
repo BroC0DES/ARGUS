@@ -1,13 +1,36 @@
 import React from "react";
-import { getGraph, getLogs, postQuery, usePoll, toIncident } from "./api.js";
+import { getGraph, getLogs, getHealth, postQuery, usePoll, toIncident } from "./api.js";
 import { GUIDE } from "./guide.js";
 
 const GRAPH_POLL_MS = 4000;
 const LOG_POLL_MS = 3000;
+const SOVEREIGN_POLL_MS = 5000;
 const DEFAULT_QUESTION = "What is happening in the system right now?";
 
 const logNum = (id) => parseInt(id.slice(1), 10);
 const withServiceText = (l) => ({ ...l, text: `${l.service} · ${l.text}` });
+
+// Sovereignty check: the backend being reachable (getHealth) proves ARGUS itself is up;
+// this separately asks whether *the internet* is reachable at all, by racing a request to
+// a well-known external host against a short timeout. `no-cors` means we can't read the
+// response (it's opaque) and don't need to -- a rejected/aborted fetch is the only signal
+// that matters, since that's what "no route to the outside world" looks like from a page.
+async function canReachInternet(timeoutMs = 3000) {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+  try {
+    await fetch(`https://www.google.com/?argus_sovereign_check=${Date.now()}`, {
+      mode: "no-cors",
+      cache: "no-store",
+      signal: ctrl.signal,
+    });
+    return true;
+  } catch {
+    return false;
+  } finally {
+    clearTimeout(timer);
+  }
+}
 
 export default function ConsoleApp() {
   const {
@@ -18,10 +41,26 @@ export default function ConsoleApp() {
   // ---- live data ----------------------------------------------------------
   const graphPoll = usePoll(getGraph, GRAPH_POLL_MS);
   const logPoll = usePoll(() => getLogs(60), LOG_POLL_MS);
+  const healthPoll = usePoll(getHealth, SOVEREIGN_POLL_MS);
   const nodes = graphPoll.data ? graphPoll.data.nodes : [];
   const edges = graphPoll.data ? graphPoll.data.edges : [];
   const polledLogs = logPoll.data || [];
   const offline = !!(graphPoll.error || logPoll.error);
+  const backendUp = !healthPoll.error;
+
+  // ---- sovereignty: backend reachable (localhost:8000/health) + internet NOT reachable ----
+  const [sovereign, setSovereign] = React.useState(false);
+  React.useEffect(() => {
+    if (!backendUp) { setSovereign(false); return; }
+    let alive = true;
+    const tick = async () => {
+      const online = await canReachInternet();
+      if (alive) setSovereign(!online);
+    };
+    tick();
+    const id = setInterval(tick, SOVEREIGN_POLL_MS);
+    return () => { alive = false; clearInterval(id); };
+  }, [backendUp]);
 
   // ---- UI state -----------------------------------------------------------
   const [screen, setScreen] = React.useState("workspace");
@@ -284,8 +323,35 @@ export default function ConsoleApp() {
         services={nodes}
         onSelectService={(id) => { setScreen("workspace"); setSelected(id); }}
         onMenuClick={() => setDrawerOpen(true)}
-        right={<Badge>{offline ? "offline · retrying" : "live"}</Badge>}
+        right={
+          <Badge tone={sovereign ? "success" : "neutral"}>
+            {sovereign ? "✈️ Sovereign Mode" : offline ? "offline · retrying" : "live"}
+          </Badge>
+        }
       />
+
+      {sovereign && (
+        <div
+          role="status"
+          style={{
+            display: "flex",
+            flex: "0 0 auto",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "var(--space-xs)",
+            padding: "var(--space-xs) var(--space-lg)",
+            background: "var(--tint-success-08)",
+            borderBottom: "1px solid var(--hairline)",
+          }}
+        >
+          <span style={{ display: "inline-flex", color: "var(--success)" }}>
+            <Icon name="shield-check" size={14} />
+          </span>
+          <span className="argus-caption" style={{ color: "var(--success)" }}>
+            All inference running locally via Ollama · No data leaving this machine.
+          </span>
+        </div>
+      )}
 
       <NavDrawer open={drawerOpen} items={navItems} activeId={screen} onSelect={setScreen} onClose={() => setDrawerOpen(false)} />
 
