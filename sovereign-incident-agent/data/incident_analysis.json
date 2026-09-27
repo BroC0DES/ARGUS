@@ -1,0 +1,127 @@
+{
+    "status": "INCIDENT_DETECTED",
+    "root_incident": {
+        "service": "database_service",
+        "type": "TIMEOUT_CLUSTER",
+        "severity": "CRITICAL",
+        "count": 9
+    },
+    "root_cause_chain": [
+        "database_service: Database connection timeouts",
+        "Downstream operations affected: inventory_service, payment_service",
+        "Failure propagated through: api_gateway, order_service, inventory_service, payment_service"
+    ],
+    "evidence_reasoning": {
+        "observations": [
+            "9 timeout cluster events detected in database_service",
+            "Additional anomalies detected: connection failure in database_service; repeated 500 in api_gateway; error spike in api_gateway; error spike in database_service; error spike in order_service; error spike in payment_service; error spike in inventory_service",
+            "Dependent services were affected: api_gateway, payment_service, inventory_service, order_service"
+        ],
+        "conclusion": "database_service is the probable root incident because the timeout cluster occurred at the dependency root and downstream services subsequently showed failures."
+    },
+    "evidence": [
+        {
+            "timestamp": "10:01:07",
+            "service": "database_service",
+            "severity": "ERROR",
+            "message": "Connection timeout"
+        },
+        {
+            "timestamp": "10:01:08",
+            "service": "database_service",
+            "severity": "ERROR",
+            "message": "Connection timeout"
+        },
+        {
+            "timestamp": "10:01:09",
+            "service": "database_service",
+            "severity": "ERROR",
+            "message": "Connection timeout"
+        },
+        {
+            "timestamp": "10:01:23",
+            "service": "database_service",
+            "severity": "ERROR",
+            "message": "Connection timeout"
+        },
+        {
+            "timestamp": "10:01:24",
+            "service": "database_service",
+            "severity": "ERROR",
+            "message": "Connection timeout"
+        },
+        {
+            "timestamp": "10:01:25",
+            "service": "database_service",
+            "severity": "ERROR",
+            "message": "Connection timeout"
+        },
+        {
+            "timestamp": "10:01:33",
+            "service": "database_service",
+            "severity": "ERROR",
+            "message": "Connection timeout"
+        },
+        {
+            "timestamp": "10:01:34",
+            "service": "database_service",
+            "severity": "ERROR",
+            "message": "Connection timeout"
+        },
+        {
+            "timestamp": "10:01:35",
+            "service": "database_service",
+            "severity": "ERROR",
+            "message": "Connection timeout"
+        }
+    ],
+    "affected_services": [
+        "api_gateway",
+        "payment_service",
+        "inventory_service",
+        "order_service"
+    ],
+    "impact_paths": [
+        [
+            "api_gateway",
+            "order_service",
+            "inventory_service",
+            "database_service"
+        ],
+        [
+            "payment_service",
+            "database_service"
+        ],
+        [
+            "inventory_service",
+            "database_service"
+        ],
+        [
+            "order_service",
+            "inventory_service",
+            "database_service"
+        ]
+    ],
+    "relevant_code": [
+        {
+            "function": "connect",
+            "file": "mock_codebase\\database_service\\connection.py"
+        },
+        {
+            "function": "save_inventory",
+            "file": "mock_codebase\\database_service\\db.py"
+        },
+        {
+            "function": "save_payment",
+            "file": "mock_codebase\\database_service\\db.py"
+        },
+        {
+            "function": "process_payment",
+            "file": "mock_codebase\\payment_service\\payment.py"
+        },
+        {
+            "function": "checkout",
+            "file": "mock_codebase\\api_gateway\\app.py"
+        }
+    ]
+}

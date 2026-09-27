@@ -1,0 +1,41 @@
+{
+    "nodes": [
+        {
+            "id": "api_gateway"
+        },
+        {
+            "id": "order_service"
+        },
+        {
+            "id": "database_service"
+        },
+        {
+            "id": "inventory_service"
+        },
+        {
+            "id": "payment_service"
+        }
+    ],
+    "edges": [
+        {
+            "source": "api_gateway",
+            "target": "order_service"
+        },
+        {
+            "source": "order_service",
+            "target": "payment_service"
+        },
+        {
+            "source": "order_service",
+            "target": "inventory_service"
+        },
+        {
+            "source": "inventory_service",
+            "target": "database_service"
+        },
+        {
+            "source": "payment_service",
+            "target": "database_service"
+        }
+    ]
+}

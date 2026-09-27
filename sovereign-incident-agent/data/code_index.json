@@ -1,0 +1,77 @@
+[
+    {
+        "file": "mock_codebase\\api_gateway\\app.py",
+        "functions": [
+            {
+                "name": "checkout",
+                "code": "def checkout():\n    print(\"API Gateway: Checkout request received\")\n\n    result = create_order()\n\n    if result:\n        print(\"API Gateway: Order completed\")\n    else:\n        print(\"API Gateway: Order failed\")"
+            }
+        ],
+        "imports": [
+            "mock_codebase.order_service.order"
+        ]
+    },
+    {
+        "file": "mock_codebase\\database_service\\connection.py",
+        "functions": [
+            {
+                "name": "connect",
+                "code": "def connect():\n    print(\"Database Service: Connecting to database\")\n    return True"
+            }
+        ],
+        "imports": []
+    },
+    {
+        "file": "mock_codebase\\database_service\\db.py",
+        "functions": [
+            {
+                "name": "save_payment",
+                "code": "def save_payment():\n    print(\"Database Service: Saving payment\")\n\n    if connect():\n        print(\"Database Service: Payment saved\")\n        return True\n\n    return False"
+            },
+            {
+                "name": "save_inventory",
+                "code": "def save_inventory():\n    print(\"Database Service: Checking inventory\")\n\n    if connect():\n        print(\"Database Service: Inventory check successful\")\n        return True\n\n    return False"
+            }
+        ],
+        "imports": [
+            "mock_codebase.database_service.connection"
+        ]
+    },
+    {
+        "file": "mock_codebase\\inventory_service\\inventory.py",
+        "functions": [
+            {
+                "name": "check_inventory",
+                "code": "def check_inventory():\n    print(\"Inventory Service: Checking inventory\")\n\n    result = save_inventory()\n\n    if result:\n        print(\"Inventory Service: Inventory available\")\n        return True\n\n    print(\"Inventory Service: Inventory check failed\")\n    return False"
+            }
+        ],
+        "imports": [
+            "mock_codebase.database_service.db"
+        ]
+    },
+    {
+        "file": "mock_codebase\\order_service\\order.py",
+        "functions": [
+            {
+                "name": "create_order",
+                "code": "def create_order():\n    print(\"Order Service: Creating order\")\n\n    if not check_inventory():\n        print(\"Order Service: Inventory unavailable\")\n        return False\n\n    payment_result = process_payment()\n\n    if payment_result:\n        print(\"Order Service: Order created successfully\")\n        return True\n\n    print(\"Order Service: Payment failed\")\n    return False"
+            }
+        ],
+        "imports": [
+            "mock_codebase.payment_service.payment",
+            "mock_codebase.inventory_service.inventory"
+        ]
+    },
+    {
+        "file": "mock_codebase\\payment_service\\payment.py",
+        "functions": [
+            {
+                "name": "process_payment",
+                "code": "def process_payment():\n    print(\"Payment Service: Processing payment\")\n\n    payment_saved = save_payment()\n\n    if payment_saved:\n        print(\"Payment Service: Payment processed successfully\")\n        return True\n\n    print(\"Payment Service: Payment processing failed\")\n    return False"
+            }
+        ],
+        "imports": [
+            "mock_codebase.database_service.db"
+        ]
+    }
+]

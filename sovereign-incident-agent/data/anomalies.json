@@ -1,0 +1,732 @@
+{
+    "anomalies": [
+        {
+            "service": "database_service",
+            "type": "TIMEOUT_CLUSTER",
+            "severity": "CRITICAL",
+            "count": 9,
+            "evidence": [
+                {
+                    "timestamp": "10:01:07",
+                    "severity": "ERROR",
+                    "service": "database_service",
+                    "message": "Connection timeout",
+                    "time_seconds": 36067,
+                    "error_type": "TIMEOUT"
+                },
+                {
+                    "timestamp": "10:01:08",
+                    "severity": "ERROR",
+                    "service": "database_service",
+                    "message": "Connection timeout",
+                    "time_seconds": 36068,
+                    "error_type": "TIMEOUT"
+                },
+                {
+                    "timestamp": "10:01:09",
+                    "severity": "ERROR",
+                    "service": "database_service",
+                    "message": "Connection timeout",
+                    "time_seconds": 36069,
+                    "error_type": "TIMEOUT"
+                },
+                {
+                    "timestamp": "10:01:23",
+                    "severity": "ERROR",
+                    "service": "database_service",
+                    "message": "Connection timeout",
+                    "time_seconds": 36083,
+                    "error_type": "TIMEOUT"
+                },
+                {
+                    "timestamp": "10:01:24",
+                    "severity": "ERROR",
+                    "service": "database_service",
+                    "message": "Connection timeout",
+                    "time_seconds": 36084,
+                    "error_type": "TIMEOUT"
+                },
+                {
+                    "timestamp": "10:01:25",
+                    "severity": "ERROR",
+                    "service": "database_service",
+                    "message": "Connection timeout",
+                    "time_seconds": 36085,
+                    "error_type": "TIMEOUT"
+                },
+                {
+                    "timestamp": "10:01:33",
+                    "severity": "ERROR",
+                    "service": "database_service",
+                    "message": "Connection timeout",
+                    "time_seconds": 36093,
+                    "error_type": "TIMEOUT"
+                },
+                {
+                    "timestamp": "10:01:34",
+                    "severity": "ERROR",
+                    "service": "database_service",
+                    "message": "Connection timeout",
+                    "time_seconds": 36094,
+                    "error_type": "TIMEOUT"
+                },
+                {
+                    "timestamp": "10:01:35",
+                    "severity": "ERROR",
+                    "service": "database_service",
+                    "message": "Connection timeout",
+                    "time_seconds": 36095,
+                    "error_type": "TIMEOUT"
+                }
+            ]
+        },
+        {
+            "service": "database_service",
+            "type": "CONNECTION_FAILURE",
+            "severity": "CRITICAL",
+            "count": 16,
+            "evidence": [
+                {
+                    "timestamp": "10:01:10",
+                    "severity": "ERROR",
+                    "service": "inventory_service",
+                    "message": "Database unavailable",
+                    "time_seconds": 36070,
+                    "error_type": "DATABASE_UNAVAILABLE"
+                },
+                {
+                    "timestamp": "10:01:12",
+                    "severity": "ERROR",
+                    "service": "payment_service",
+                    "message": "Database unavailable",
+                    "time_seconds": 36072,
+                    "error_type": "DATABASE_UNAVAILABLE"
+                },
+                {
+                    "timestamp": "10:01:26",
+                    "severity": "ERROR",
+                    "service": "inventory_service",
+                    "message": "Database unavailable",
+                    "time_seconds": 36086,
+                    "error_type": "DATABASE_UNAVAILABLE"
+                },
+                {
+                    "timestamp": "10:01:28",
+                    "severity": "ERROR",
+                    "service": "payment_service",
+                    "message": "Database unavailable",
+                    "time_seconds": 36088,
+                    "error_type": "DATABASE_UNAVAILABLE"
+                },
+                {
+                    "timestamp": "10:01:36",
+                    "severity": "ERROR",
+                    "service": "inventory_service",
+                    "message": "Database unavailable",
+                    "time_seconds": 36096,
+                    "error_type": "DATABASE_UNAVAILABLE"
+                },
+                {
+                    "timestamp": "10:01:38",
+                    "severity": "ERROR",
+                    "service": "payment_service",
+                    "message": "Database unavailable",
+                    "time_seconds": 36098,
+                    "error_type": "DATABASE_UNAVAILABLE"
+                },
+                {
+                    "timestamp": "10:01:46",
+                    "severity": "ERROR",
+                    "service": "inventory_service",
+                    "message": "Database unavailable",
+                    "time_seconds": 36106,
+                    "error_type": "DATABASE_UNAVAILABLE"
+                },
+                {
+                    "timestamp": "10:01:48",
+                    "severity": "ERROR",
+                    "service": "payment_service",
+                    "message": "Database unavailable",
+                    "time_seconds": 36108,
+                    "error_type": "DATABASE_UNAVAILABLE"
+                },
+                {
+                    "timestamp": "10:01:53",
+                    "severity": "ERROR",
+                    "service": "database_service",
+                    "message": "Connection refused",
+                    "time_seconds": 36113,
+                    "error_type": "CONNECTION_REFUSED"
+                },
+                {
+                    "timestamp": "10:01:54",
+                    "severity": "ERROR",
+                    "service": "database_service",
+                    "message": "Connection refused",
+                    "time_seconds": 36114,
+                    "error_type": "CONNECTION_REFUSED"
+                },
+                {
+                    "timestamp": "10:01:55",
+                    "severity": "ERROR",
+                    "service": "database_service",
+                    "message": "Connection refused",
+                    "time_seconds": 36115,
+                    "error_type": "CONNECTION_REFUSED"
+                },
+                {
+                    "timestamp": "10:01:56",
+                    "severity": "ERROR",
+                    "service": "inventory_service",
+                    "message": "Database unavailable",
+                    "time_seconds": 36116,
+                    "error_type": "DATABASE_UNAVAILABLE"
+                },
+                {
+                    "timestamp": "10:01:57",
+                    "severity": "ERROR",
+                    "service": "payment_service",
+                    "message": "Database unavailable",
+                    "time_seconds": 36117,
+                    "error_type": "DATABASE_UNAVAILABLE"
+                },
+                {
+                    "timestamp": "10:02:02",
+                    "severity": "ERROR",
+                    "service": "database_service",
+                    "message": "Connection refused",
+                    "time_seconds": 36122,
+                    "error_type": "CONNECTION_REFUSED"
+                },
+                {
+                    "timestamp": "10:02:03",
+                    "severity": "ERROR",
+                    "service": "database_service",
+                    "message": "Connection refused",
+                    "time_seconds": 36123,
+                    "error_type": "CONNECTION_REFUSED"
+                },
+                {
+                    "timestamp": "10:02:04",
+                    "severity": "ERROR",
+                    "service": "database_service",
+                    "message": "Connection refused",
+                    "time_seconds": 36124,
+                    "error_type": "CONNECTION_REFUSED"
+                }
+            ]
+        },
+        {
+            "service": "api_gateway",
+            "type": "REPEATED_500",
+            "severity": "HIGH",
+            "count": 8,
+            "evidence": [
+                {
+                    "timestamp": "10:01:16",
+                    "severity": "ERROR",
+                    "service": "api_gateway",
+                    "message": "Payment failed with HTTP 500",
+                    "time_seconds": 36076,
+                    "error_type": "HTTP_500"
+                },
+                {
+                    "timestamp": "10:01:17",
+                    "severity": "ERROR",
+                    "service": "api_gateway",
+                    "message": "Payment failed with HTTP 500",
+                    "time_seconds": 36077,
+                    "error_type": "HTTP_500"
+                },
+                {
+                    "timestamp": "10:01:18",
+                    "severity": "ERROR",
+                    "service": "api_gateway",
+                    "message": "Payment failed with HTTP 500",
+                    "time_seconds": 36078,
+                    "error_type": "HTTP_500"
+                },
+                {
+                    "timestamp": "10:01:32",
+                    "severity": "ERROR",
+                    "service": "api_gateway",
+                    "message": "Payment failed with HTTP 500",
+                    "time_seconds": 36092,
+                    "error_type": "HTTP_500"
+                },
+                {
+                    "timestamp": "10:01:42",
+                    "severity": "ERROR",
+                    "service": "api_gateway",
+                    "message": "Payment failed with HTTP 500",
+                    "time_seconds": 36102,
+                    "error_type": "HTTP_500"
+                },
+                {
+                    "timestamp": "10:01:43",
+                    "severity": "ERROR",
+                    "service": "api_gateway",
+                    "message": "Payment failed with HTTP 500",
+                    "time_seconds": 36103,
+                    "error_type": "HTTP_500"
+                },
+                {
+                    "timestamp": "10:01:52",
+                    "severity": "ERROR",
+                    "service": "api_gateway",
+                    "message": "Payment failed with HTTP 500",
+                    "time_seconds": 36112,
+                    "error_type": "HTTP_500"
+                },
+                {
+                    "timestamp": "10:01:59",
+                    "severity": "ERROR",
+                    "service": "api_gateway",
+                    "message": "Payment failed with HTTP 500",
+                    "time_seconds": 36119,
+                    "error_type": "HTTP_500"
+                }
+            ]
+        },
+        {
+            "service": "api_gateway",
+            "type": "ERROR_SPIKE",
+            "severity": "HIGH",
+            "count": 8,
+            "evidence": [
+                {
+                    "timestamp": "10:01:16",
+                    "severity": "ERROR",
+                    "service": "api_gateway",
+                    "message": "Payment failed with HTTP 500",
+                    "time_seconds": 36076,
+                    "error_type": "HTTP_500"
+                },
+                {
+                    "timestamp": "10:01:17",
+                    "severity": "ERROR",
+                    "service": "api_gateway",
+                    "message": "Payment failed with HTTP 500",
+                    "time_seconds": 36077,
+                    "error_type": "HTTP_500"
+                },
+                {
+                    "timestamp": "10:01:18",
+                    "severity": "ERROR",
+                    "service": "api_gateway",
+                    "message": "Payment failed with HTTP 500",
+                    "time_seconds": 36078,
+                    "error_type": "HTTP_500"
+                },
+                {
+                    "timestamp": "10:01:32",
+                    "severity": "ERROR",
+                    "service": "api_gateway",
+                    "message": "Payment failed with HTTP 500",
+                    "time_seconds": 36092,
+                    "error_type": "HTTP_500"
+                },
+                {
+                    "timestamp": "10:01:42",
+                    "severity": "ERROR",
+                    "service": "api_gateway",
+                    "message": "Payment failed with HTTP 500",
+                    "time_seconds": 36102,
+                    "error_type": "HTTP_500"
+                },
+                {
+                    "timestamp": "10:01:43",
+                    "severity": "ERROR",
+                    "service": "api_gateway",
+                    "message": "Payment failed with HTTP 500",
+                    "time_seconds": 36103,
+                    "error_type": "HTTP_500"
+                },
+                {
+                    "timestamp": "10:01:52",
+                    "severity": "ERROR",
+                    "service": "api_gateway",
+                    "message": "Payment failed with HTTP 500",
+                    "time_seconds": 36112,
+                    "error_type": "HTTP_500"
+                },
+                {
+                    "timestamp": "10:01:59",
+                    "severity": "ERROR",
+                    "service": "api_gateway",
+                    "message": "Payment failed with HTTP 500",
+                    "time_seconds": 36119,
+                    "error_type": "HTTP_500"
+                }
+            ]
+        },
+        {
+            "service": "database_service",
+            "type": "ERROR_SPIKE",
+            "severity": "HIGH",
+            "count": 15,
+            "evidence": [
+                {
+                    "timestamp": "10:01:07",
+                    "severity": "ERROR",
+                    "service": "database_service",
+                    "message": "Connection timeout",
+                    "time_seconds": 36067,
+                    "error_type": "TIMEOUT"
+                },
+                {
+                    "timestamp": "10:01:08",
+                    "severity": "ERROR",
+                    "service": "database_service",
+                    "message": "Connection timeout",
+                    "time_seconds": 36068,
+                    "error_type": "TIMEOUT"
+                },
+                {
+                    "timestamp": "10:01:09",
+                    "severity": "ERROR",
+                    "service": "database_service",
+                    "message": "Connection timeout",
+                    "time_seconds": 36069,
+                    "error_type": "TIMEOUT"
+                },
+                {
+                    "timestamp": "10:01:23",
+                    "severity": "ERROR",
+                    "service": "database_service",
+                    "message": "Connection timeout",
+                    "time_seconds": 36083,
+                    "error_type": "TIMEOUT"
+                },
+                {
+                    "timestamp": "10:01:24",
+                    "severity": "ERROR",
+                    "service": "database_service",
+                    "message": "Connection timeout",
+                    "time_seconds": 36084,
+                    "error_type": "TIMEOUT"
+                },
+                {
+                    "timestamp": "10:01:25",
+                    "severity": "ERROR",
+                    "service": "database_service",
+                    "message": "Connection timeout",
+                    "time_seconds": 36085,
+                    "error_type": "TIMEOUT"
+                },
+                {
+                    "timestamp": "10:01:33",
+                    "severity": "ERROR",
+                    "service": "database_service",
+                    "message": "Connection timeout",
+                    "time_seconds": 36093,
+                    "error_type": "TIMEOUT"
+                },
+                {
+                    "timestamp": "10:01:34",
+                    "severity": "ERROR",
+                    "service": "database_service",
+                    "message": "Connection timeout",
+                    "time_seconds": 36094,
+                    "error_type": "TIMEOUT"
+                },
+                {
+                    "timestamp": "10:01:35",
+                    "severity": "ERROR",
+                    "service": "database_service",
+                    "message": "Connection timeout",
+                    "time_seconds": 36095,
+                    "error_type": "TIMEOUT"
+                },
+                {
+                    "timestamp": "10:01:53",
+                    "severity": "ERROR",
+                    "service": "database_service",
+                    "message": "Connection refused",
+                    "time_seconds": 36113,
+                    "error_type": "CONNECTION_REFUSED"
+                },
+                {
+                    "timestamp": "10:01:54",
+                    "severity": "ERROR",
+                    "service": "database_service",
+                    "message": "Connection refused",
+                    "time_seconds": 36114,
+                    "error_type": "CONNECTION_REFUSED"
+                },
+                {
+                    "timestamp": "10:01:55",
+                    "severity": "ERROR",
+                    "service": "database_service",
+                    "message": "Connection refused",
+                    "time_seconds": 36115,
+                    "error_type": "CONNECTION_REFUSED"
+                },
+                {
+                    "timestamp": "10:02:02",
+                    "severity": "ERROR",
+                    "service": "database_service",
+                    "message": "Connection refused",
+                    "time_seconds": 36122,
+                    "error_type": "CONNECTION_REFUSED"
+                },
+                {
+                    "timestamp": "10:02:03",
+                    "severity": "ERROR",
+                    "service": "database_service",
+                    "message": "Connection refused",
+                    "time_seconds": 36123,
+                    "error_type": "CONNECTION_REFUSED"
+                },
+                {
+                    "timestamp": "10:02:04",
+                    "severity": "ERROR",
+                    "service": "database_service",
+                    "message": "Connection refused",
+                    "time_seconds": 36124,
+                    "error_type": "CONNECTION_REFUSED"
+                }
+            ]
+        },
+        {
+            "service": "order_service",
+            "type": "ERROR_SPIKE",
+            "severity": "HIGH",
+            "count": 9,
+            "evidence": [
+                {
+                    "timestamp": "10:01:14",
+                    "severity": "ERROR",
+                    "service": "order_service",
+                    "message": "Inventory unavailable",
+                    "time_seconds": 36074,
+                    "error_type": "UNKNOWN_ERROR"
+                },
+                {
+                    "timestamp": "10:01:15",
+                    "severity": "ERROR",
+                    "service": "order_service",
+                    "message": "Payment failed",
+                    "time_seconds": 36075,
+                    "error_type": "PAYMENT_FAILURE"
+                },
+                {
+                    "timestamp": "10:01:30",
+                    "severity": "ERROR",
+                    "service": "order_service",
+                    "message": "Inventory unavailable",
+                    "time_seconds": 36090,
+                    "error_type": "UNKNOWN_ERROR"
+                },
+                {
+                    "timestamp": "10:01:31",
+                    "severity": "ERROR",
+                    "service": "order_service",
+                    "message": "Payment failed",
+                    "time_seconds": 36091,
+                    "error_type": "PAYMENT_FAILURE"
+                },
+                {
+                    "timestamp": "10:01:40",
+                    "severity": "ERROR",
+                    "service": "order_service",
+                    "message": "Inventory unavailable",
+                    "time_seconds": 36100,
+                    "error_type": "UNKNOWN_ERROR"
+                },
+                {
+                    "timestamp": "10:01:41",
+                    "severity": "ERROR",
+                    "service": "order_service",
+                    "message": "Payment failed",
+                    "time_seconds": 36101,
+                    "error_type": "PAYMENT_FAILURE"
+                },
+                {
+                    "timestamp": "10:01:50",
+                    "severity": "ERROR",
+                    "service": "order_service",
+                    "message": "Inventory unavailable",
+                    "time_seconds": 36110,
+                    "error_type": "UNKNOWN_ERROR"
+                },
+                {
+                    "timestamp": "10:01:51",
+                    "severity": "ERROR",
+                    "service": "order_service",
+                    "message": "Payment failed",
+                    "time_seconds": 36111,
+                    "error_type": "PAYMENT_FAILURE"
+                },
+                {
+                    "timestamp": "10:01:58",
+                    "severity": "ERROR",
+                    "service": "order_service",
+                    "message": "Inventory unavailable",
+                    "time_seconds": 36118,
+                    "error_type": "UNKNOWN_ERROR"
+                }
+            ]
+        },
+        {
+            "service": "payment_service",
+            "type": "ERROR_SPIKE",
+            "severity": "HIGH",
+            "count": 9,
+            "evidence": [
+                {
+                    "timestamp": "10:01:12",
+                    "severity": "ERROR",
+                    "service": "payment_service",
+                    "message": "Database unavailable",
+                    "time_seconds": 36072,
+                    "error_type": "DATABASE_UNAVAILABLE"
+                },
+                {
+                    "timestamp": "10:01:13",
+                    "severity": "ERROR",
+                    "service": "payment_service",
+                    "message": "Payment failed",
+                    "time_seconds": 36073,
+                    "error_type": "PAYMENT_FAILURE"
+                },
+                {
+                    "timestamp": "10:01:28",
+                    "severity": "ERROR",
+                    "service": "payment_service",
+                    "message": "Database unavailable",
+                    "time_seconds": 36088,
+                    "error_type": "DATABASE_UNAVAILABLE"
+                },
+                {
+                    "timestamp": "10:01:29",
+                    "severity": "ERROR",
+                    "service": "payment_service",
+                    "message": "Payment failed",
+                    "time_seconds": 36089,
+                    "error_type": "PAYMENT_FAILURE"
+                },
+                {
+                    "timestamp": "10:01:38",
+                    "severity": "ERROR",
+                    "service": "payment_service",
+                    "message": "Database unavailable",
+                    "time_seconds": 36098,
+                    "error_type": "DATABASE_UNAVAILABLE"
+                },
+                {
+                    "timestamp": "10:01:39",
+                    "severity": "ERROR",
+                    "service": "payment_service",
+                    "message": "Payment failed",
+                    "time_seconds": 36099,
+                    "error_type": "PAYMENT_FAILURE"
+                },
+                {
+                    "timestamp": "10:01:48",
+                    "severity": "ERROR",
+                    "service": "payment_service",
+                    "message": "Database unavailable",
+                    "time_seconds": 36108,
+                    "error_type": "DATABASE_UNAVAILABLE"
+                },
+                {
+                    "timestamp": "10:01:49",
+                    "severity": "ERROR",
+                    "service": "payment_service",
+                    "message": "Payment failed",
+                    "time_seconds": 36109,
+                    "error_type": "PAYMENT_FAILURE"
+                },
+                {
+                    "timestamp": "10:01:57",
+                    "severity": "ERROR",
+                    "service": "payment_service",
+                    "message": "Database unavailable",
+                    "time_seconds": 36117,
+                    "error_type": "DATABASE_UNAVAILABLE"
+                }
+            ]
+        },
+        {
+            "service": "inventory_service",
+            "type": "ERROR_SPIKE",
+            "severity": "HIGH",
+            "count": 9,
+            "evidence": [
+                {
+                    "timestamp": "10:01:10",
+                    "severity": "ERROR",
+                    "service": "inventory_service",
+                    "message": "Database unavailable",
+                    "time_seconds": 36070,
+                    "error_type": "DATABASE_UNAVAILABLE"
+                },
+                {
+                    "timestamp": "10:01:11",
+                    "severity": "ERROR",
+                    "service": "inventory_service",
+                    "message": "Inventory check failed",
+                    "time_seconds": 36071,
+                    "error_type": "INVENTORY_FAILURE"
+                },
+                {
+                    "timestamp": "10:01:26",
+                    "severity": "ERROR",
+                    "service": "inventory_service",
+                    "message": "Database unavailable",
+                    "time_seconds": 36086,
+                    "error_type": "DATABASE_UNAVAILABLE"
+                },
+                {
+                    "timestamp": "10:01:27",
+                    "severity": "ERROR",
+                    "service": "inventory_service",
+                    "message": "Inventory check failed",
+                    "time_seconds": 36087,
+                    "error_type": "INVENTORY_FAILURE"
+                },
+                {
+                    "timestamp": "10:01:36",
+                    "severity": "ERROR",
+                    "service": "inventory_service",
+                    "message": "Database unavailable",
+                    "time_seconds": 36096,
+                    "error_type": "DATABASE_UNAVAILABLE"
+                },
+                {
+                    "timestamp": "10:01:37",
+                    "severity": "ERROR",
+                    "service": "inventory_service",
+                    "message": "Inventory check failed",
+                    "time_seconds": 36097,
+                    "error_type": "INVENTORY_FAILURE"
+                },
+                {
+                    "timestamp": "10:01:46",
+                    "severity": "ERROR",
+                    "service": "inventory_service",
+                    "message": "Database unavailable",
+                    "time_seconds": 36106,
+                    "error_type": "DATABASE_UNAVAILABLE"
+                },
+                {
+                    "timestamp": "10:01:47",
+                    "severity": "ERROR",
+                    "service": "inventory_service",
+                    "message": "Inventory check failed",
+                    "time_seconds": 36107,
+                    "error_type": "INVENTORY_FAILURE"
+                },
+                {
+                    "timestamp": "10:01:56",
+                    "severity": "ERROR",
+                    "service": "inventory_service",
+                    "message": "Database unavailable",
+                    "time_seconds": 36116,
+                    "error_type": "DATABASE_UNAVAILABLE"
+                }
+            ]
+        }
+    ]
+}
