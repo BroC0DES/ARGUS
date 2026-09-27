@@ -197,7 +197,9 @@ def run_query(question: str, logs: LogAnalyzer, indexer: CodeIndexer) -> dict:
 
     # ---- computed (not model-provided) fields ----
     root_id = services[root_display]
-    trace_path = [display_name(s) for s in indexer.path_to(root_id)]
+    # No confident cause -> no real candidate to point at. Leave the trace empty so the
+    # graph highlights nothing (the model's "best guess" service is not a finding).
+    trace_path = [display_name(s) for s in indexer.path_to(root_id)] if confident else []
     affected_ids = (indexer.callers(root_id) | indexer.callees(root_id)) - {root_id} if confident else set()
     affected = []
     for sid in sorted(affected_ids, key=lambda s: (s not in indexer.callers(root_id), s)):
