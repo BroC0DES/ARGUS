@@ -1,0 +1,8 @@
+{
+  "name": "api-gateway",
+  "version": "1.0.0",
+  "main": "src/router.ts",
+  "dependencies": {
+    "orders-service": "1.0.0"
+  }
+}

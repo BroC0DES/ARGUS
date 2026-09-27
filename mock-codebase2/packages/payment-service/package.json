@@ -1,0 +1,8 @@
+{
+  "name": "payment-service",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "dependencies": {
+    "db-pool": "1.0.0"
+  }
+}

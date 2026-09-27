@@ -15,7 +15,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 
-LINE_RE = re.compile(r"^(\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3})\s+(INFO|WARN|ERROR)\s+(\S+)\s+(.*)$")
+LINE_RE = re.compile(r"^(\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3})Z?\s+(INFO|WARN|ERROR)\s+(\S+)\s+(.*)$")
 SEVERITY = {"INFO": "info", "WARN": "warn", "ERROR": "error"}
 TAIL_BYTES = 512 * 1024
 

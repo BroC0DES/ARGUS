@@ -2,8 +2,11 @@
 dependency graph, and TF-IDF retrieval over the chunks.
 
 Services are the directories under <repo>/services/ (or, if absent, the top-level
-directories that contain Python files). An edge A -> B means "A imports B", i.e.
-A depends on / calls B.
+directories that contain source files). An edge A -> B means "A imports B", i.e.
+A depends on / calls B. Python and TypeScript are both supported; a service id is
+always normalized to underscores (matching Python's own module-name convention)
+regardless of which language it's written in, so display_name() and log-line
+service names (hyphenated) map onto it the same way either way.
 """
 from __future__ import annotations
 
@@ -16,9 +19,12 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 import tree_sitter_python as tspython
+import tree_sitter_typescript as tsts
 from tree_sitter import Language, Parser
 
-_PARSER = Parser(Language(tspython.language()))
+_PARSER_PY = Parser(Language(tspython.language()))
+_PARSER_TS = Parser(Language(tsts.language_typescript()))
+_SOURCE_EXTS = (".py", ".ts", ".tsx")
 _SKIP_DIRS = {".git", "node_modules", "venv", ".venv", "__pycache__", "tests", "test", "dist", "build"}
 _TOKEN_RE = re.compile(r"[A-Za-z][A-Za-z0-9]*")
 
@@ -57,22 +63,29 @@ class Index:
 
 
 def _discover_services(repo: Path) -> dict[str, Path]:
+    """Service id is always the underscore form of the directory name (e.g. a TS
+    package folder 'db-pool' becomes id 'db_pool'), so display_name() and the
+    hyphen->underscore lookup in query_pipeline._bundle() work the same regardless
+    of which language a service happens to be written in."""
     root = repo / "services" if (repo / "services").is_dir() else repo
     found: dict[str, Path] = {}
     for d in sorted(root.iterdir()):
         if d.is_dir() and d.name not in _SKIP_DIRS and not d.name.startswith("."):
-            if any(d.rglob("*.py")):
-                found[d.name] = d
+            if any(p.suffix in _SOURCE_EXTS for p in d.rglob("*") if p.is_file()):
+                found[d.name.replace("-", "_")] = d
     return found
 
 
-def _py_files(d: Path):
-    for p in sorted(d.rglob("*.py")):
-        if not any(part in _SKIP_DIRS for part in p.parts) and p.name != "__init__.py":
-            yield p
+def _source_files(d: Path):
+    for p in sorted(d.rglob("*")):
+        if p.suffix not in _SOURCE_EXTS or any(part in _SKIP_DIRS for part in p.parts):
+            continue
+        if p.suffix == ".py" and p.name == "__init__.py":
+            continue
+        yield p
 
 
-def _imports(tree_root, src: bytes) -> list[str]:
+def _imports_py(tree_root, src: bytes) -> list[str]:
     mods: list[str] = []
     stack = [tree_root]
     while stack:
@@ -90,7 +103,26 @@ def _imports(tree_root, src: bytes) -> list[str]:
     return mods
 
 
-def _definitions(node, src: bytes, prefix: str = ""):
+def _imports_ts(tree_root, src: bytes) -> list[str]:
+    """TS imports are relative paths ('../../db-pool/src/pool'), not dotted module
+    names. Convert '/' -> '.' and '-' -> '_' so the result can be split on '.' and
+    matched against services the exact same way _build() already does for Python."""
+    mods: list[str] = []
+    stack = [tree_root]
+    while stack:
+        n = stack.pop()
+        if n.type in ("import_statement", "export_statement"):
+            src_field = n.child_by_field_name("source")
+            if src_field is not None:
+                frag = next((c for c in src_field.children if c.type == "string_fragment"), None)
+                if frag is not None:
+                    path = src[frag.start_byte:frag.end_byte].decode("utf8", "replace")
+                    mods.append(path.replace("/", ".").replace("-", "_"))
+        stack.extend(n.children)
+    return mods
+
+
+def _definitions_py(node, src: bytes, prefix: str = ""):
     """Yield (qualified_name, node) for functions, and methods qualified by class."""
     for c in node.children:
         target = c
@@ -105,7 +137,43 @@ def _definitions(node, src: bytes, prefix: str = ""):
             body = target.child_by_field_name("body")
             yield cname, c
             if body is not None:
-                yield from _definitions(body, src, prefix=cname + ".")
+                yield from _definitions_py(body, src, prefix=cname + ".")
+
+
+def _definitions_ts(node, src: bytes, prefix: str = ""):
+    """Same shape as _definitions_py: yield (qualified_name, node) for top-level
+    functions and class methods. `export`/`export default` wraps the declaration
+    in an export_statement -- unwrapped to find the real node, but the outer
+    export_statement is what gets chunked, so 'export async function foo' stays
+    intact in the displayed code."""
+    for c in node.children:
+        target = c
+        if c.type == "export_statement":
+            target = next((gc for gc in c.children if gc.type in ("function_declaration", "class_declaration")), c)
+        if target.type in ("function_declaration", "function_signature"):
+            nm = target.child_by_field_name("name")
+            if nm is not None:
+                yield prefix + src[nm.start_byte:nm.end_byte].decode(), c
+        elif target.type == "class_declaration":
+            nm = target.child_by_field_name("name")
+            if nm is None:
+                continue
+            cname = src[nm.start_byte:nm.end_byte].decode()
+            yield cname, c
+            body = target.child_by_field_name("body")
+            if body is not None:
+                for gc in body.children:
+                    if gc.type == "method_definition":
+                        mname = gc.child_by_field_name("name")
+                        if mname is not None:
+                            yield cname + "." + src[mname.start_byte:mname.end_byte].decode(), gc
+
+
+_LANG = {
+    ".py": (_PARSER_PY, _imports_py, _definitions_py),
+    ".ts": (_PARSER_TS, _imports_ts, _definitions_ts),
+    ".tsx": (_PARSER_TS, _imports_ts, _definitions_ts),
+}
 
 
 def _build(repo: Path) -> Index:
@@ -113,17 +181,18 @@ def _build(repo: Path) -> Index:
     chunks: list[Chunk] = []
     edges: set[tuple[str, str]] = set()
     for sid, sdir in services.items():
-        for path in _py_files(sdir):
+        for path in _source_files(sdir):
+            parser, imports_fn, definitions_fn = _LANG[path.suffix]
             src = path.read_bytes()
-            tree = _PARSER.parse(src)
+            tree = parser.parse(src)
             rel = path.relative_to(repo).as_posix()
             text_lines = src.decode("utf8", "replace").splitlines()
-            for mod in _imports(tree.root_node, src):
+            for mod in imports_fn(tree.root_node, src):
                 for seg in mod.split("."):
                     if seg in services and seg != sid:
                         edges.add((sid, seg))
                         break
-            for qname, node in _definitions(tree.root_node, src):
+            for qname, node in definitions_fn(tree.root_node, src):
                 s, e = node.start_point[0], node.end_point[0]
                 lines = text_lines[s:e + 1]
                 ch = Chunk(sid, rel, qname, s + 1, e + 1, lines)
@@ -142,10 +211,11 @@ def _build(repo: Path) -> Index:
 
 def _signature(repo: Path) -> tuple:
     sig = []
-    for p in repo.rglob("*.py"):
-        if not any(part in _SKIP_DIRS for part in p.parts):
-            st = p.stat()
-            sig.append((str(p), st.st_mtime_ns, st.st_size))
+    for ext in _SOURCE_EXTS:
+        for p in repo.rglob(f"*{ext}"):
+            if not any(part in _SKIP_DIRS for part in p.parts):
+                st = p.stat()
+                sig.append((str(p), st.st_mtime_ns, st.st_size))
     return tuple(sorted(sig))
 
 

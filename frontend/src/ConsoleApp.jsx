@@ -1,5 +1,5 @@
 import React from "react";
-import { getGraph, getLogs, getHealth, postQuery, usePoll, toIncident } from "./api.js";
+import { getGraph, getLogs, getHealth, postQuery, setScenario, usePoll, toIncident } from "./api.js";
 import { GUIDE } from "./guide.js";
 
 const GRAPH_POLL_MS = 4000;
@@ -9,6 +9,15 @@ const DEFAULT_QUESTION = "What is happening in the system right now?";
 
 const logNum = (id) => parseInt(id.slice(1), 10);
 const withServiceText = (l) => ({ ...l, text: `${l.service} · ${l.text}` });
+
+// Demo scenario labels -- the backend identifies scenarios by their slug (matches
+// the /health `active_scenario` / `available_scenarios` fields and the POST /scenario
+// body), this is just how they're displayed.
+const SCENARIO_LABELS = {
+  "payment-timeout": "Payment Timeout",
+  "db-exhaustion": "DB Exhaustion",
+  "cascading-failure": "Cascading Failure",
+};
 
 // Sovereignty check: the backend being reachable (getHealth) proves ARGUS itself is up;
 // this separately asks whether *the internet* is reachable at all, by racing a request to
@@ -61,6 +70,24 @@ export default function ConsoleApp() {
     const id = setInterval(tick, SOVEREIGN_POLL_MS);
     return () => { alive = false; clearInterval(id); };
   }, [backendUp]);
+
+  // ---- demo scenario switcher: reads active/available from the same health poll above ----
+  const activeScenario = healthPoll.data ? healthPoll.data.active_scenario : null;
+  const availableScenarios = healthPoll.data ? healthPoll.data.available_scenarios : [];
+  const [scenarioBusy, setScenarioBusy] = React.useState(null); // name currently switching to, or null
+  const [scenarioError, setScenarioError] = React.useState(null);
+  const onSelectScenario = async (name) => {
+    if (scenarioBusy || name === activeScenario) return;
+    setScenarioBusy(name);
+    setScenarioError(null);
+    try {
+      await setScenario(name);
+    } catch (e) {
+      setScenarioError(e.message);
+    } finally {
+      setScenarioBusy(null);
+    }
+  };
 
   // ---- UI state -----------------------------------------------------------
   const [screen, setScreen] = React.useState("workspace");
@@ -358,6 +385,32 @@ export default function ConsoleApp() {
       {screen === "workspace" && (
         <main style={{ flex: 1, minHeight: 0, display: "flex", gap: "var(--gap-zone)", padding: "var(--space-lg)" }}>
           <section style={{ flex: "1 1 60%", minWidth: 0, display: "flex", flexDirection: "column", gap: "var(--gap-zone)" }}>
+            {availableScenarios.length > 0 && (
+              <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: "var(--space-sm)" }}>
+                <span className="argus-caption" style={{ color: "var(--ink-subtle)" }}>Demo scenario:</span>
+                <Button
+                  variant={!activeScenario || activeScenario === "none" ? "primary" : "secondary"}
+                  size="sm"
+                  disabled={!!scenarioBusy}
+                  onClick={() => onSelectScenario("none")}
+                >Live traffic</Button>
+                {availableScenarios.map((name) => (
+                  <Button
+                    key={name}
+                    variant={activeScenario === name ? "primary" : "secondary"}
+                    size="sm"
+                    disabled={!!scenarioBusy}
+                    onClick={() => onSelectScenario(name)}
+                  >{scenarioBusy === name ? "Switching…" : SCENARIO_LABELS[name] || name}</Button>
+                ))}
+                <span className="argus-caption" style={{ color: "var(--ink-subtle)", marginLeft: "auto" }}>
+                  Active: <span className="argus-mono" style={{ color: "var(--ink-muted)" }}>
+                    {!activeScenario || activeScenario === "none" ? "live traffic" : SCENARIO_LABELS[activeScenario] || activeScenario}
+                  </span>
+                </span>
+                {scenarioError && <span className="argus-caption" style={{ color: "var(--critical)" }}>{scenarioError}</span>}
+              </div>
+            )}
             <div style={{ position: "relative", flex: "1 1 auto", minHeight: 320, display: "flex" }}>
               <ServiceGraph
                 nodes={nodes}

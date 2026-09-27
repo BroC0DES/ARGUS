@@ -42,6 +42,9 @@ export const getHealth = () => request("/health");
 export const getLogs = (n = 60) => request(`/logs?n=${n}`).then((r) => r.lines);
 // /query runs retrieval + an LLM call, so it gets a much longer timeout than polls.
 export const postQuery = (question) => request("/query", { method: "POST", body: { question }, timeoutMs: 60000 });
+// Scenario replay itself is instant (it just rewrites the log file) -- generous
+// timeout only in case the backend is briefly busy with something else.
+export const setScenario = (name) => request("/scenario", { method: "POST", body: { name }, timeoutMs: 15000 });
 
 /**
  * Poll `fn` every `ms`. A failed poll keeps the last-known-good data (never

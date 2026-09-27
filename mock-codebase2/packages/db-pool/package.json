@@ -1,0 +1,5 @@
+{
+  "name": "db-pool",
+  "version": "1.0.0",
+  "main": "src/pool.ts"
+}

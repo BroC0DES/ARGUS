@@ -1,0 +1,7 @@
+{
+  "name": "argus-mock-codebase",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ]
+}

@@ -14,6 +14,7 @@ venv/
 backend/logs/
 *.log
 !sovereign-incident-agent/logs/system.log
+!mock-codebase2/logs/*.log
 __pycache__/
 *.pyc
 

@@ -1,0 +1,21 @@
+2026-09-27T16:00:01.100Z INFO api-gateway request routed order=ord_9500
+2026-09-27T16:00:01.500Z INFO payment-service gateway.charge succeeded order=ord_9500 latency=520ms
+2026-09-27T16:00:01.600Z INFO db-pool transaction recorded order=ord_9500
+2026-09-27T16:00:01.700Z INFO ledger-worker ledger entry written order=ord_9500
+2026-09-27T16:00:01.800Z INFO orders-service order saved order=ord_9500
+2026-09-27T16:00:01.900Z INFO notify-worker confirmation email queued order=ord_9500
+2026-09-27T16:04:30.200Z ERROR db-pool connection pool exhausted order=ord_9520 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T16:04:30.500Z ERROR payment-service transaction record failed order=ord_9520 code=POOL_EXHAUSTED
+2026-09-27T16:04:31.100Z ERROR ledger-worker ledger write failed order=ord_9520 code=POOL_EXHAUSTED
+2026-09-27T16:04:31.400Z ERROR orders-service order save failed order=ord_9520 code=POOL_EXHAUSTED
+2026-09-27T16:04:31.600Z INFO notify-worker confirmation email queued order=ord_9520
+2026-09-27T16:04:45.300Z ERROR db-pool connection pool exhausted order=ord_9521 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T16:04:45.500Z ERROR payment-service transaction record failed order=ord_9521 code=POOL_EXHAUSTED
+2026-09-27T16:04:45.800Z ERROR ledger-worker ledger write failed order=ord_9521 code=POOL_EXHAUSTED
+2026-09-27T16:04:46.100Z ERROR orders-service order save failed order=ord_9521 code=POOL_EXHAUSTED
+2026-09-27T16:05:02.900Z WARN api-gateway elevated error rate downstream 5xx=4 window=60s
+2026-09-27T16:05:10.200Z ERROR db-pool connection pool exhausted order=ord_9522 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T16:05:10.400Z ERROR payment-service transaction record failed order=ord_9522 code=POOL_EXHAUSTED
+2026-09-27T16:05:10.700Z ERROR ledger-worker ledger write failed order=ord_9522 code=POOL_EXHAUSTED
+2026-09-27T16:05:10.900Z ERROR orders-service order save failed order=ord_9522 code=POOL_EXHAUSTED
+2026-09-27T16:05:11.000Z INFO notify-worker confirmation email queued order=ord_9522

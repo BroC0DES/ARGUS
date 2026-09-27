@@ -15,12 +15,14 @@ load_dotenv(HERE / ".env")
 from code_indexer import CodeIndexer, display_name  # noqa: E402  (after load_dotenv)
 from log_analyzer import LogAnalyzer, WINDOW_S  # noqa: E402
 from query_pipeline import QueryError, run_query  # noqa: E402
+import scenario_sim  # noqa: E402
 
 REPO_PATH = os.environ.get("REPO_PATH") or str((HERE.parent / "sample_repo"))
 LOG_PATH = os.environ.get("LOG_PATH") or str(HERE / "logs" / "app.log")
 
 indexer = CodeIndexer(REPO_PATH)
 logs = LogAnalyzer(LOG_PATH)
+active_scenario = "none"  # "none" = whatever's actually being written to LOG_PATH (traffic_sim.py or live traffic)
 
 app = FastAPI(title="ARGUS")
 app.add_middleware(
@@ -36,9 +38,38 @@ class QueryBody(BaseModel):
     question: str = Field(default="", max_length=2000)
 
 
+class ScenarioBody(BaseModel):
+    name: str = Field(max_length=64)
+
+
 @app.get("/health")
 def health():
-    return {"ok": True, "repo": REPO_PATH, "log": LOG_PATH, "llm": "ollama", "ollama_model": os.environ.get("OLLAMA_MODEL", "mistral")}
+    return {
+        "ok": True, "repo": REPO_PATH, "log": LOG_PATH, "llm": "ollama",
+        "ollama_model": os.environ.get("OLLAMA_MODEL", "mistral"),
+        "active_scenario": active_scenario,
+        "available_scenarios": sorted(scenario_sim.SCENARIOS),
+    }
+
+
+@app.post("/scenario")
+def set_scenario(body: ScenarioBody):
+    """Switch the log file being watched to a scenario fixture, without restarting
+    anything -- replays it into LOG_PATH with timestamps shifted to "now" (see
+    scenario_sim.py) so the existing Log Analyzer picks it up as a live incident.
+    name="none" is a special case: it doesn't touch LOG_PATH at all, it just marks
+    no scenario as active (LOG_PATH keeps showing whatever traffic_sim.py, or
+    nothing, is actually writing to it)."""
+    global active_scenario
+    if body.name == "none":
+        active_scenario = "none"
+        return {"active_scenario": active_scenario, "lines_written": 0}
+    try:
+        n = scenario_sim.replay(body.name, LOG_PATH)
+    except scenario_sim.ScenarioError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    active_scenario = body.name
+    return {"active_scenario": active_scenario, "lines_written": n}
 
 
 @app.get("/graph")

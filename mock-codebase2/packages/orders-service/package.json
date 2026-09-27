@@ -1,0 +1,10 @@
+{
+  "name": "orders-service",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "dependencies": {
+    "payment-service": "1.0.0",
+    "db-pool": "1.0.0",
+    "notify-worker": "1.0.0"
+  }
+}
