@@ -5,6 +5,11 @@
   "dependencies": {
     "payment-service": "1.0.0",
     "db-pool": "1.0.0",
-    "notify-worker": "1.0.0"
+    "notify-worker": "1.0.0",
+    "ledger-worker": "1.0.0",
+    "express": "^4.19.2"
+  },
+  "scripts": {
+    "dev": "tsx watch src/server.ts"
   }
 }

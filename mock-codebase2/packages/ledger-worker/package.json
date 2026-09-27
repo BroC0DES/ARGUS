@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "main": "src/ledger.ts",
   "dependencies": {
-    "db-pool": "1.0.0"
+    "db-pool": "1.0.0",
+    "express": "^4.19.2"
+  },
+  "scripts": {
+    "dev": "tsx watch src/server.ts"
   }
 }

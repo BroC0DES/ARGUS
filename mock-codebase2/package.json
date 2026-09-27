@@ -3,5 +3,12 @@
   "private": true,
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "scripts": {
+    "dev": "node dev.mjs",
+    "traffic": "node traffic_sim2.mjs"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2"
+  }
 }

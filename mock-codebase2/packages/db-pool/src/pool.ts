@@ -29,6 +29,14 @@ export async function withConnection<T>(fn: () => Promise<T>): Promise<T> {
   }
   active++;
   try {
+    // A real DB call actually takes some time to hold a connection open; without
+    // this, "active" never overlaps across separate incoming HTTP requests at all
+    // -- Node's event loop fully drains one request's microtask chain (including
+    // the active-- below) before it even starts handling the next one, so
+    // maxConnections could never be genuinely exercised by real concurrent
+    // traffic. This is the only line added here; maxConnections and the
+    // exhaustion check above -- the actual bug -- are untouched.
+    await new Promise((resolve) => setTimeout(resolve, 120));
     return await fn();
   } finally {
     active--;

@@ -1,5 +1,11 @@
 {
   "name": "notify-worker",
   "version": "1.0.0",
-  "main": "src/notify.ts"
+  "main": "src/notify.ts",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "scripts": {
+    "dev": "tsx watch src/server.ts"
+  }
 }
