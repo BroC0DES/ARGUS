@@ -13,6 +13,7 @@ venv/
 # Runtime output
 backend/logs/
 *.log
+!sovereign-incident-agent/logs/system.log
 __pycache__/
 *.pyc
 

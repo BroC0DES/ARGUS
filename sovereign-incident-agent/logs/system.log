@@ -1,0 +1,200 @@
+10:00:00 INFO api_gateway Request received
+10:00:01 INFO order_service Processing order
+10:00:02 INFO inventory_service Checking inventory
+10:00:03 INFO database_service Connection pool healthy
+10:00:04 INFO payment_service Processing payment
+10:00:05 INFO database_service Payment saved
+10:00:06 INFO order_service Order completed
+10:00:07 INFO api_gateway Order completed
+10:00:08 INFO api_gateway Request received
+10:00:09 INFO order_service Processing order
+10:00:10 INFO inventory_service Checking inventory
+10:00:11 INFO database_service Connection pool healthy
+10:00:12 INFO payment_service Processing payment
+10:00:13 INFO database_service Payment saved
+10:00:14 INFO order_service Order completed
+10:00:15 INFO api_gateway Order completed
+10:00:16 INFO api_gateway Request received
+10:00:17 INFO order_service Processing order
+10:00:18 INFO inventory_service Checking inventory
+10:00:19 INFO database_service Connection pool healthy
+10:00:20 INFO payment_service Processing payment
+10:00:21 INFO database_service Payment saved
+10:00:22 INFO order_service Order completed
+10:00:23 INFO api_gateway Order completed
+10:00:24 INFO api_gateway Request received
+10:00:25 INFO order_service Processing order
+10:00:26 INFO inventory_service Checking inventory
+10:00:27 INFO database_service Connection pool healthy
+10:00:28 INFO payment_service Processing payment
+10:00:29 INFO database_service Payment saved
+10:00:30 INFO order_service Order completed
+10:00:31 INFO api_gateway Order completed
+10:00:32 INFO api_gateway Request received
+10:00:33 INFO order_service Processing order
+10:00:34 INFO inventory_service Checking inventory
+10:00:35 INFO database_service Connection pool healthy
+10:00:36 INFO payment_service Processing payment
+10:00:37 INFO database_service Payment saved
+10:00:38 INFO order_service Order completed
+10:00:39 INFO api_gateway Order completed
+10:00:40 INFO database_service Connection pool warning
+10:00:41 WARNING database_service Connection pool usage high
+10:00:42 INFO api_gateway Request received
+10:00:43 INFO order_service Processing order
+10:00:44 INFO inventory_service Checking inventory
+10:00:45 WARNING database_service Database latency increased
+10:00:46 WARNING database_service Connection pool warning
+10:00:47 INFO payment_service Processing payment
+10:00:48 WARNING database_service Database latency increased
+10:00:49 INFO api_gateway Request received
+10:00:50 INFO order_service Processing order
+10:00:51 INFO inventory_service Checking inventory
+10:00:52 WARNING database_service Connection pool usage high
+10:00:53 INFO payment_service Processing payment
+10:00:54 WARNING database_service Database latency increased
+10:00:55 INFO api_gateway Request received
+10:00:56 INFO order_service Processing order
+10:00:57 WARNING database_service Connection pool warning
+10:00:58 INFO inventory_service Checking inventory
+10:00:59 WARNING database_service Database latency increased
+10:01:00 INFO payment_service Processing payment
+10:01:01 WARNING database_service Connection pool usage high
+10:01:02 INFO api_gateway Request received
+10:01:03 INFO order_service Processing order
+10:01:04 WARNING database_service Database latency increased
+10:01:05 INFO inventory_service Checking inventory
+10:01:06 WARNING database_service Connection pool warning
+10:01:07 ERROR database_service Connection timeout
+10:01:08 ERROR database_service Connection timeout
+10:01:09 ERROR database_service Connection timeout
+10:01:10 ERROR inventory_service Database unavailable
+10:01:11 ERROR inventory_service Inventory check failed
+10:01:12 ERROR payment_service Database unavailable
+10:01:13 ERROR payment_service Payment failed
+10:01:14 ERROR order_service Inventory unavailable
+10:01:15 ERROR order_service Payment failed
+10:01:16 ERROR api_gateway Payment failed with HTTP 500
+10:01:17 ERROR api_gateway Payment failed with HTTP 500
+10:01:18 ERROR api_gateway Payment failed with HTTP 500
+10:01:19 INFO api_gateway Retrying request
+10:01:20 INFO order_service Retrying order
+10:01:21 WARNING database_service Connection pool exhausted
+10:01:22 WARNING database_service Connection pool exhausted
+10:01:23 ERROR database_service Connection timeout
+10:01:24 ERROR database_service Connection timeout
+10:01:25 ERROR database_service Connection timeout
+10:01:26 ERROR inventory_service Database unavailable
+10:01:27 ERROR inventory_service Inventory check failed
+10:01:28 ERROR payment_service Database unavailable
+10:01:29 ERROR payment_service Payment failed
+10:01:30 ERROR order_service Inventory unavailable
+10:01:31 ERROR order_service Payment failed
+10:01:32 ERROR api_gateway Payment failed with HTTP 500
+10:01:33 ERROR database_service Connection timeout
+10:01:34 ERROR database_service Connection timeout
+10:01:35 ERROR database_service Connection timeout
+10:01:36 ERROR inventory_service Database unavailable
+10:01:37 ERROR inventory_service Inventory check failed
+10:01:38 ERROR payment_service Database unavailable
+10:01:39 ERROR payment_service Payment failed
+10:01:40 ERROR order_service Inventory unavailable
+10:01:41 ERROR order_service Payment failed
+10:01:42 ERROR api_gateway Payment failed with HTTP 500
+10:01:43 ERROR api_gateway Payment failed with HTTP 500
+10:01:44 INFO api_gateway Request retry scheduled
+10:01:45 WARNING database_service Connection pool exhausted
+10:01:46 ERROR inventory_service Database unavailable
+10:01:47 ERROR inventory_service Inventory check failed
+10:01:48 ERROR payment_service Database unavailable
+10:01:49 ERROR payment_service Payment failed
+10:01:50 ERROR order_service Inventory unavailable
+10:01:51 ERROR order_service Payment failed
+10:01:52 ERROR api_gateway Payment failed with HTTP 500
+10:01:53 ERROR database_service Connection refused
+10:01:54 ERROR database_service Connection refused
+10:01:55 ERROR database_service Connection refused
+10:01:56 ERROR inventory_service Database unavailable
+10:01:57 ERROR payment_service Database unavailable
+10:01:58 ERROR order_service Inventory unavailable
+10:01:59 ERROR api_gateway Payment failed with HTTP 500
+10:02:00 WARNING database_service Database unavailable
+10:02:01 WARNING database_service Connection pool exhausted
+10:02:02 ERROR database_service Connection refused
+10:02:03 ERROR database_service Connection refused
+10:02:04 ERROR database_service Connection refused
+10:02:05 INFO api_gateway Request retry scheduled
+10:02:06 INFO order_service Waiting for database recovery
+10:02:07 INFO inventory_service Waiting for database recovery
+10:02:08 INFO payment_service Waiting for database recovery
+10:02:09 INFO database_service Restarting connection pool
+10:02:10 INFO database_service Reconnecting
+10:02:11 INFO database_service Reconnecting
+10:02:12 INFO database_service Reconnecting
+10:02:13 INFO database_service Reconnecting
+10:02:14 INFO database_service Connection pool initializing
+10:02:15 INFO database_service Connection pool initializing
+10:02:16 INFO database_service Connection pool initializing
+10:02:17 INFO database_service Database health check running
+10:02:18 INFO database_service Database health check running
+10:02:19 INFO database_service Database health check passed
+10:02:20 INFO database_service Database connection restored
+10:02:21 INFO inventory_service Inventory check successful
+10:02:22 INFO payment_service Payment processed successfully
+10:02:23 INFO order_service Order completed
+10:02:24 INFO api_gateway Order completed
+10:02:25 INFO api_gateway Request received
+10:02:26 INFO order_service Processing order
+10:02:27 INFO inventory_service Checking inventory
+10:02:28 INFO database_service Connection pool healthy
+10:02:29 INFO payment_service Processing payment
+10:02:30 INFO database_service Payment saved
+10:02:31 INFO order_service Order completed
+10:02:32 INFO api_gateway Order completed
+10:02:33 INFO api_gateway Request received
+10:02:34 INFO order_service Processing order
+10:02:35 INFO inventory_service Checking inventory
+10:02:36 INFO database_service Connection pool healthy
+10:02:37 INFO payment_service Processing payment
+10:02:38 INFO database_service Payment saved
+10:02:39 INFO order_service Order completed
+10:02:40 INFO api_gateway Order completed
+10:02:41 INFO api_gateway Request received
+10:02:42 INFO order_service Processing order
+10:02:43 INFO inventory_service Checking inventory
+10:02:44 INFO database_service Connection pool healthy
+10:02:45 INFO payment_service Processing payment
+10:02:46 INFO database_service Payment saved
+10:02:47 INFO order_service Order completed
+10:02:48 INFO api_gateway Order completed
+10:02:49 INFO api_gateway Request received
+10:02:50 INFO order_service Processing order
+10:02:51 INFO inventory_service Checking inventory
+10:02:52 INFO database_service Connection pool healthy
+10:02:53 INFO payment_service Processing payment
+10:02:54 INFO database_service Payment saved
+10:02:55 INFO order_service Order completed
+10:02:56 INFO api_gateway Order completed
+10:02:57 INFO api_gateway Request received
+10:02:58 INFO order_service Processing order
+10:02:59 INFO api_gateway Order completed
+10:03:00 INFO api_gateway Health check passed
+10:03:01 INFO order_service Health check passed
+10:03:02 INFO inventory_service Health check passed
+10:03:03 INFO payment_service Health check passed
+10:03:04 INFO database_service Connection pool healthy
+10:03:00 INFO api_gateway Health check passed
+10:03:01 INFO order_service Health check passed
+10:03:02 INFO inventory_service Health check passed
+10:03:03 INFO payment_service Health check passed
+10:03:04 INFO database_service Connection pool healthy
+10:03:00 INFO api_gateway Health check passed
+10:03:01 INFO order_service Health check passed
+10:03:02 INFO inventory_service Health check passed
+10:03:03 INFO payment_service Health check passed
+10:03:04 INFO database_service Connection pool healthy
+10:03:00 INFO api_gateway Health check passed
+10:03:01 INFO order_service Health check passed
+10:03:02 INFO inventory_service Health check passed
+10:03:03 INFO payment_service Health check passed
+10:03:04 INFO database_service Connection pool healthy
