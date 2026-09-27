@@ -17,10 +17,10 @@ cd frontend && npm install && cp .env.example .env.local                 # sets 
 ## LLM: local Ollama (no API key)
 ARGUS runs its diagnosis on a **local Ollama model** — no Anthropic/Claude API key and no cloud calls.
 ```
-ollama pull llama3.1:8b      # any model with reasonable JSON/structured-output support works
+ollama pull mistral          # any model with reasonable JSON/structured-output support works
 ollama serve                 # http://localhost:11434 (skip if already running)
 ```
-Configure in `backend/.env`: `OLLAMA_URL` (default `http://localhost:11434`), `OLLAMA_MODEL` (default `llama3.1:8b`).
+Configure in `backend/.env`: `OLLAMA_URL` (default `http://localhost:11434`), `OLLAMA_MODEL` (default `mistral`).
 
 ## Run (three terminals)
 ```

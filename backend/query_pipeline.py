@@ -24,7 +24,7 @@ from code_indexer import CodeIndexer, display_name
 from log_analyzer import LogAnalyzer, WINDOW_S
 
 OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://localhost:11434").rstrip("/")
-OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "llama3.1:8b")
+OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "mistral")
 OLLAMA_TIMEOUT = float(os.environ.get("OLLAMA_TIMEOUT", "180"))
 MAX_LOG_LINES = 90
 MAX_CHUNKS = 6
