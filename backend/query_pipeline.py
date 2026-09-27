@@ -3,7 +3,7 @@
   Log Analyzer (current anomalies)
     -> Code Indexer (retrieval + dependency graph)
     -> bundle context
-    -> Claude Haiku 4.5 (forced tool call = structured report)
+    -> local Ollama model (schema-constrained JSON = structured report)
     -> validate against what was actually computed this request
     -> response
 
@@ -14,15 +14,18 @@ derived from the graph and logs, never from the model.
 """
 from __future__ import annotations
 
+import json
 import os
+import urllib.error
+import urllib.request
 from datetime import datetime
-
-import anthropic
 
 from code_indexer import CodeIndexer, display_name
 from log_analyzer import LogAnalyzer, WINDOW_S
 
-MODEL = "claude-haiku-4-5-20251001"
+OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://localhost:11434").rstrip("/")
+OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "llama3.1:8b")
+OLLAMA_TIMEOUT = float(os.environ.get("OLLAMA_TIMEOUT", "180"))
 MAX_LOG_LINES = 90
 MAX_CHUNKS = 6
 
@@ -129,27 +132,39 @@ def _render_context(question, services, edges, anomalies, lines, chunks, stats) 
 
 
 def _call_model(context: str) -> dict:
-    key = os.environ.get("ANTHROPIC_API_KEY")
-    if not key:
-        raise QueryError(503, "ANTHROPIC_API_KEY is not set. Add it to backend/.env and restart the backend.")
+    # Env is read per call so .env changes apply after load_dotenv in main.py.
+    url = os.environ.get("OLLAMA_URL", OLLAMA_URL).rstrip("/")
+    model = os.environ.get("OLLAMA_MODEL", OLLAMA_MODEL)
+    body = json.dumps({
+        "model": model,
+        "stream": False,
+        "format": REPORT_TOOL["input_schema"],  # constrains output to the report schema
+        "options": {"temperature": 0, "num_ctx": 16384},
+        "messages": [
+            {"role": "system", "content": SYSTEM + "
+
+Respond with a JSON object matching the report schema."},
+            {"role": "user", "content": context},
+        ],
+    }).encode()
+    req = urllib.request.Request(f"{url}/api/chat", data=body, headers={"Content-Type": "application/json"})
     try:
-        client = anthropic.Anthropic(api_key=key, timeout=45.0, max_retries=1)
-        resp = client.messages.create(
-            model=MODEL,
-            max_tokens=2500,
-            system=SYSTEM,
-            tools=[REPORT_TOOL],
-            tool_choice={"type": "tool", "name": "report_incident"},
-            messages=[{"role": "user", "content": context}],
-        )
-    except anthropic.AuthenticationError:
-        raise QueryError(503, "The Anthropic API rejected ANTHROPIC_API_KEY.")
-    except anthropic.APIError as e:
-        raise QueryError(502, f"Anthropic API error: {getattr(e, 'message', str(e))}")
-    for block in resp.content:
-        if block.type == "tool_use" and block.name == "report_incident":
-            return block.input
-    raise QueryError(502, "The model returned no structured report.")
+        with urllib.request.urlopen(req, timeout=OLLAMA_TIMEOUT) as resp:
+            data = json.load(resp)
+    except urllib.error.HTTPError as e:
+        detail = e.read().decode(errors="replace")[:300]
+        if e.code == 404:
+            raise QueryError(503, f"Ollama model {model!r} not found. Run: ollama pull {model}")
+        raise QueryError(502, f"Ollama error {e.code}: {detail}")
+    except (urllib.error.URLError, TimeoutError, ConnectionError) as e:
+        raise QueryError(503, f"Cannot reach Ollama at {url} ({getattr(e, 'reason', e)}). Start it with `ollama serve`.")
+    try:
+        report = json.loads(data["message"]["content"])
+    except (KeyError, TypeError, ValueError):
+        raise QueryError(502, "The model returned no structured report.")
+    if not isinstance(report, dict):
+        raise QueryError(502, "The model returned no structured report.")
+    return report
 
 
 def run_query(question: str, logs: LogAnalyzer, indexer: CodeIndexer) -> dict:

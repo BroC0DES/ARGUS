@@ -38,7 +38,7 @@ class QueryBody(BaseModel):
 
 @app.get("/health")
 def health():
-    return {"ok": True, "repo": REPO_PATH, "log": LOG_PATH, "has_api_key": bool(os.environ.get("ANTHROPIC_API_KEY"))}
+    return {"ok": True, "repo": REPO_PATH, "log": LOG_PATH, "llm": "ollama", "ollama_model": os.environ.get("OLLAMA_MODEL", "llama3.1:8b")}
 
 
 @app.get("/graph")

@@ -10,9 +10,17 @@ sample_repo/  default REPO_PATH: a small multi-service Python codebase to index
 
 ## Setup
 ```
-cd backend  && pip install -r requirements.txt && cp .env.example .env   # then set ANTHROPIC_API_KEY
+cd backend  && pip install -r requirements.txt && cp .env.example .env
 cd frontend && npm install && cp .env.example .env.local                 # sets VITE_API_URL (env files are git-ignored)
 ```
+
+## LLM: local Ollama (no API key)
+ARGUS runs its diagnosis on a **local Ollama model** — no Anthropic/Claude API key and no cloud calls.
+```
+ollama pull llama3.1:8b      # any model with reasonable JSON/structured-output support works
+ollama serve                 # http://localhost:11434 (skip if already running)
+```
+Configure in `backend/.env`: `OLLAMA_URL` (default `http://localhost:11434`), `OLLAMA_MODEL` (default `llama3.1:8b`).
 
 ## Run (three terminals)
 ```

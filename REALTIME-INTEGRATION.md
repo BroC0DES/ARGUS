@@ -17,7 +17,7 @@ Three local processes, no deployment needed for the hackathon:
 ## 3. Backend — what must exist and be genuinely real
 - **POST /query** — full pipeline: Log Analyzer (current anomalies) →
   Code Indexer (vector store + dependency graph retrieval) → bundle
-  context → real Anthropic API call (Claude Haiku 4.5) → parse into
+  context → real call to a local Ollama model (`/api/chat`, schema-constrained JSON) → parse into
   `{root_cause, evidence_logs, relevant_code, recommended_fix,
   confidence, trace_path, node_ids, affected_nodes, timeline}`. Every
   field must trace back to something computed that request — nothing
@@ -26,7 +26,7 @@ Three local processes, no deployment needed for the hackathon:
   count) computed from current log data, not static.
 - **GET /logs** — most recent N lines, freshly read from disk each call.
 - **CORS** enabled for `http://localhost:5173`.
-- **.env**: `ANTHROPIC_API_KEY`, `REPO_PATH` (absolute path to the real
+- **.env**: `OLLAMA_URL`, `OLLAMA_MODEL`, `REPO_PATH` (absolute path to the real
   codebase being indexed).
 
 ## 4. Frontend — what Claude Code needs to change in the Claude-Design build
