@@ -16,7 +16,10 @@ Three local processes, no deployment needed for the hackathon:
 
 ## 3. Backend — what must exist and be genuinely real
 - **POST /query** — full pipeline: Log Analyzer (current anomalies) →
-  Code Indexer (vector store + dependency graph retrieval) → bundle
+  Code Indexer (tree-sitter parsing + local TF-IDF retrieval, no vector
+  DB or embeddings — see backend/code_indexer.py, not the ChromaDB-based
+  sovereign-incident-agent/code_indexer/ scripts, which aren't wired into
+  this pipeline) + dependency graph retrieval → bundle
   context → real call to a local Ollama model (`/api/chat`, schema-constrained JSON) → parse into
   `{root_cause, evidence_logs, relevant_code, recommended_fix,
   confidence, trace_path, node_ids, affected_nodes, timeline}`. Every
