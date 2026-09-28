@@ -314,12 +314,17 @@ class CodeIndexer:
 
     # ---- retrieval --------------------------------------------------------
     def search(self, query: str, k: int = 6, boost: dict[str, float] | None = None) -> list[Chunk]:
-        return [ch for _, ch in self.search_scored(query, k=k, boost=boost)]
+        return [ch for _, _, ch in self.search_scored(query, k=k, boost=boost)]
 
-    def search_scored(self, query: str, k: int = 6, boost: dict[str, float] | None = None) -> list[tuple[float, Chunk]]:
-        """Same ranking as search(), but keeps the raw cosine similarity (post-boost)
-        alongside each chunk -- callers that need retrieval confidence, not just the
-        chunks themselves, use this instead of stripping the score."""
+    def search_scored(self, query: str, k: int = 6, boost: dict[str, float] | None = None) -> list[tuple[float, float, Chunk]]:
+        """Ranks by the boosted score (boost is a retrieval-ranking heuristic --
+        which chunk counts as the top hit is still entirely its call, unchanged).
+        Each result also carries the raw, unboosted cosine similarity alongside
+        it, for callers that need retrieval confidence rather than just ranking:
+        boost is derived from the same anomaly/graph signal confidence scoring
+        already counts elsewhere (dominance), so feeding the BOOSTED score into
+        confidence too would double-count that signal. Returns
+        (boosted_score, raw_cosine, chunk) tuples, sorted by boosted_score."""
         ix = self.index()
         q = Counter(tokenize(query))
         if not q or not ix.chunks:
@@ -332,7 +337,8 @@ class CodeIndexer:
             if not dot:
                 continue
             cnorm = math.sqrt(sum(((1 + math.log(c)) * ix.idf[t]) ** 2 for t, c in ch.tokens.items())) or 1.0
-            score = dot / (qnorm * cnorm) * (boost or {}).get(ch.service, 1.0)
-            scored.append((score, ch))
+            raw = dot / (qnorm * cnorm)
+            boosted = raw * (boost or {}).get(ch.service, 1.0)
+            scored.append((boosted, raw, ch))
         scored.sort(key=lambda x: -x[0])
         return scored[:k]
