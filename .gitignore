@@ -24,3 +24,21 @@ dist/
 .claude/
 .DS_Store
 Thumbs.db
+
+# --- wip-validation / eval scratch: never commit (see CLAUDE.md) ---
+eval/_sanitized/
+eval/blind/
+eval/reference_answers.json
+eval/runs/
+eval/scenarios_generated/*
+!eval/scenarios_generated/*.py
+scratch/
+tmp/
+*.tmp
+*.bak
+.cache/
+*.faiss
+*.index
+chroma/
+.chroma/
+CLAUDE.md
