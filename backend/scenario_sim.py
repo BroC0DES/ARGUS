@@ -30,6 +30,13 @@ SCENARIOS = {
     "payment-timeout": "scenario-payment-timeout.log",
     "db-exhaustion": "scenario-db-exhaustion.log",
     "cascading-failure": "scenario-cascading-failure.log",
+    # Test scenarios -- same mock-codebase2/logs/ folder, same replay() mechanism above,
+    # no behavior change; just four more named fixtures for the frontend's "Test
+    # scenarios" group.
+    "two-faults": "test-two-faults.log",
+    "stray-error": "test-stray-error.log",
+    "thin-evidence": "test-thin-evidence.log",
+    "ambiguous-orders": "test-ambiguous-orders.log",
 }
 
 MAX_BACKUPS = 20  # oldest ones are pruned so a long demo session doesn't pile up forever

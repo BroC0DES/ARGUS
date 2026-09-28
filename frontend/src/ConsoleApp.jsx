@@ -17,7 +17,14 @@ const SCENARIO_LABELS = {
   "payment-timeout": "Payment Timeout",
   "db-exhaustion": "DB Exhaustion",
   "cascading-failure": "Cascading Failure",
+  "two-faults": "Two Faults",
+  "stray-error": "Stray Error",
+  "thin-evidence": "Thin Evidence",
+  "ambiguous-orders": "Ambiguous Orders",
 };
+// Scenarios shown in their own "Test scenarios" row, separate from the demo group
+// above -- purely a display grouping, the backend serves them all as one flat list.
+const TEST_SCENARIOS = new Set(["two-faults", "stray-error", "thin-evidence", "ambiguous-orders"]);
 
 // Sovereignty check: the backend being reachable (getHealth) proves ARGUS itself is up;
 // this separately asks whether *the internet* is reachable at all, by racing a request to
@@ -74,6 +81,8 @@ export default function ConsoleApp() {
   // ---- demo scenario switcher: reads active/available from the same health poll above ----
   const activeScenario = healthPoll.data ? healthPoll.data.active_scenario : null;
   const availableScenarios = healthPoll.data ? healthPoll.data.available_scenarios : [];
+  const demoScenarios = availableScenarios.filter((n) => !TEST_SCENARIOS.has(n));
+  const testScenarios = availableScenarios.filter((n) => TEST_SCENARIOS.has(n));
   const [scenarioBusy, setScenarioBusy] = React.useState(null); // name currently switching to, or null
   const [scenarioError, setScenarioError] = React.useState(null);
   const [scenarioNote, setScenarioNote] = React.useState(null);
@@ -408,7 +417,7 @@ export default function ConsoleApp() {
                   disabled={!!scenarioBusy}
                   onClick={() => onSelectScenario("none")}
                 >Live traffic</Button>
-                {availableScenarios.map((name) => (
+                {demoScenarios.map((name) => (
                   <Button
                     key={name}
                     variant={activeScenario === name ? "primary" : "secondary"}
@@ -424,6 +433,20 @@ export default function ConsoleApp() {
                 </span>
                 {scenarioError && <span className="argus-caption" style={{ color: "var(--critical)" }}>{scenarioError}</span>}
                 {scenarioNote && <span className="argus-caption" style={{ color: "var(--ink-subtle)" }}>{scenarioNote}</span>}
+              </div>
+            )}
+            {testScenarios.length > 0 && (
+              <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: "var(--space-sm)" }}>
+                <span className="argus-caption" style={{ color: "var(--ink-subtle)" }}>Test scenarios:</span>
+                {testScenarios.map((name) => (
+                  <Button
+                    key={name}
+                    variant={activeScenario === name ? "primary" : "secondary"}
+                    size="sm"
+                    disabled={!!scenarioBusy}
+                    onClick={() => onSelectScenario(name)}
+                  >{scenarioBusy === name ? "Switching…" : SCENARIO_LABELS[name] || name}</Button>
+                ))}
               </div>
             )}
             <div style={{ position: "relative", flex: "1 1 auto", minHeight: 320, display: "flex" }}>

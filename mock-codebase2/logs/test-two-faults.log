@@ -1,0 +1,186 @@
+2026-09-27T18:00:02.784Z INFO orders-service checkout started order=ord_9801
+2026-09-27T18:00:02.826Z INFO api-gateway request routed order=ord_9801
+2026-09-27T18:00:10.589Z INFO orders-service checkout started order=ord_9802
+2026-09-27T18:00:10.612Z INFO api-gateway request routed order=ord_9802
+2026-09-27T18:00:19.201Z INFO orders-service checkout started order=ord_9803
+2026-09-27T18:00:19.549Z INFO api-gateway request routed order=ord_9803
+2026-09-27T18:00:25.101Z INFO orders-service checkout started order=ord_9804
+2026-09-27T18:00:25.302Z INFO api-gateway request routed order=ord_9804
+2026-09-27T18:00:34.687Z INFO api-gateway request routed order=ord_9805
+2026-09-27T18:00:34.909Z INFO orders-service checkout started order=ord_9805
+2026-09-27T18:00:42.279Z INFO api-gateway request routed order=ord_9806
+2026-09-27T18:00:42.637Z INFO orders-service checkout started order=ord_9806
+2026-09-27T18:00:45.688Z ERROR payment-service transaction record failed order=ord_9871 code=POOL_EXHAUSTED
+2026-09-27T18:00:46.595Z ERROR ledger-worker ledger write failed order=ord_9901 code=POOL_EXHAUSTED
+2026-09-27T18:00:46.757Z ERROR notify-worker email send failed order=ord_9921 code=SMTP_TIMEOUT
+2026-09-27T18:00:46.914Z ERROR db-pool connection pool exhausted order=ord_9831 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:00:49.761Z ERROR db-pool connection pool exhausted order=ord_9832 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:00:50.317Z INFO orders-service checkout started order=ord_9807
+2026-09-27T18:00:50.319Z INFO api-gateway request routed order=ord_9807
+2026-09-27T18:00:50.504Z ERROR notify-worker email send failed order=ord_9922 code=SMTP_TIMEOUT
+2026-09-27T18:00:51.472Z ERROR payment-service transaction record failed order=ord_9872 code=POOL_EXHAUSTED
+2026-09-27T18:00:55.533Z ERROR ledger-worker ledger write failed order=ord_9902 code=POOL_EXHAUSTED
+2026-09-27T18:00:56.067Z ERROR db-pool connection pool exhausted order=ord_9833 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:00:57.014Z INFO orders-service checkout started order=ord_9808
+2026-09-27T18:00:57.293Z INFO api-gateway request routed order=ord_9808
+2026-09-27T18:00:57.495Z ERROR notify-worker email send failed order=ord_9923 code=SMTP_TIMEOUT
+2026-09-27T18:00:57.985Z ERROR payment-service transaction record failed order=ord_9873 code=POOL_EXHAUSTED
+2026-09-27T18:01:00.890Z ERROR db-pool connection pool exhausted order=ord_9834 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:01:03.210Z ERROR notify-worker email send failed order=ord_9924 code=SMTP_TIMEOUT
+2026-09-27T18:01:03.464Z INFO orders-service checkout started order=ord_9809
+2026-09-27T18:01:03.660Z INFO api-gateway request routed order=ord_9809
+2026-09-27T18:01:04.446Z ERROR ledger-worker ledger write failed order=ord_9903 code=POOL_EXHAUSTED
+2026-09-27T18:01:05.054Z ERROR payment-service transaction record failed order=ord_9874 code=POOL_EXHAUSTED
+2026-09-27T18:01:05.772Z ERROR db-pool connection pool exhausted order=ord_9835 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:01:07.854Z ERROR notify-worker email send failed order=ord_9925 code=SMTP_TIMEOUT
+2026-09-27T18:01:10.231Z ERROR db-pool connection pool exhausted order=ord_9836 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:01:10.669Z ERROR payment-service transaction record failed order=ord_9875 code=POOL_EXHAUSTED
+2026-09-27T18:01:11.284Z INFO api-gateway request routed order=ord_9810
+2026-09-27T18:01:11.312Z INFO orders-service checkout started order=ord_9810
+2026-09-27T18:01:12.485Z ERROR notify-worker email send failed order=ord_9926 code=SMTP_TIMEOUT
+2026-09-27T18:01:14.797Z ERROR ledger-worker ledger write failed order=ord_9904 code=POOL_EXHAUSTED
+2026-09-27T18:01:15.118Z ERROR db-pool connection pool exhausted order=ord_9837 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:01:17.212Z ERROR payment-service transaction record failed order=ord_9876 code=POOL_EXHAUSTED
+2026-09-27T18:01:18.808Z INFO orders-service checkout started order=ord_9811
+2026-09-27T18:01:18.814Z INFO api-gateway request routed order=ord_9811
+2026-09-27T18:01:19.287Z ERROR db-pool connection pool exhausted order=ord_9838 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:01:19.306Z ERROR notify-worker email send failed order=ord_9927 code=SMTP_TIMEOUT
+2026-09-27T18:01:23.789Z ERROR ledger-worker ledger write failed order=ord_9905 code=POOL_EXHAUSTED
+2026-09-27T18:01:24.122Z ERROR db-pool connection pool exhausted order=ord_9839 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:01:24.423Z ERROR payment-service transaction record failed order=ord_9877 code=POOL_EXHAUSTED
+2026-09-27T18:01:24.947Z ERROR notify-worker email send failed order=ord_9928 code=SMTP_TIMEOUT
+2026-09-27T18:01:26.989Z INFO orders-service checkout started order=ord_9812
+2026-09-27T18:01:27.123Z INFO api-gateway request routed order=ord_9812
+2026-09-27T18:01:28.602Z ERROR db-pool connection pool exhausted order=ord_9840 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:01:29.836Z ERROR notify-worker email send failed order=ord_9929 code=SMTP_TIMEOUT
+2026-09-27T18:01:30.242Z ERROR payment-service transaction record failed order=ord_9878 code=POOL_EXHAUSTED
+2026-09-27T18:01:32.612Z ERROR db-pool connection pool exhausted order=ord_9841 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:01:33.651Z ERROR ledger-worker ledger write failed order=ord_9906 code=POOL_EXHAUSTED
+2026-09-27T18:01:34.874Z ERROR notify-worker email send failed order=ord_9930 code=SMTP_TIMEOUT
+2026-09-27T18:01:35.990Z INFO api-gateway request routed order=ord_9813
+2026-09-27T18:01:36.033Z INFO orders-service checkout started order=ord_9813
+2026-09-27T18:01:36.310Z ERROR payment-service transaction record failed order=ord_9879 code=POOL_EXHAUSTED
+2026-09-27T18:01:38.990Z ERROR db-pool connection pool exhausted order=ord_9842 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:01:40.041Z ERROR notify-worker email send failed order=ord_9931 code=SMTP_TIMEOUT
+2026-09-27T18:01:41.787Z INFO orders-service checkout started order=ord_9814
+2026-09-27T18:01:41.853Z INFO api-gateway request routed order=ord_9814
+2026-09-27T18:01:42.642Z ERROR ledger-worker ledger write failed order=ord_9907 code=POOL_EXHAUSTED
+2026-09-27T18:01:42.947Z ERROR payment-service transaction record failed order=ord_9880 code=POOL_EXHAUSTED
+2026-09-27T18:01:43.139Z ERROR db-pool connection pool exhausted order=ord_9843 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:01:45.408Z ERROR notify-worker email send failed order=ord_9932 code=SMTP_TIMEOUT
+2026-09-27T18:01:47.149Z ERROR db-pool connection pool exhausted order=ord_9844 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:01:48.380Z ERROR payment-service transaction record failed order=ord_9881 code=POOL_EXHAUSTED
+2026-09-27T18:01:48.929Z INFO api-gateway request routed order=ord_9815
+2026-09-27T18:01:49.123Z INFO orders-service checkout started order=ord_9815
+2026-09-27T18:01:50.554Z ERROR notify-worker email send failed order=ord_9933 code=SMTP_TIMEOUT
+2026-09-27T18:01:52.509Z ERROR db-pool connection pool exhausted order=ord_9845 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:01:52.761Z ERROR ledger-worker ledger write failed order=ord_9908 code=POOL_EXHAUSTED
+2026-09-27T18:01:55.439Z ERROR payment-service transaction record failed order=ord_9882 code=POOL_EXHAUSTED
+2026-09-27T18:01:56.919Z ERROR notify-worker email send failed order=ord_9934 code=SMTP_TIMEOUT
+2026-09-27T18:01:57.219Z ERROR db-pool connection pool exhausted order=ord_9846 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:01:58.344Z INFO orders-service checkout started order=ord_9816
+2026-09-27T18:01:58.601Z INFO api-gateway request routed order=ord_9816
+2026-09-27T18:02:01.117Z ERROR ledger-worker ledger write failed order=ord_9909 code=POOL_EXHAUSTED
+2026-09-27T18:02:01.713Z ERROR db-pool connection pool exhausted order=ord_9847 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:02:01.841Z ERROR payment-service transaction record failed order=ord_9883 code=POOL_EXHAUSTED
+2026-09-27T18:02:01.865Z ERROR notify-worker email send failed order=ord_9935 code=SMTP_TIMEOUT
+2026-09-27T18:02:06.241Z INFO orders-service checkout started order=ord_9817
+2026-09-27T18:02:06.425Z INFO api-gateway request routed order=ord_9817
+2026-09-27T18:02:06.442Z ERROR db-pool connection pool exhausted order=ord_9848 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:02:06.816Z ERROR notify-worker email send failed order=ord_9936 code=SMTP_TIMEOUT
+2026-09-27T18:02:07.709Z ERROR payment-service transaction record failed order=ord_9884 code=POOL_EXHAUSTED
+2026-09-27T18:02:11.097Z ERROR ledger-worker ledger write failed order=ord_9910 code=POOL_EXHAUSTED
+2026-09-27T18:02:11.576Z ERROR db-pool connection pool exhausted order=ord_9849 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:02:12.065Z ERROR notify-worker email send failed order=ord_9937 code=SMTP_TIMEOUT
+2026-09-27T18:02:13.385Z INFO orders-service checkout started order=ord_9818
+2026-09-27T18:02:13.403Z INFO api-gateway request routed order=ord_9818
+2026-09-27T18:02:13.884Z ERROR payment-service transaction record failed order=ord_9885 code=POOL_EXHAUSTED
+2026-09-27T18:02:16.496Z ERROR db-pool connection pool exhausted order=ord_9850 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:02:18.617Z ERROR notify-worker email send failed order=ord_9938 code=SMTP_TIMEOUT
+2026-09-27T18:02:20.333Z INFO orders-service checkout started order=ord_9819
+2026-09-27T18:02:20.610Z INFO api-gateway request routed order=ord_9819
+2026-09-27T18:02:21.224Z ERROR db-pool connection pool exhausted order=ord_9851 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:02:21.799Z ERROR payment-service transaction record failed order=ord_9886 code=POOL_EXHAUSTED
+2026-09-27T18:02:21.935Z ERROR ledger-worker ledger write failed order=ord_9911 code=POOL_EXHAUSTED
+2026-09-27T18:02:23.306Z ERROR notify-worker email send failed order=ord_9939 code=SMTP_TIMEOUT
+2026-09-27T18:02:25.666Z ERROR db-pool connection pool exhausted order=ord_9852 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:02:27.335Z INFO orders-service checkout started order=ord_9820
+2026-09-27T18:02:27.353Z ERROR payment-service transaction record failed order=ord_9887 code=POOL_EXHAUSTED
+2026-09-27T18:02:27.526Z INFO api-gateway request routed order=ord_9820
+2026-09-27T18:02:29.142Z ERROR notify-worker email send failed order=ord_9940 code=SMTP_TIMEOUT
+2026-09-27T18:02:29.555Z ERROR db-pool connection pool exhausted order=ord_9853 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:02:31.251Z ERROR ledger-worker ledger write failed order=ord_9912 code=POOL_EXHAUSTED
+2026-09-27T18:02:33.084Z ERROR payment-service transaction record failed order=ord_9888 code=POOL_EXHAUSTED
+2026-09-27T18:02:34.222Z ERROR notify-worker email send failed order=ord_9941 code=SMTP_TIMEOUT
+2026-09-27T18:02:34.709Z ERROR db-pool connection pool exhausted order=ord_9854 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:02:34.793Z INFO api-gateway request routed order=ord_9821
+2026-09-27T18:02:34.870Z INFO orders-service checkout started order=ord_9821
+2026-09-27T18:02:39.354Z ERROR db-pool connection pool exhausted order=ord_9855 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:02:39.612Z ERROR ledger-worker ledger write failed order=ord_9913 code=POOL_EXHAUSTED
+2026-09-27T18:02:40.211Z ERROR payment-service transaction record failed order=ord_9889 code=POOL_EXHAUSTED
+2026-09-27T18:02:40.743Z ERROR notify-worker email send failed order=ord_9942 code=SMTP_TIMEOUT
+2026-09-27T18:02:43.810Z INFO api-gateway request routed order=ord_9822
+2026-09-27T18:02:43.842Z INFO orders-service checkout started order=ord_9822
+2026-09-27T18:02:44.918Z ERROR db-pool connection pool exhausted order=ord_9856 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:02:46.227Z ERROR notify-worker email send failed order=ord_9943 code=SMTP_TIMEOUT
+2026-09-27T18:02:46.967Z ERROR payment-service transaction record failed order=ord_9890 code=POOL_EXHAUSTED
+2026-09-27T18:02:49.893Z ERROR notify-worker email send failed order=ord_9944 code=SMTP_TIMEOUT
+2026-09-27T18:02:50.217Z ERROR ledger-worker ledger write failed order=ord_9914 code=POOL_EXHAUSTED
+2026-09-27T18:02:50.222Z ERROR db-pool connection pool exhausted order=ord_9857 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:02:50.985Z INFO orders-service checkout started order=ord_9823
+2026-09-27T18:02:51.114Z INFO api-gateway request routed order=ord_9823
+2026-09-27T18:02:51.708Z ERROR payment-service transaction record failed order=ord_9891 code=POOL_EXHAUSTED
+2026-09-27T18:02:54.846Z ERROR db-pool connection pool exhausted order=ord_9858 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:02:55.687Z ERROR notify-worker email send failed order=ord_9945 code=SMTP_TIMEOUT
+2026-09-27T18:02:57.994Z INFO orders-service checkout started order=ord_9824
+2026-09-27T18:02:58.035Z ERROR payment-service transaction record failed order=ord_9892 code=POOL_EXHAUSTED
+2026-09-27T18:02:58.224Z INFO api-gateway request routed order=ord_9824
+2026-09-27T18:02:58.620Z ERROR ledger-worker ledger write failed order=ord_9915 code=POOL_EXHAUSTED
+2026-09-27T18:02:59.594Z ERROR db-pool connection pool exhausted order=ord_9859 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:03:01.369Z ERROR notify-worker email send failed order=ord_9946 code=SMTP_TIMEOUT
+2026-09-27T18:03:04.382Z ERROR db-pool connection pool exhausted order=ord_9860 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:03:04.626Z ERROR payment-service transaction record failed order=ord_9893 code=POOL_EXHAUSTED
+2026-09-27T18:03:04.882Z INFO api-gateway request routed order=ord_9825
+2026-09-27T18:03:05.022Z INFO orders-service checkout started order=ord_9825
+2026-09-27T18:03:08.010Z ERROR db-pool connection pool exhausted order=ord_9861 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:03:08.116Z ERROR notify-worker email send failed order=ord_9947 code=SMTP_TIMEOUT
+2026-09-27T18:03:09.378Z ERROR ledger-worker ledger write failed order=ord_9916 code=POOL_EXHAUSTED
+2026-09-27T18:03:12.104Z ERROR payment-service transaction record failed order=ord_9894 code=POOL_EXHAUSTED
+2026-09-27T18:03:13.136Z ERROR notify-worker email send failed order=ord_9948 code=SMTP_TIMEOUT
+2026-09-27T18:03:13.864Z INFO orders-service checkout started order=ord_9826
+2026-09-27T18:03:13.933Z ERROR db-pool connection pool exhausted order=ord_9862 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:03:13.976Z INFO api-gateway request routed order=ord_9826
+2026-09-27T18:03:17.320Z ERROR payment-service transaction record failed order=ord_9895 code=POOL_EXHAUSTED
+2026-09-27T18:03:17.678Z ERROR notify-worker email send failed order=ord_9949 code=SMTP_TIMEOUT
+2026-09-27T18:03:18.346Z ERROR db-pool connection pool exhausted order=ord_9863 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:03:18.487Z ERROR ledger-worker ledger write failed order=ord_9917 code=POOL_EXHAUSTED
+2026-09-27T18:03:21.491Z INFO orders-service checkout started order=ord_9827
+2026-09-27T18:03:21.597Z INFO api-gateway request routed order=ord_9827
+2026-09-27T18:03:21.916Z ERROR db-pool connection pool exhausted order=ord_9864 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:03:22.854Z ERROR notify-worker email send failed order=ord_9950 code=SMTP_TIMEOUT
+2026-09-27T18:03:24.742Z ERROR payment-service transaction record failed order=ord_9896 code=POOL_EXHAUSTED
+2026-09-27T18:03:26.533Z ERROR db-pool connection pool exhausted order=ord_9865 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:03:27.332Z ERROR ledger-worker ledger write failed order=ord_9918 code=POOL_EXHAUSTED
+2026-09-27T18:03:28.934Z INFO orders-service checkout started order=ord_9828
+2026-09-27T18:03:29.206Z ERROR notify-worker email send failed order=ord_9951 code=SMTP_TIMEOUT
+2026-09-27T18:03:29.248Z INFO api-gateway request routed order=ord_9828
+2026-09-27T18:03:31.023Z ERROR payment-service transaction record failed order=ord_9897 code=POOL_EXHAUSTED
+2026-09-27T18:03:31.279Z ERROR db-pool connection pool exhausted order=ord_9866 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:03:34.961Z ERROR notify-worker email send failed order=ord_9952 code=SMTP_TIMEOUT
+2026-09-27T18:03:36.504Z ERROR ledger-worker ledger write failed order=ord_9919 code=POOL_EXHAUSTED
+2026-09-27T18:03:36.630Z INFO orders-service checkout started order=ord_9829
+2026-09-27T18:03:36.817Z INFO api-gateway request routed order=ord_9829
+2026-09-27T18:03:37.089Z ERROR payment-service transaction record failed order=ord_9898 code=POOL_EXHAUSTED
+2026-09-27T18:03:37.511Z ERROR db-pool connection pool exhausted order=ord_9867 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:03:40.578Z ERROR notify-worker email send failed order=ord_9953 code=SMTP_TIMEOUT
+2026-09-27T18:03:41.249Z ERROR db-pool connection pool exhausted order=ord_9868 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:03:42.774Z ERROR payment-service transaction record failed order=ord_9899 code=POOL_EXHAUSTED
+2026-09-27T18:03:43.912Z INFO api-gateway request routed order=ord_9830
+2026-09-27T18:03:44.051Z INFO orders-service checkout started order=ord_9830
+2026-09-27T18:03:44.830Z ERROR notify-worker email send failed order=ord_9954 code=SMTP_TIMEOUT
+2026-09-27T18:03:45.516Z ERROR ledger-worker ledger write failed order=ord_9920 code=POOL_EXHAUSTED
+2026-09-27T18:03:45.718Z ERROR db-pool connection pool exhausted order=ord_9869 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:03:50.617Z ERROR payment-service transaction record failed order=ord_9900 code=POOL_EXHAUSTED
+2026-09-27T18:03:51.336Z ERROR notify-worker email send failed order=ord_9955 code=SMTP_TIMEOUT
+2026-09-27T18:03:51.499Z ERROR db-pool connection pool exhausted order=ord_9870 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T18:03:59.000Z INFO api-gateway request routed order=ord_9956
