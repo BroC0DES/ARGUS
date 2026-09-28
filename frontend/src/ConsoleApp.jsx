@@ -1,6 +1,7 @@
 import React from "react";
 import { getGraph, getLogs, getHealth, postQuery, setScenario, usePoll, toIncident } from "./api.js";
 import { GUIDE } from "./guide.js";
+import DetailsModal from "./DetailsModal.jsx";
 
 const GRAPH_POLL_MS = 4000;
 const LOG_POLL_MS = 3000;
@@ -119,6 +120,7 @@ export default function ConsoleApp() {
   const [selected, setSelected] = React.useState(null);
   const [flashId, setFlashId] = React.useState(null);
   const [result, setResult] = React.useState(null); // { incident, response }
+  const [detailsOpen, setDetailsOpen] = React.useState(false);
   const timers = React.useRef([]);
   const lastPath = React.useRef([]);
   const lastQuestion = React.useRef(DEFAULT_QUESTION);
@@ -491,17 +493,35 @@ export default function ConsoleApp() {
 
       {screen === "report" && (
         <main style={{ flex: 1, minHeight: 0, overflow: "auto", padding: "var(--space-lg)" }}>
-          <IncidentReport
-            incident={incident}
-            onRootCauseClick={() => { setScreen("workspace"); setSelected(incident.service); }}
-            onServiceClick={(id) => { setScreen("workspace"); setSelected(id); }}
-            onStatClick={(s) => s.sourceLogIds && s.sourceLogIds.length > 0 && (setScreen("workspace"), flash(s.sourceLogIds[0]))}
-            onCitationClick={(e) => { setScreen("workspace"); flash(e.id); }}
-            onCodeClick={() => { setScreen("workspace"); setSelected(incident.service); }}
-            onExportPostmortem={onExportPostmortem}
-            style={{ maxWidth: 760, margin: "0 auto" }}
-          />
+          <div style={{ maxWidth: 760, margin: "0 auto", display: "flex", flexDirection: "column", gap: "var(--space-sm)" }}>
+            <IncidentReport
+              incident={incident}
+              onRootCauseClick={() => { setScreen("workspace"); setSelected(incident.service); }}
+              onServiceClick={(id) => { setScreen("workspace"); setSelected(id); }}
+              onStatClick={(s) => s.sourceLogIds && s.sourceLogIds.length > 0 && (setScreen("workspace"), flash(s.sourceLogIds[0]))}
+              onCitationClick={(e) => { setScreen("workspace"); flash(e.id); }}
+              onCodeClick={() => { setScreen("workspace"); setSelected(incident.service); }}
+              onExportPostmortem={onExportPostmortem}
+            />
+            {result && (
+              <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                <Button variant="secondary" size="sm" icon={<Icon name="info" size={14} />} onClick={() => setDetailsOpen(true)}>
+                  Details
+                </Button>
+              </div>
+            )}
+          </div>
         </main>
+      )}
+
+      {detailsOpen && response && (
+        <DetailsModal
+          response={response}
+          ollamaModel={healthPoll.data ? healthPoll.data.ollama_model : null}
+          onClose={() => setDetailsOpen(false)}
+          onCitationClick={(l) => { setDetailsOpen(false); setScreen("workspace"); flash(l.id); }}
+          onServiceClick={(id) => { setDetailsOpen(false); setScreen("workspace"); setSelected(id); }}
+        />
       )}
 
       {screen === "blast" && (
