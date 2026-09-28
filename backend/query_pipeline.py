@@ -32,6 +32,7 @@ from collections import deque
 from datetime import datetime
 
 from code_indexer import CodeIndexer, display_name
+from explain import confidence_reason
 from log_analyzer import LogAnalyzer, WINDOW_S, _signature
 
 OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://localhost:11434").rstrip("/")
@@ -370,6 +371,38 @@ def _compute_confidence(root_errors: int, root_warns: int, num_candidates: int, 
     return {"label": label, "score": score, "signals": {"evidence": evidence, "dominance": dominance, "relevance": relevance}}
 
 
+def _competing_candidates(inc: dict, failing: dict, incidents: list[dict]) -> list[dict]:
+    """Structured ambiguity data backing confidence_reason and the API's
+    `competing_candidates` field. Only non-empty when >1 competitor is why
+    _compute_confidence forced this incident's label to "low" -- a single
+    weak candidate (thin evidence) or a weak code match are NOT ambiguity,
+    so callers get [] there and read the reason from the signals instead.
+    Includes the strongest candidate (index 0 of inc["candidates"], already
+    sorted strongest-first by _partition_incidents) alongside its rivals.
+
+    `label` is the OTHER incident's own structural label ("single" /
+    "ambiguous") when this candidate is also the root of some incident in
+    the full `incidents` list, else None. A genuine competitor never has its
+    own incident -- it stays merged into this one, which is exactly what
+    makes it a competitor -- so this only ever resolves for the strongest
+    candidate, whose "own incident" is this incident itself."""
+    candidates = inc["candidates"]
+    if len(candidates) <= 1:
+        return []
+    root_label = {i["root"]: i["label"] for i in incidents if i["root"]}
+    strongest_w = _weighted(failing[candidates[0]])
+    out = []
+    for c in candidates:
+        w = _weighted(failing[c])
+        out.append({
+            "service": c,
+            "weighted_errors": w,
+            "share_of_top": round(w / strongest_w, 3) if strongest_w else 0.0,
+            "label": root_label.get(c),
+        })
+    return out
+
+
 def _fallback_narrative(incident: dict) -> str:
     root, candidates, symptoms, label = incident["root"], incident["candidates"], incident["symptoms"], incident["label"]
     if label == "single":
@@ -523,6 +556,7 @@ def _diagnose(question: str, anomalies: list[dict], indexer: CodeIndexer, servic
         confidences.append(conf)
         chunks_lists.append(scored)
         boosted_scores.append(top_boosted)
+    competing_candidates = [_competing_candidates(inc, failing, incidents) for inc in incidents]
 
     answer_type = "incident"
     chain: list[str] = []
@@ -547,7 +581,8 @@ def _diagnose(question: str, anomalies: list[dict], indexer: CodeIndexer, servic
     return {
         "mode": mode, "target": target, "answer_type": answer_type,
         "incidents": incidents, "confidences": confidences, "chunks_lists": chunks_lists,
-        "boosted_scores": boosted_scores, "primary_idx": primary_idx, "chain": chain, "failing": failing,
+        "boosted_scores": boosted_scores, "competing_candidates": competing_candidates,
+        "primary_idx": primary_idx, "chain": chain, "failing": failing,
     }
 
 
@@ -566,6 +601,8 @@ def run_query(question: str, logs: LogAnalyzer, indexer: CodeIndexer) -> dict:
     primary_conf = d["confidences"][primary_idx] if primary_idx is not None else _compute_confidence(0, 0, 0, 0.0)
     primary_chunks = [ch for _, _, ch in d["chunks_lists"][primary_idx]] if primary_idx is not None else []
     primary_boosted = d["boosted_scores"][primary_idx] if primary_idx is not None else 0.0
+    primary_competing = d["competing_candidates"][primary_idx] if primary_idx is not None else []
+    primary_reason = confidence_reason(primary, primary_conf, primary_competing, CONFIG["EVIDENCE_DIVISOR"])
 
     # ---- call the model ONLY for the one incident actually being answered --
     if answer_type == "incident" and primary["root"]:
@@ -673,6 +710,7 @@ def run_query(question: str, logs: LogAnalyzer, indexer: CodeIndexer) -> dict:
     incidents_out = []
     for i, inc in source:
         conf = d["confidences"][i]
+        competing = d["competing_candidates"][i]
         inc_chain = chain if i == primary_idx and mode == "specific" else _incident_chain(inc, indexer)
         incidents_out.append({
             "root": inc["root"], "candidates": inc["candidates"], "symptoms": inc["symptoms"],
@@ -680,6 +718,7 @@ def run_query(question: str, logs: LogAnalyzer, indexer: CodeIndexer) -> dict:
             "score": conf["score"], "confidence_label": conf["label"], "signals": conf["signals"],
             "raw_relevance": conf["signals"]["relevance"], "boosted_score": round(d["boosted_scores"][i], 3),
             "is_minor": inc["is_minor"], "activity": inc["activity"], "last_error_age_s": inc["last_error_age_s"],
+            "competing_candidates": competing, "confidence_reason": confidence_reason(inc, conf, competing, CONFIG["EVIDENCE_DIVISOR"]),
         })
 
     diagnosis_block = {
@@ -693,6 +732,7 @@ def run_query(question: str, logs: LogAnalyzer, indexer: CodeIndexer) -> dict:
         # the top hit, kept here only for comparison/display.
         "raw_relevance": primary_conf["signals"]["relevance"], "boosted_score": round(primary_boosted, 3),
         "is_minor": primary["is_minor"], "activity": primary["activity"], "last_error_age_s": primary["last_error_age_s"],
+        "competing_candidates": primary_competing, "confidence_reason": primary_reason,
         "config": CONFIG,
     }
     print("[ARGUS diagnosis] " + json.dumps({

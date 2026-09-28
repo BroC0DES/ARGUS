@@ -21,6 +21,42 @@ def join(items, oxford=False):
     return ", ".join(items[:-1]) + sep + items[-1]
 
 
+def _fmt_count(n):
+    """394 not 394.0, but keep a fraction (e.g. from WARNING_WEIGHT) if there
+    is one."""
+    n = round(n, 2)
+    return str(int(n)) if float(n).is_integer() else str(n)
+
+
+def confidence_reason(incident, conf, competing_candidates, divisor):
+    """Short, structured reason for the diagnosis object / incidents entries
+    -- separate from explain()'s long narrative paragraph below. Plain
+    f-strings from the run's real values only: no LLM, no hardcoded service
+    names, nothing beyond `incident`, `conf`, `competing_candidates`, and the
+    evidence divisor passed in by the caller. None when confidence is high --
+    there's nothing to explain away.
+
+    competing_candidates is only non-empty when low confidence is caused by
+    ambiguity (see query_pipeline._competing_candidates), so its length alone
+    tells us which of the three "low" reasons applies: 2+ plausible roots,
+    one root with thin evidence, or one root with only a weak code match.
+    """
+    if conf["label"] == "high":
+        return None
+    if not incident.get("root"):
+        return "No errors were found in the last 5 minutes."
+    if len(competing_candidates) > 1:
+        pieces = [f"{c['service']} ({_fmt_count(c['weighted_errors'])} errors)" for c in competing_candidates]
+        verb = "are both" if len(pieces) == 2 else "are all"
+        return f"{join(pieces)} {verb} plausible root causes, so ARGUS cannot tell which one started this."
+    if conf["signals"]["evidence"] < 1.0:
+        return (f"{incident['root']} had only {incident['root_errors']} errors, "
+                f"below the {divisor} needed for full evidence weight.")
+    if conf["signals"]["relevance"] < STRONG_AT:
+        return "The code found only loosely matches the errors."
+    return None
+
+
 def explain(r):
     n = len(r["failing_services"])
     root, cands, syms = r["root"], r["candidates"], r["symptoms"]

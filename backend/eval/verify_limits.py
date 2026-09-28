@@ -18,6 +18,7 @@ os.environ.setdefault("REPO_PATH", os.path.normpath(os.path.join(BACKEND, "..", 
 
 from code_indexer import CodeIndexer  # noqa: E402
 from log_analyzer import LogLine  # noqa: E402
+import explain as explain_module  # noqa: E402
 import query_pipeline as qp  # noqa: E402
 
 indexer = CodeIndexer(os.environ["REPO_PATH"])
@@ -52,6 +53,14 @@ def primary_of(d):
 
 def conf_of(d):
     return d["confidences"][d["primary_idx"]] if d["primary_idx"] is not None else qp._compute_confidence(0, 0, 0, 0.0)
+
+
+def competing_of(d):
+    return d["competing_candidates"][d["primary_idx"]] if d["primary_idx"] is not None else []
+
+
+def reason_of(d):
+    return explain_module.confidence_reason(primary_of(d), conf_of(d), competing_of(d), qp.CONFIG["EVIDENCE_DIVISOR"])
 
 
 POOL_TPL = "connection pool exhausted order=ord_{i} code=POOL_EXHAUSTED active=5 max=5"
@@ -170,7 +179,70 @@ c_h = conf_of(d_h)
 check("h) confidence low", c_h["label"] == "low", f"got {c_h['label']!r}")
 
 # =============================================================================
-# i) test_explain still prints PASS
+# confidence_reason / competing_candidates (Prompt 6 / "explanation")
+# =============================================================================
+
+# a) two upstream roots at 394/390 (reuses h's fixture): low, reason names
+#    both services and both counts, competing_candidates has 2 entries.
+comp_h, reason_h = competing_of(d_h), reason_of(d_h)
+check("a) competing_candidates has 2 entries", len(comp_h) == 2, f"got {comp_h!r}")
+check("a) reason names both services and counts", reason_h is not None and all(
+    tok in reason_h for tok in ("payment-service", "394", "ledger-worker", "390")
+), f"reason={reason_h!r}")
+check("a) reason never says 'similar'", reason_h is not None and "similar" not in reason_h, f"reason={reason_h!r}")
+
+# b) three roots at 394/180/150 upstream of one victim (reuses f's fixture):
+#    3 entries ordered by count.
+comp_f, reason_f = competing_of(d_f), reason_of(d_f)
+check("b) 3 entries ordered by count", [c["service"] for c in comp_f] == ["payment-service", "ledger-worker", "notify-worker"],
+      f"got {[c['service'] for c in comp_f]!r}")
+check("b) reason names all three counts, 'all' phrasing", reason_f is not None and all(
+    tok in reason_f for tok in ("394", "180", "150", "are all plausible root causes")
+), f"reason={reason_f!r}")
+
+# c) roots at 394 and 2 (reuses g's fixture): high, competing_candidates
+#    empty, reason null, paragraph does not claim it can't name a cause.
+comp_g, reason_g = competing_of(d_g), reason_of(d_g)
+check("c) competing_candidates empty when high", comp_g == [], f"got {comp_g!r}")
+check("c) reason null when high", reason_g is None, f"got {reason_g!r}")
+explain_input_g = dict(
+    failing_services=p_g["failing_services"], root=p_g["root"], candidates=p_g["candidates"],
+    symptoms=p_g["symptoms"], root_errors=p_g["root_errors"], label=c_g["label"], score=c_g["score"],
+    signals=c_g["signals"], is_eval=False,
+)
+paragraph_g = explain_module.explain(explain_input_g)
+check("c) paragraph does not say it cannot name a single cause", "cannot name a single cause" not in paragraph_g
+      and "not name a single cause" not in paragraph_g, f"paragraph={paragraph_g!r}")
+
+# d) one clear root with only 5 errors, nothing else failing: low, competing
+#    empty, reason mentions the 5 errors and the evidence divisor.
+ISOLATED_THIN = [mk_anomaly("notify-worker", 5, "generic failure occurred id={i}")]
+d_d = diagnose("What is happening?", ISOLATED_THIN)
+p_d, c_d = primary_of(d_d), conf_of(d_d)
+comp_d, reason_d = competing_of(d_d), reason_of(d_d)
+check("d) confidence low", c_d["label"] == "low", f"got {c_d['label']!r}")
+check("d) competing_candidates empty (not ambiguity)", comp_d == [], f"got {comp_d!r}")
+check("d) reason mentions 5 errors and the divisor", reason_d is not None and "5" in reason_d
+      and str(qp.CONFIG["EVIDENCE_DIVISOR"]) in reason_d, f"reason={reason_d!r}")
+
+# e) rename the services in memory (a-svc, b-svc): confidence_reason is pure
+#    code fed only from its arguments, so it must use the given names, never
+#    a name from the real mock codebase.
+SYNTH_INCIDENT = {"root": "a-svc", "root_errors": 50}
+SYNTH_CONF = {"label": "low", "signals": {"evidence": 1.0, "relevance": 1.0, "dominance": 0.5}}
+SYNTH_COMPETING = [
+    {"service": "a-svc", "weighted_errors": 50, "share_of_top": 1.0, "label": "ambiguous"},
+    {"service": "b-svc", "weighted_errors": 40, "share_of_top": 0.8, "label": None},
+]
+reason_synth = explain_module.confidence_reason(SYNTH_INCIDENT, SYNTH_CONF, SYNTH_COMPETING, qp.CONFIG["EVIDENCE_DIVISOR"])
+check("e) reason uses the renamed services", reason_synth is not None and "a-svc" in reason_synth and "b-svc" in reason_synth,
+      f"reason={reason_synth!r}")
+check("e) no real service name hardcoded into the reason", reason_synth is not None and not any(
+    name in reason_synth for name in ("payment-service", "ledger-worker", "db-pool", "notify-worker", "orders-service", "api-gateway")
+), f"reason={reason_synth!r}")
+
+# =============================================================================
+# i) test_explain still prints PASS  (also covers TEST item "f")
 # =============================================================================
 proc = subprocess.run([sys.executable, "-m", "eval.test_explain"], cwd=BACKEND, capture_output=True, text=True)
 check("i) test_explain prints PASS", proc.stdout.strip() == "PASS", f"stdout={proc.stdout!r} stderr={proc.stderr!r}")
