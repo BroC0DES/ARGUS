@@ -1,20 +1,58 @@
-2026-09-27T14:15:01.004Z INFO api-gateway request routed order=ord_8860
-2026-09-27T14:15:02.511Z INFO orders-service checkout started order=ord_8860
-2026-09-27T14:15:03.220Z INFO payment-service gateway.charge succeeded order=ord_8860 latency=612ms
-2026-09-27T14:15:03.301Z INFO db-pool transaction recorded order=ord_8860
-2026-09-27T14:15:03.350Z INFO orders-service order saved order=ord_8860
-2026-09-27T14:15:03.400Z INFO notify-worker confirmation email queued order=ord_8860
-2026-09-27T14:17:40.201Z INFO api-gateway request routed order=ord_8870
-2026-09-27T14:17:40.900Z INFO orders-service checkout started order=ord_8870
-2026-09-27T14:22:07.318Z ERROR payment-service gateway.charge timeout after 3000ms order=ord_8871
-2026-09-27T14:22:07.402Z INFO payment-service retry 1/3 order=ord_8871
-2026-09-27T14:22:08.115Z ERROR payment-service charge failed order=ord_8871 code=GATEWAY_TIMEOUT
-2026-09-27T14:22:08.220Z INFO db-pool transaction skipped order=ord_8871 reason=payment_failed
-2026-09-27T14:22:09.006Z INFO payment-service circuit breaker half-open payment->stripe
-2026-09-27T14:22:10.500Z INFO api-gateway request routed order=ord_8872
-2026-09-27T14:22:11.441Z ERROR payment-service charge failed order=ord_8872 code=GATEWAY_TIMEOUT
-2026-09-27T14:23:04.100Z ERROR payment-service gateway.charge timeout after 3000ms order=ord_8873
-2026-09-27T14:23:05.800Z ERROR payment-service charge failed order=ord_8873 code=GATEWAY_TIMEOUT
-2026-09-27T14:24:13.700Z ERROR payment-service charge failed order=ord_8875 code=GATEWAY_TIMEOUT
-2026-09-27T14:25:02.220Z INFO db-pool connection pool nominal active=4 idle=1
-2026-09-27T14:25:10.410Z INFO notify-worker confirmation email queued order=ord_8865
+2026-09-27T16:00:00.000Z INFO api-gateway request routed order=ord_8860
+2026-09-27T16:00:01.500Z INFO orders-service checkout started order=ord_8860
+2026-09-27T16:00:02.200Z INFO payment-service gateway.charge succeeded order=ord_8860 latency=612ms
+2026-09-27T16:00:02.300Z INFO db-pool transaction recorded order=ord_8860
+2026-09-27T16:00:02.350Z INFO orders-service order saved order=ord_8860
+2026-09-27T16:00:02.400Z INFO notify-worker confirmation email queued order=ord_8860
+2026-09-27T16:02:40.000Z ERROR payment-service gateway.charge timeout after 3000ms order=ord_8871
+2026-09-27T16:02:40.100Z INFO payment-service retry 1/3 order=ord_8871
+2026-09-27T16:02:40.800Z ERROR payment-service charge failed order=ord_8871 code=GATEWAY_TIMEOUT
+2026-09-27T16:02:40.900Z INFO payment-service circuit breaker half-open payment->stripe
+2026-09-27T16:02:59.000Z ERROR payment-service gateway.charge timeout after 3000ms order=ord_8872
+2026-09-27T16:02:59.100Z INFO payment-service retry 1/3 order=ord_8872
+2026-09-27T16:02:59.800Z ERROR payment-service charge failed order=ord_8872 code=GATEWAY_TIMEOUT
+2026-09-27T16:03:18.000Z ERROR payment-service gateway.charge timeout after 3000ms order=ord_8873
+2026-09-27T16:03:18.100Z INFO payment-service retry 1/3 order=ord_8873
+2026-09-27T16:03:18.800Z ERROR payment-service charge failed order=ord_8873 code=GATEWAY_TIMEOUT
+2026-09-27T16:03:37.000Z ERROR payment-service gateway.charge timeout after 3000ms order=ord_8874
+2026-09-27T16:03:37.100Z INFO payment-service retry 1/3 order=ord_8874
+2026-09-27T16:03:37.800Z ERROR payment-service charge failed order=ord_8874 code=GATEWAY_TIMEOUT
+2026-09-27T16:03:37.900Z INFO payment-service circuit breaker half-open payment->stripe
+2026-09-27T16:03:56.000Z ERROR payment-service gateway.charge timeout after 3000ms order=ord_8875
+2026-09-27T16:03:56.100Z INFO payment-service retry 1/3 order=ord_8875
+2026-09-27T16:03:56.800Z ERROR payment-service charge failed order=ord_8875 code=GATEWAY_TIMEOUT
+2026-09-27T16:04:15.000Z ERROR payment-service gateway.charge timeout after 3000ms order=ord_8876
+2026-09-27T16:04:15.100Z INFO payment-service retry 1/3 order=ord_8876
+2026-09-27T16:04:15.800Z ERROR payment-service charge failed order=ord_8876 code=GATEWAY_TIMEOUT
+2026-09-27T16:04:34.000Z ERROR payment-service gateway.charge timeout after 3000ms order=ord_8877
+2026-09-27T16:04:34.100Z INFO payment-service retry 1/3 order=ord_8877
+2026-09-27T16:04:34.800Z ERROR payment-service charge failed order=ord_8877 code=GATEWAY_TIMEOUT
+2026-09-27T16:04:34.900Z INFO payment-service circuit breaker half-open payment->stripe
+2026-09-27T16:04:53.000Z ERROR payment-service gateway.charge timeout after 3000ms order=ord_8878
+2026-09-27T16:04:53.100Z INFO payment-service retry 1/3 order=ord_8878
+2026-09-27T16:04:53.800Z ERROR payment-service charge failed order=ord_8878 code=GATEWAY_TIMEOUT
+2026-09-27T16:05:12.000Z ERROR payment-service gateway.charge timeout after 3000ms order=ord_8879
+2026-09-27T16:05:12.100Z INFO payment-service retry 1/3 order=ord_8879
+2026-09-27T16:05:12.800Z ERROR payment-service charge failed order=ord_8879 code=GATEWAY_TIMEOUT
+2026-09-27T16:05:31.000Z ERROR payment-service gateway.charge timeout after 3000ms order=ord_8880
+2026-09-27T16:05:31.100Z INFO payment-service retry 1/3 order=ord_8880
+2026-09-27T16:05:31.800Z ERROR payment-service charge failed order=ord_8880 code=GATEWAY_TIMEOUT
+2026-09-27T16:05:31.900Z INFO payment-service circuit breaker half-open payment->stripe
+2026-09-27T16:05:50.000Z ERROR payment-service gateway.charge timeout after 3000ms order=ord_8881
+2026-09-27T16:05:50.100Z INFO payment-service retry 1/3 order=ord_8881
+2026-09-27T16:05:50.800Z ERROR payment-service charge failed order=ord_8881 code=GATEWAY_TIMEOUT
+2026-09-27T16:06:09.000Z ERROR payment-service gateway.charge timeout after 3000ms order=ord_8882
+2026-09-27T16:06:09.100Z INFO payment-service retry 1/3 order=ord_8882
+2026-09-27T16:06:09.800Z ERROR payment-service charge failed order=ord_8882 code=GATEWAY_TIMEOUT
+2026-09-27T16:06:28.000Z ERROR payment-service gateway.charge timeout after 3000ms order=ord_8883
+2026-09-27T16:06:28.100Z INFO payment-service retry 1/3 order=ord_8883
+2026-09-27T16:06:28.800Z ERROR payment-service charge failed order=ord_8883 code=GATEWAY_TIMEOUT
+2026-09-27T16:06:28.900Z INFO payment-service circuit breaker half-open payment->stripe
+2026-09-27T16:06:47.000Z ERROR payment-service gateway.charge timeout after 3000ms order=ord_8884
+2026-09-27T16:06:47.100Z INFO payment-service retry 1/3 order=ord_8884
+2026-09-27T16:06:47.800Z ERROR payment-service charge failed order=ord_8884 code=GATEWAY_TIMEOUT
+2026-09-27T16:07:06.000Z ERROR payment-service gateway.charge timeout after 3000ms order=ord_8885
+2026-09-27T16:07:06.100Z INFO payment-service retry 1/3 order=ord_8885
+2026-09-27T16:07:06.800Z ERROR payment-service charge failed order=ord_8885 code=GATEWAY_TIMEOUT
+2026-09-27T16:07:45.000Z INFO db-pool connection pool nominal active=4 idle=1
+2026-09-27T16:07:55.000Z INFO notify-worker confirmation email queued order=ord_8865

@@ -1,0 +1,19 @@
+2026-09-27T15:00:01.100Z INFO api-gateway request routed order=ord_9001
+2026-09-27T15:00:01.400Z INFO orders-service checkout started order=ord_9001
+2026-09-27T15:00:01.900Z INFO payment-service gateway.charge succeeded order=ord_9001 latency=540ms
+2026-09-27T15:00:02.000Z INFO db-pool transaction recorded order=ord_9001
+2026-09-27T15:00:02.100Z INFO orders-service order saved order=ord_9001
+2026-09-27T15:00:02.200Z INFO notify-worker confirmation email queued order=ord_9001
+2026-09-27T15:03:10.300Z INFO api-gateway request routed order=ord_9010
+2026-09-27T15:03:10.600Z INFO payment-service gateway.charge succeeded order=ord_9010 latency=498ms
+2026-09-27T15:03:10.700Z ERROR db-pool connection pool exhausted order=ord_9010 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T15:03:10.750Z ERROR payment-service transaction record failed order=ord_9010 code=POOL_EXHAUSTED
+2026-09-27T15:03:11.900Z INFO api-gateway request routed order=ord_9011
+2026-09-27T15:03:12.100Z INFO payment-service gateway.charge succeeded order=ord_9011 latency=510ms
+2026-09-27T15:03:12.150Z ERROR db-pool connection pool exhausted order=ord_9011 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T15:03:13.400Z INFO api-gateway request routed order=ord_9012
+2026-09-27T15:03:13.700Z INFO payment-service gateway.charge succeeded order=ord_9012 latency=505ms
+2026-09-27T15:03:13.750Z ERROR db-pool connection pool exhausted order=ord_9012 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T15:03:13.800Z INFO notify-worker confirmation email queued order=ord_9012
+2026-09-27T15:04:20.100Z ERROR db-pool connection pool exhausted order=ord_9015 code=POOL_EXHAUSTED active=5 max=5
+2026-09-27T15:04:20.400Z INFO notify-worker confirmation email queued order=ord_9015

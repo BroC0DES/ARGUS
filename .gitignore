@@ -15,6 +15,7 @@ backend/logs/
 *.log
 !sovereign-incident-agent/logs/system.log
 !mock-codebase2/logs/*.log
+!eval/fixtures_thin/*.log
 __pycache__/
 *.pyc
 
