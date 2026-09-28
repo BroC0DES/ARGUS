@@ -1,0 +1,4231 @@
+{
+  "seed": 20260928,
+  "generated_at": "2026-09-28T19:49:14",
+  "run_at": "2026-09-28T19:49:19",
+  "rows": [
+    {
+      "id": "cas-root-01",
+      "category": "cascade",
+      "split": "test",
+      "mode": "general",
+      "question": "What is happening in the system right now?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "db-pool"
+        ],
+        "primary_root": "db-pool",
+        "chain": [
+          "api-gateway",
+          "orders-service",
+          "db-pool"
+        ],
+        "label": "high",
+        "activity": "ongoing",
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "general",
+        "answer_type": "incident",
+        "roots": [
+          "db-pool"
+        ],
+        "primary_root": "db-pool",
+        "chain": null,
+        "label": "high",
+        "score": 0.846,
+        "signals": {
+          "evidence": 1.0,
+          "dominance": 1.0,
+          "relevance": 0.383
+        },
+        "activity": "ongoing",
+        "last_error_age_s": 5.0,
+        "competing_candidates": [],
+        "confidence_reason": null,
+        "failing_services": [
+          "db-pool",
+          "ledger-worker",
+          "orders-service",
+          "payment-service"
+        ],
+        "root": "db-pool",
+        "candidates": [
+          "db-pool"
+        ],
+        "symptoms": [
+          "ledger-worker",
+          "orders-service",
+          "payment-service"
+        ],
+        "root_errors": 30
+      },
+      "match": true,
+      "verdict": "correct and confident",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "db-pool",
+        "ledger-worker",
+        "orders-service",
+        "payment-service"
+      ],
+      "root": "db-pool",
+      "candidates": [
+        "db-pool"
+      ],
+      "symptoms": [
+        "ledger-worker",
+        "orders-service",
+        "payment-service"
+      ],
+      "root_errors": 30,
+      "label": "high",
+      "score": 0.846,
+      "signals": {
+        "evidence": 1.0,
+        "dominance": 1.0,
+        "relevance": 0.383
+      },
+      "activity": "ongoing",
+      "confidence_reason": null,
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "cas-root-02",
+      "category": "cascade",
+      "split": "test",
+      "mode": "general",
+      "question": "What is happening in the system right now?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "db-pool"
+        ],
+        "primary_root": "db-pool",
+        "chain": [
+          "api-gateway",
+          "orders-service",
+          "db-pool"
+        ],
+        "label": "high",
+        "activity": "ongoing",
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "general",
+        "answer_type": "incident",
+        "roots": [
+          "db-pool"
+        ],
+        "primary_root": "db-pool",
+        "chain": null,
+        "label": "high",
+        "score": 0.846,
+        "signals": {
+          "evidence": 1.0,
+          "dominance": 1.0,
+          "relevance": 0.383
+        },
+        "activity": "ongoing",
+        "last_error_age_s": 10.0,
+        "competing_candidates": [],
+        "confidence_reason": null,
+        "failing_services": [
+          "db-pool",
+          "ledger-worker",
+          "orders-service",
+          "payment-service"
+        ],
+        "root": "db-pool",
+        "candidates": [
+          "db-pool"
+        ],
+        "symptoms": [
+          "ledger-worker",
+          "orders-service",
+          "payment-service"
+        ],
+        "root_errors": 55
+      },
+      "match": true,
+      "verdict": "correct and confident",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "db-pool",
+        "ledger-worker",
+        "orders-service",
+        "payment-service"
+      ],
+      "root": "db-pool",
+      "candidates": [
+        "db-pool"
+      ],
+      "symptoms": [
+        "ledger-worker",
+        "orders-service",
+        "payment-service"
+      ],
+      "root_errors": 55,
+      "label": "high",
+      "score": 0.846,
+      "signals": {
+        "evidence": 1.0,
+        "dominance": 1.0,
+        "relevance": 0.383
+      },
+      "activity": "ongoing",
+      "confidence_reason": null,
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "cas-victim-01",
+      "category": "cascade",
+      "split": "tune",
+      "mode": "specific",
+      "question": "What is wrong with payment-service?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "db-pool"
+        ],
+        "primary_root": "db-pool",
+        "chain": [
+          "payment-service",
+          "db-pool"
+        ],
+        "label": "high",
+        "activity": "ongoing",
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "specific",
+        "answer_type": "incident",
+        "roots": [
+          "db-pool"
+        ],
+        "primary_root": "db-pool",
+        "chain": [
+          "payment-service",
+          "db-pool"
+        ],
+        "label": "high",
+        "score": 0.846,
+        "signals": {
+          "evidence": 1.0,
+          "dominance": 1.0,
+          "relevance": 0.383
+        },
+        "activity": "ongoing",
+        "last_error_age_s": 5.0,
+        "competing_candidates": [],
+        "confidence_reason": null,
+        "failing_services": [
+          "db-pool",
+          "ledger-worker",
+          "orders-service",
+          "payment-service"
+        ],
+        "root": "db-pool",
+        "candidates": [
+          "db-pool"
+        ],
+        "symptoms": [
+          "ledger-worker",
+          "orders-service",
+          "payment-service"
+        ],
+        "root_errors": 30
+      },
+      "match": true,
+      "verdict": "correct and confident",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "db-pool",
+        "ledger-worker",
+        "orders-service",
+        "payment-service"
+      ],
+      "root": "db-pool",
+      "candidates": [
+        "db-pool"
+      ],
+      "symptoms": [
+        "ledger-worker",
+        "orders-service",
+        "payment-service"
+      ],
+      "root_errors": 30,
+      "label": "high",
+      "score": 0.846,
+      "signals": {
+        "evidence": 1.0,
+        "dominance": 1.0,
+        "relevance": 0.383
+      },
+      "activity": "ongoing",
+      "confidence_reason": null,
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "cas-victim-02",
+      "category": "cascade",
+      "split": "tune",
+      "mode": "specific",
+      "question": "What is wrong with ledger-worker?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "db-pool"
+        ],
+        "primary_root": "db-pool",
+        "chain": [
+          "ledger-worker",
+          "db-pool"
+        ],
+        "label": "high",
+        "activity": "ongoing",
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "specific",
+        "answer_type": "incident",
+        "roots": [
+          "db-pool"
+        ],
+        "primary_root": "db-pool",
+        "chain": [
+          "ledger-worker",
+          "db-pool"
+        ],
+        "label": "high",
+        "score": 0.846,
+        "signals": {
+          "evidence": 1.0,
+          "dominance": 1.0,
+          "relevance": 0.383
+        },
+        "activity": "ongoing",
+        "last_error_age_s": 10.0,
+        "competing_candidates": [],
+        "confidence_reason": null,
+        "failing_services": [
+          "db-pool",
+          "ledger-worker",
+          "orders-service",
+          "payment-service"
+        ],
+        "root": "db-pool",
+        "candidates": [
+          "db-pool"
+        ],
+        "symptoms": [
+          "ledger-worker",
+          "orders-service",
+          "payment-service"
+        ],
+        "root_errors": 55
+      },
+      "match": true,
+      "verdict": "correct and confident",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "db-pool",
+        "ledger-worker",
+        "orders-service",
+        "payment-service"
+      ],
+      "root": "db-pool",
+      "candidates": [
+        "db-pool"
+      ],
+      "symptoms": [
+        "ledger-worker",
+        "orders-service",
+        "payment-service"
+      ],
+      "root_errors": 55,
+      "label": "high",
+      "score": 0.846,
+      "signals": {
+        "evidence": 1.0,
+        "dominance": 1.0,
+        "relevance": 0.383
+      },
+      "activity": "ongoing",
+      "confidence_reason": null,
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "clean-01",
+      "category": "clean",
+      "split": "tune",
+      "mode": "general",
+      "question": "What is happening in the system right now?",
+      "expected": {
+        "answer_type": "healthy",
+        "roots": [],
+        "primary_root": null,
+        "chain": null,
+        "label": null,
+        "activity": null,
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "general",
+        "answer_type": "healthy",
+        "roots": [],
+        "primary_root": null,
+        "chain": null,
+        "label": null,
+        "score": 0.0,
+        "signals": {
+          "evidence": 0.0,
+          "dominance": 0.0,
+          "relevance": 0.0
+        },
+        "activity": null,
+        "last_error_age_s": null,
+        "competing_candidates": [],
+        "confidence_reason": "No errors were found in the last 5 minutes.",
+        "failing_services": [],
+        "root": null,
+        "candidates": [],
+        "symptoms": [],
+        "root_errors": 0
+      },
+      "match": true,
+      "verdict": "correct abstention",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [],
+      "root": null,
+      "candidates": [],
+      "symptoms": [],
+      "root_errors": 0,
+      "label": null,
+      "score": 0.0,
+      "signals": {
+        "evidence": 0.0,
+        "dominance": 0.0,
+        "relevance": 0.0
+      },
+      "activity": null,
+      "confidence_reason": "No errors were found in the last 5 minutes.",
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "clean-02",
+      "category": "clean",
+      "split": "tune",
+      "mode": "specific",
+      "question": "What is wrong with orders-service?",
+      "expected": {
+        "answer_type": "healthy",
+        "roots": [],
+        "primary_root": null,
+        "chain": null,
+        "label": null,
+        "activity": null,
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "specific",
+        "answer_type": "healthy",
+        "roots": [],
+        "primary_root": null,
+        "chain": null,
+        "label": null,
+        "score": 0.0,
+        "signals": {
+          "evidence": 0.0,
+          "dominance": 0.0,
+          "relevance": 0.0
+        },
+        "activity": null,
+        "last_error_age_s": null,
+        "competing_candidates": [],
+        "confidence_reason": "No errors were found in the last 5 minutes.",
+        "failing_services": [],
+        "root": null,
+        "candidates": [],
+        "symptoms": [],
+        "root_errors": 0
+      },
+      "match": true,
+      "verdict": "correct abstention",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [],
+      "root": null,
+      "candidates": [],
+      "symptoms": [],
+      "root_errors": 0,
+      "label": null,
+      "score": 0.0,
+      "signals": {
+        "evidence": 0.0,
+        "dominance": 0.0,
+        "relevance": 0.0
+      },
+      "activity": null,
+      "confidence_reason": "No errors were found in the last 5 minutes.",
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "clean-03",
+      "category": "clean",
+      "split": "test",
+      "mode": "specific",
+      "question": "What is wrong with notify-worker?",
+      "expected": {
+        "answer_type": "healthy",
+        "roots": [],
+        "primary_root": null,
+        "chain": null,
+        "label": null,
+        "activity": null,
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "specific",
+        "answer_type": "healthy",
+        "roots": [],
+        "primary_root": null,
+        "chain": null,
+        "label": null,
+        "score": 0.0,
+        "signals": {
+          "evidence": 0.0,
+          "dominance": 0.0,
+          "relevance": 0.0
+        },
+        "activity": null,
+        "last_error_age_s": null,
+        "competing_candidates": [],
+        "confidence_reason": "No errors were found in the last 5 minutes.",
+        "failing_services": [],
+        "root": null,
+        "candidates": [],
+        "symptoms": [],
+        "root_errors": 0
+      },
+      "match": true,
+      "verdict": "correct abstention",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [],
+      "root": null,
+      "candidates": [],
+      "symptoms": [],
+      "root_errors": 0,
+      "label": null,
+      "score": 0.0,
+      "signals": {
+        "evidence": 0.0,
+        "dominance": 0.0,
+        "relevance": 0.0
+      },
+      "activity": null,
+      "confidence_reason": "No errors were found in the last 5 minutes.",
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "hsq-01",
+      "category": "healthy_service_question",
+      "split": "test",
+      "mode": "specific",
+      "question": "What is wrong with notify-worker?",
+      "expected": {
+        "answer_type": "healthy",
+        "roots": [
+          "db-pool"
+        ],
+        "primary_root": null,
+        "chain": null,
+        "label": null,
+        "activity": null,
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "specific",
+        "answer_type": "healthy",
+        "roots": [
+          "db-pool"
+        ],
+        "primary_root": null,
+        "chain": null,
+        "label": null,
+        "score": 0.0,
+        "signals": {
+          "evidence": 0.0,
+          "dominance": 0.0,
+          "relevance": 0.0
+        },
+        "activity": null,
+        "last_error_age_s": null,
+        "competing_candidates": [],
+        "confidence_reason": "No errors were found in the last 5 minutes.",
+        "failing_services": [],
+        "root": null,
+        "candidates": [],
+        "symptoms": [],
+        "root_errors": 0
+      },
+      "match": true,
+      "verdict": "correct abstention",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [],
+      "root": null,
+      "candidates": [],
+      "symptoms": [],
+      "root_errors": 0,
+      "label": null,
+      "score": 0.0,
+      "signals": {
+        "evidence": 0.0,
+        "dominance": 0.0,
+        "relevance": 0.0
+      },
+      "activity": null,
+      "confidence_reason": "No errors were found in the last 5 minutes.",
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "hsq-02",
+      "category": "healthy_service_question",
+      "split": "tune",
+      "mode": "specific",
+      "question": "What is wrong with db-pool?",
+      "expected": {
+        "answer_type": "healthy",
+        "roots": [
+          "payment-service"
+        ],
+        "primary_root": null,
+        "chain": null,
+        "label": null,
+        "activity": null,
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "specific",
+        "answer_type": "healthy",
+        "roots": [
+          "payment-service"
+        ],
+        "primary_root": null,
+        "chain": null,
+        "label": null,
+        "score": 0.0,
+        "signals": {
+          "evidence": 0.0,
+          "dominance": 0.0,
+          "relevance": 0.0
+        },
+        "activity": null,
+        "last_error_age_s": null,
+        "competing_candidates": [],
+        "confidence_reason": "No errors were found in the last 5 minutes.",
+        "failing_services": [],
+        "root": null,
+        "candidates": [],
+        "symptoms": [],
+        "root_errors": 0
+      },
+      "match": true,
+      "verdict": "correct abstention",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [],
+      "root": null,
+      "candidates": [],
+      "symptoms": [],
+      "root_errors": 0,
+      "label": null,
+      "score": 0.0,
+      "signals": {
+        "evidence": 0.0,
+        "dominance": 0.0,
+        "relevance": 0.0
+      },
+      "activity": null,
+      "confidence_reason": "No errors were found in the last 5 minutes.",
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "hsq-03",
+      "category": "healthy_service_question",
+      "split": "test",
+      "mode": "specific",
+      "question": "What is wrong with ledger-worker?",
+      "expected": {
+        "answer_type": "healthy",
+        "roots": [],
+        "primary_root": null,
+        "chain": null,
+        "label": null,
+        "activity": null,
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "specific",
+        "answer_type": "healthy",
+        "roots": [],
+        "primary_root": null,
+        "chain": null,
+        "label": null,
+        "score": 0.0,
+        "signals": {
+          "evidence": 0.0,
+          "dominance": 0.0,
+          "relevance": 0.0
+        },
+        "activity": null,
+        "last_error_age_s": null,
+        "competing_candidates": [],
+        "confidence_reason": "No errors were found in the last 5 minutes.",
+        "failing_services": [],
+        "root": null,
+        "candidates": [],
+        "symptoms": [],
+        "root_errors": 0
+      },
+      "match": true,
+      "verdict": "correct abstention",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [],
+      "root": null,
+      "candidates": [],
+      "symptoms": [],
+      "root_errors": 0,
+      "label": null,
+      "score": 0.0,
+      "signals": {
+        "evidence": 0.0,
+        "dominance": 0.0,
+        "relevance": 0.0
+      },
+      "activity": null,
+      "confidence_reason": "No errors were found in the last 5 minutes.",
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "lv-cascade-01",
+      "category": "low_volume",
+      "split": "test",
+      "mode": "general",
+      "question": "What is happening in the system right now?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "db-pool"
+        ],
+        "primary_root": "db-pool",
+        "chain": null,
+        "label": "low",
+        "activity": "ongoing",
+        "competing": [],
+        "borderline": true
+      },
+      "actual": {
+        "mode": "general",
+        "answer_type": "incident",
+        "roots": [
+          "db-pool"
+        ],
+        "primary_root": "db-pool",
+        "chain": null,
+        "label": "low",
+        "score": 0.506,
+        "signals": {
+          "evidence": 0.15,
+          "dominance": 1.0,
+          "relevance": 0.383
+        },
+        "activity": "ongoing",
+        "last_error_age_s": 0.8,
+        "competing_candidates": [],
+        "confidence_reason": "db-pool had only 3 errors, below the 20 needed for full evidence weight.",
+        "failing_services": [
+          "db-pool",
+          "ledger-worker",
+          "orders-service",
+          "payment-service"
+        ],
+        "root": "db-pool",
+        "candidates": [
+          "db-pool"
+        ],
+        "symptoms": [
+          "ledger-worker",
+          "orders-service",
+          "payment-service"
+        ],
+        "root_errors": 3
+      },
+      "match": true,
+      "verdict": "correctly uncertain",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "db-pool",
+        "ledger-worker",
+        "orders-service",
+        "payment-service"
+      ],
+      "root": "db-pool",
+      "candidates": [
+        "db-pool"
+      ],
+      "symptoms": [
+        "ledger-worker",
+        "orders-service",
+        "payment-service"
+      ],
+      "root_errors": 3,
+      "label": "low",
+      "score": 0.506,
+      "signals": {
+        "evidence": 0.15,
+        "dominance": 1.0,
+        "relevance": 0.383
+      },
+      "activity": "ongoing",
+      "confidence_reason": "db-pool had only 3 errors, below the 20 needed for full evidence weight.",
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "lv-dbexh-01",
+      "category": "low_volume",
+      "split": "tune",
+      "mode": "general",
+      "question": "What is happening in the system right now?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "db-pool"
+        ],
+        "primary_root": "db-pool",
+        "chain": null,
+        "label": "low",
+        "activity": "ongoing",
+        "competing": [],
+        "borderline": true
+      },
+      "actual": {
+        "mode": "general",
+        "answer_type": "incident",
+        "roots": [
+          "db-pool"
+        ],
+        "primary_root": "db-pool",
+        "chain": null,
+        "label": "low",
+        "score": 0.526,
+        "signals": {
+          "evidence": 0.2,
+          "dominance": 1.0,
+          "relevance": 0.383
+        },
+        "activity": "ongoing",
+        "last_error_age_s": 0.3,
+        "competing_candidates": [],
+        "confidence_reason": "db-pool had only 4 errors, below the 20 needed for full evidence weight.",
+        "failing_services": [
+          "db-pool",
+          "payment-service"
+        ],
+        "root": "db-pool",
+        "candidates": [
+          "db-pool"
+        ],
+        "symptoms": [
+          "payment-service"
+        ],
+        "root_errors": 4
+      },
+      "match": true,
+      "verdict": "correctly uncertain",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "db-pool",
+        "payment-service"
+      ],
+      "root": "db-pool",
+      "candidates": [
+        "db-pool"
+      ],
+      "symptoms": [
+        "payment-service"
+      ],
+      "root_errors": 4,
+      "label": "low",
+      "score": 0.526,
+      "signals": {
+        "evidence": 0.2,
+        "dominance": 1.0,
+        "relevance": 0.383
+      },
+      "activity": "ongoing",
+      "confidence_reason": "db-pool had only 4 errors, below the 20 needed for full evidence weight.",
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "lv-paytimeout-01",
+      "category": "low_volume",
+      "split": "tune",
+      "mode": "specific",
+      "question": "What is wrong with payment-service?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "payment-service"
+        ],
+        "primary_root": "payment-service",
+        "chain": [
+          "payment-service"
+        ],
+        "label": "low",
+        "activity": "ongoing",
+        "competing": [],
+        "borderline": true
+      },
+      "actual": {
+        "mode": "specific",
+        "answer_type": "incident",
+        "roots": [
+          "payment-service"
+        ],
+        "primary_root": "payment-service",
+        "chain": [
+          "payment-service"
+        ],
+        "label": "low",
+        "score": 0.611,
+        "signals": {
+          "evidence": 0.3,
+          "dominance": 1.0,
+          "relevance": 0.563
+        },
+        "activity": "ongoing",
+        "last_error_age_s": 56.71,
+        "competing_candidates": [],
+        "confidence_reason": "payment-service had only 6 errors, below the 20 needed for full evidence weight.",
+        "failing_services": [
+          "payment-service"
+        ],
+        "root": "payment-service",
+        "candidates": [
+          "payment-service"
+        ],
+        "symptoms": [],
+        "root_errors": 6
+      },
+      "match": true,
+      "verdict": "correctly uncertain",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "payment-service"
+      ],
+      "root": "payment-service",
+      "candidates": [
+        "payment-service"
+      ],
+      "symptoms": [],
+      "root_errors": 6,
+      "label": "low",
+      "score": 0.611,
+      "signals": {
+        "evidence": 0.3,
+        "dominance": 1.0,
+        "relevance": 0.563
+      },
+      "activity": "ongoing",
+      "confidence_reason": "payment-service had only 6 errors, below the 20 needed for full evidence weight.",
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "me-01",
+      "category": "mixed_errors",
+      "split": "test",
+      "mode": "general",
+      "question": "What is happening in the system right now?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "notify-worker"
+        ],
+        "primary_root": "notify-worker",
+        "chain": null,
+        "label": "high",
+        "activity": "ongoing",
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "general",
+        "answer_type": "incident",
+        "roots": [
+          "notify-worker"
+        ],
+        "primary_root": "notify-worker",
+        "chain": null,
+        "label": "high",
+        "score": 0.847,
+        "signals": {
+          "evidence": 1.0,
+          "dominance": 1.0,
+          "relevance": 0.386
+        },
+        "activity": "ongoing",
+        "last_error_age_s": 5.0,
+        "competing_candidates": [],
+        "confidence_reason": null,
+        "failing_services": [
+          "notify-worker"
+        ],
+        "root": "notify-worker",
+        "candidates": [
+          "notify-worker"
+        ],
+        "symptoms": [],
+        "root_errors": 30
+      },
+      "match": true,
+      "verdict": "correct and confident",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "notify-worker"
+      ],
+      "root": "notify-worker",
+      "candidates": [
+        "notify-worker"
+      ],
+      "symptoms": [],
+      "root_errors": 30,
+      "label": "high",
+      "score": 0.847,
+      "signals": {
+        "evidence": 1.0,
+        "dominance": 1.0,
+        "relevance": 0.386
+      },
+      "activity": "ongoing",
+      "confidence_reason": null,
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "me-02",
+      "category": "mixed_errors",
+      "split": "tune",
+      "mode": "specific",
+      "question": "What is wrong with ledger-worker?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "ledger-worker"
+        ],
+        "primary_root": "ledger-worker",
+        "chain": [
+          "ledger-worker"
+        ],
+        "label": "high",
+        "activity": "ongoing",
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "specific",
+        "answer_type": "incident",
+        "roots": [
+          "ledger-worker"
+        ],
+        "primary_root": "ledger-worker",
+        "chain": [
+          "ledger-worker"
+        ],
+        "label": "high",
+        "score": 0.86,
+        "signals": {
+          "evidence": 1.0,
+          "dominance": 1.0,
+          "relevance": 0.441
+        },
+        "activity": "ongoing",
+        "last_error_age_s": 5.0,
+        "competing_candidates": [],
+        "confidence_reason": null,
+        "failing_services": [
+          "ledger-worker"
+        ],
+        "root": "ledger-worker",
+        "candidates": [
+          "ledger-worker"
+        ],
+        "symptoms": [],
+        "root_errors": 30
+      },
+      "match": true,
+      "verdict": "correct and confident",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "ledger-worker"
+      ],
+      "root": "ledger-worker",
+      "candidates": [
+        "ledger-worker"
+      ],
+      "symptoms": [],
+      "root_errors": 30,
+      "label": "high",
+      "score": 0.86,
+      "signals": {
+        "evidence": 1.0,
+        "dominance": 1.0,
+        "relevance": 0.441
+      },
+      "activity": "ongoing",
+      "confidence_reason": null,
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "me-03",
+      "category": "mixed_errors",
+      "split": "test",
+      "mode": "general",
+      "question": "What is happening in the system right now?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "payment-service"
+        ],
+        "primary_root": "payment-service",
+        "chain": null,
+        "label": "high",
+        "activity": "ongoing",
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "general",
+        "answer_type": "incident",
+        "roots": [
+          "payment-service"
+        ],
+        "primary_root": "payment-service",
+        "chain": null,
+        "label": "high",
+        "score": 0.854,
+        "signals": {
+          "evidence": 1.0,
+          "dominance": 1.0,
+          "relevance": 0.416
+        },
+        "activity": "ongoing",
+        "last_error_age_s": 5.0,
+        "competing_candidates": [],
+        "confidence_reason": null,
+        "failing_services": [
+          "payment-service"
+        ],
+        "root": "payment-service",
+        "candidates": [
+          "payment-service"
+        ],
+        "symptoms": [],
+        "root_errors": 30
+      },
+      "match": true,
+      "verdict": "correct and confident",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "payment-service"
+      ],
+      "root": "payment-service",
+      "candidates": [
+        "payment-service"
+      ],
+      "symptoms": [],
+      "root_errors": 30,
+      "label": "high",
+      "score": 0.854,
+      "signals": {
+        "evidence": 1.0,
+        "dominance": 1.0,
+        "relevance": 0.416
+      },
+      "activity": "ongoing",
+      "confidence_reason": null,
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "nw-01",
+      "category": "noisy_warnings",
+      "split": "tune",
+      "mode": "general",
+      "question": "What is happening in the system right now?",
+      "expected": {
+        "answer_type": "healthy",
+        "roots": [],
+        "primary_root": null,
+        "chain": null,
+        "label": null,
+        "activity": null,
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "general",
+        "answer_type": "healthy",
+        "roots": [],
+        "primary_root": null,
+        "chain": null,
+        "label": null,
+        "score": 0.0,
+        "signals": {
+          "evidence": 0.0,
+          "dominance": 0.0,
+          "relevance": 0.0
+        },
+        "activity": null,
+        "last_error_age_s": null,
+        "competing_candidates": [],
+        "confidence_reason": "No errors were found in the last 5 minutes.",
+        "failing_services": [],
+        "root": null,
+        "candidates": [],
+        "symptoms": [],
+        "root_errors": 0
+      },
+      "match": true,
+      "verdict": "correct abstention",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [],
+      "root": null,
+      "candidates": [],
+      "symptoms": [],
+      "root_errors": 0,
+      "label": null,
+      "score": 0.0,
+      "signals": {
+        "evidence": 0.0,
+        "dominance": 0.0,
+        "relevance": 0.0
+      },
+      "activity": null,
+      "confidence_reason": "No errors were found in the last 5 minutes.",
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "nw-02",
+      "category": "noisy_warnings",
+      "split": "test",
+      "mode": "specific",
+      "question": "What is wrong with payment-service?",
+      "expected": {
+        "answer_type": "healthy",
+        "roots": [],
+        "primary_root": null,
+        "chain": null,
+        "label": null,
+        "activity": null,
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "specific",
+        "answer_type": "healthy",
+        "roots": [],
+        "primary_root": null,
+        "chain": null,
+        "label": null,
+        "score": 0.0,
+        "signals": {
+          "evidence": 0.0,
+          "dominance": 0.0,
+          "relevance": 0.0
+        },
+        "activity": null,
+        "last_error_age_s": null,
+        "competing_candidates": [],
+        "confidence_reason": "No errors were found in the last 5 minutes.",
+        "failing_services": [],
+        "root": null,
+        "candidates": [],
+        "symptoms": [],
+        "root_errors": 0
+      },
+      "match": true,
+      "verdict": "correct abstention",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [],
+      "root": null,
+      "candidates": [],
+      "symptoms": [],
+      "root_errors": 0,
+      "label": null,
+      "score": 0.0,
+      "signals": {
+        "evidence": 0.0,
+        "dominance": 0.0,
+        "relevance": 0.0
+      },
+      "activity": null,
+      "confidence_reason": "No errors were found in the last 5 minutes.",
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "nw-03",
+      "category": "noisy_warnings",
+      "split": "test",
+      "mode": "general",
+      "question": "What is happening in the system right now?",
+      "expected": {
+        "answer_type": "healthy",
+        "roots": [],
+        "primary_root": null,
+        "chain": null,
+        "label": null,
+        "activity": null,
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "general",
+        "answer_type": "healthy",
+        "roots": [],
+        "primary_root": null,
+        "chain": null,
+        "label": null,
+        "score": 0.0,
+        "signals": {
+          "evidence": 0.0,
+          "dominance": 0.0,
+          "relevance": 0.0
+        },
+        "activity": null,
+        "last_error_age_s": null,
+        "competing_candidates": [],
+        "confidence_reason": "No errors were found in the last 5 minutes.",
+        "failing_services": [],
+        "root": null,
+        "candidates": [],
+        "symptoms": [],
+        "root_errors": 0
+      },
+      "match": true,
+      "verdict": "correct abstention",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [],
+      "root": null,
+      "candidates": [],
+      "symptoms": [],
+      "root_errors": 0,
+      "label": null,
+      "score": 0.0,
+      "signals": {
+        "evidence": 0.0,
+        "dominance": 0.0,
+        "relevance": 0.0
+      },
+      "activity": null,
+      "confidence_reason": "No errors were found in the last 5 minutes.",
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "rg-root-01",
+      "category": "renamed_graph",
+      "split": "test",
+      "mode": "general",
+      "question": "What is happening in the system right now?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "archive-store"
+        ],
+        "primary_root": "archive-store",
+        "chain": [
+          "front-door",
+          "core-router",
+          "archive-store"
+        ],
+        "label": "high",
+        "activity": "ongoing",
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "general",
+        "answer_type": "incident",
+        "roots": [
+          "archive-store"
+        ],
+        "primary_root": "archive-store",
+        "chain": null,
+        "label": "high",
+        "score": 0.94,
+        "signals": {
+          "evidence": 1.0,
+          "dominance": 1.0,
+          "relevance": 0.758
+        },
+        "activity": "ongoing",
+        "last_error_age_s": 5.0,
+        "competing_candidates": [],
+        "confidence_reason": null,
+        "failing_services": [
+          "archive-store",
+          "billing-unit"
+        ],
+        "root": "archive-store",
+        "candidates": [
+          "archive-store"
+        ],
+        "symptoms": [
+          "billing-unit"
+        ],
+        "root_errors": 30
+      },
+      "match": true,
+      "verdict": "correct and confident",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "archive-store",
+        "billing-unit"
+      ],
+      "root": "archive-store",
+      "candidates": [
+        "archive-store"
+      ],
+      "symptoms": [
+        "billing-unit"
+      ],
+      "root_errors": 30,
+      "label": "high",
+      "score": 0.94,
+      "signals": {
+        "evidence": 1.0,
+        "dominance": 1.0,
+        "relevance": 0.758
+      },
+      "activity": "ongoing",
+      "confidence_reason": null,
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "rg-single-01",
+      "category": "renamed_graph",
+      "split": "tune",
+      "mode": "general",
+      "question": "What is happening in the system right now?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "billing-unit"
+        ],
+        "primary_root": "billing-unit",
+        "chain": [
+          "front-door",
+          "core-router",
+          "billing-unit"
+        ],
+        "label": "high",
+        "activity": "ongoing",
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "general",
+        "answer_type": "incident",
+        "roots": [
+          "billing-unit"
+        ],
+        "primary_root": "billing-unit",
+        "chain": null,
+        "label": "high",
+        "score": 0.965,
+        "signals": {
+          "evidence": 1.0,
+          "dominance": 1.0,
+          "relevance": 0.859
+        },
+        "activity": "ongoing",
+        "last_error_age_s": 4.0,
+        "competing_candidates": [],
+        "confidence_reason": null,
+        "failing_services": [
+          "billing-unit"
+        ],
+        "root": "billing-unit",
+        "candidates": [
+          "billing-unit"
+        ],
+        "symptoms": [],
+        "root_errors": 28
+      },
+      "match": true,
+      "verdict": "correct and confident",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "billing-unit"
+      ],
+      "root": "billing-unit",
+      "candidates": [
+        "billing-unit"
+      ],
+      "symptoms": [],
+      "root_errors": 28,
+      "label": "high",
+      "score": 0.965,
+      "signals": {
+        "evidence": 1.0,
+        "dominance": 1.0,
+        "relevance": 0.859
+      },
+      "activity": "ongoing",
+      "confidence_reason": null,
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "rg-victim-01",
+      "category": "renamed_graph",
+      "split": "test",
+      "mode": "specific",
+      "question": "What is wrong with billing-unit?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "archive-store"
+        ],
+        "primary_root": "archive-store",
+        "chain": [
+          "billing-unit",
+          "archive-store"
+        ],
+        "label": "high",
+        "activity": "ongoing",
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "specific",
+        "answer_type": "incident",
+        "roots": [
+          "archive-store"
+        ],
+        "primary_root": "archive-store",
+        "chain": [
+          "billing-unit",
+          "archive-store"
+        ],
+        "label": "high",
+        "score": 0.94,
+        "signals": {
+          "evidence": 1.0,
+          "dominance": 1.0,
+          "relevance": 0.758
+        },
+        "activity": "ongoing",
+        "last_error_age_s": 5.0,
+        "competing_candidates": [],
+        "confidence_reason": null,
+        "failing_services": [
+          "archive-store",
+          "billing-unit"
+        ],
+        "root": "archive-store",
+        "candidates": [
+          "archive-store"
+        ],
+        "symptoms": [
+          "billing-unit"
+        ],
+        "root_errors": 30
+      },
+      "match": true,
+      "verdict": "correct and confident",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "archive-store",
+        "billing-unit"
+      ],
+      "root": "archive-store",
+      "candidates": [
+        "archive-store"
+      ],
+      "symptoms": [
+        "billing-unit"
+      ],
+      "root_errors": 30,
+      "label": "high",
+      "score": 0.94,
+      "signals": {
+        "evidence": 1.0,
+        "dominance": 1.0,
+        "relevance": 0.758
+      },
+      "activity": "ongoing",
+      "confidence_reason": null,
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "rs-01",
+      "category": "recently_stopped",
+      "split": "tune",
+      "mode": "general",
+      "question": "What is happening in the system right now?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "db-pool"
+        ],
+        "primary_root": "db-pool",
+        "chain": null,
+        "label": "high",
+        "activity": "stopped",
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "general",
+        "answer_type": "incident",
+        "roots": [
+          "db-pool"
+        ],
+        "primary_root": "db-pool",
+        "chain": null,
+        "label": "high",
+        "score": 0.846,
+        "signals": {
+          "evidence": 1.0,
+          "dominance": 1.0,
+          "relevance": 0.383
+        },
+        "activity": "stopped",
+        "last_error_age_s": 120.0,
+        "competing_candidates": [],
+        "confidence_reason": null,
+        "failing_services": [
+          "db-pool",
+          "ledger-worker",
+          "orders-service",
+          "payment-service"
+        ],
+        "root": "db-pool",
+        "candidates": [
+          "db-pool"
+        ],
+        "symptoms": [
+          "ledger-worker",
+          "orders-service",
+          "payment-service"
+        ],
+        "root_errors": 30
+      },
+      "match": true,
+      "verdict": "correct and confident",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "db-pool",
+        "ledger-worker",
+        "orders-service",
+        "payment-service"
+      ],
+      "root": "db-pool",
+      "candidates": [
+        "db-pool"
+      ],
+      "symptoms": [
+        "ledger-worker",
+        "orders-service",
+        "payment-service"
+      ],
+      "root_errors": 30,
+      "label": "high",
+      "score": 0.846,
+      "signals": {
+        "evidence": 1.0,
+        "dominance": 1.0,
+        "relevance": 0.383
+      },
+      "activity": "stopped",
+      "confidence_reason": null,
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "rs-02",
+      "category": "recently_stopped",
+      "split": "tune",
+      "mode": "specific",
+      "question": "What is wrong with payment-service?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "payment-service"
+        ],
+        "primary_root": "payment-service",
+        "chain": [
+          "payment-service"
+        ],
+        "label": "high",
+        "activity": "stopped",
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "specific",
+        "answer_type": "incident",
+        "roots": [
+          "payment-service"
+        ],
+        "primary_root": "payment-service",
+        "chain": [
+          "payment-service"
+        ],
+        "label": "high",
+        "score": 0.854,
+        "signals": {
+          "evidence": 1.0,
+          "dominance": 1.0,
+          "relevance": 0.416
+        },
+        "activity": "stopped",
+        "last_error_age_s": 210.0,
+        "competing_candidates": [],
+        "confidence_reason": null,
+        "failing_services": [
+          "payment-service"
+        ],
+        "root": "payment-service",
+        "candidates": [
+          "payment-service"
+        ],
+        "symptoms": [],
+        "root_errors": 25
+      },
+      "match": true,
+      "verdict": "correct and confident",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "payment-service"
+      ],
+      "root": "payment-service",
+      "candidates": [
+        "payment-service"
+      ],
+      "symptoms": [],
+      "root_errors": 25,
+      "label": "high",
+      "score": 0.854,
+      "signals": {
+        "evidence": 1.0,
+        "dominance": 1.0,
+        "relevance": 0.416
+      },
+      "activity": "stopped",
+      "confidence_reason": null,
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "rs-03",
+      "category": "recently_stopped",
+      "split": "test",
+      "mode": "general",
+      "question": "What is happening in the system right now?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "notify-worker"
+        ],
+        "primary_root": "notify-worker",
+        "chain": null,
+        "label": "high",
+        "activity": "stopped",
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "general",
+        "answer_type": "incident",
+        "roots": [
+          "notify-worker"
+        ],
+        "primary_root": "notify-worker",
+        "chain": null,
+        "label": "high",
+        "score": 0.847,
+        "signals": {
+          "evidence": 1.0,
+          "dominance": 1.0,
+          "relevance": 0.386
+        },
+        "activity": "stopped",
+        "last_error_age_s": 72.0,
+        "competing_candidates": [],
+        "confidence_reason": null,
+        "failing_services": [
+          "notify-worker"
+        ],
+        "root": "notify-worker",
+        "candidates": [
+          "notify-worker"
+        ],
+        "symptoms": [],
+        "root_errors": 20
+      },
+      "match": true,
+      "verdict": "correct and confident",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "notify-worker"
+      ],
+      "root": "notify-worker",
+      "candidates": [
+        "notify-worker"
+      ],
+      "symptoms": [],
+      "root_errors": 20,
+      "label": "high",
+      "score": 0.847,
+      "signals": {
+        "evidence": 1.0,
+        "dominance": 1.0,
+        "relevance": 0.386
+      },
+      "activity": "stopped",
+      "confidence_reason": null,
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "se-01",
+      "category": "stray_error",
+      "split": "test",
+      "mode": "general",
+      "question": "What is happening in the system right now?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "db-pool",
+          "notify-worker"
+        ],
+        "primary_root": "db-pool",
+        "chain": null,
+        "label": "high",
+        "activity": "ongoing",
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "general",
+        "answer_type": "incident",
+        "roots": [
+          "db-pool",
+          "notify-worker"
+        ],
+        "primary_root": "db-pool",
+        "chain": null,
+        "label": "high",
+        "score": 0.846,
+        "signals": {
+          "evidence": 1.0,
+          "dominance": 1.0,
+          "relevance": 0.383
+        },
+        "activity": "ongoing",
+        "last_error_age_s": 5.0,
+        "competing_candidates": [],
+        "confidence_reason": null,
+        "failing_services": [
+          "db-pool",
+          "payment-service"
+        ],
+        "root": "db-pool",
+        "candidates": [
+          "db-pool"
+        ],
+        "symptoms": [
+          "payment-service"
+        ],
+        "root_errors": 30
+      },
+      "match": true,
+      "verdict": "correct and confident",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "db-pool",
+        "payment-service"
+      ],
+      "root": "db-pool",
+      "candidates": [
+        "db-pool"
+      ],
+      "symptoms": [
+        "payment-service"
+      ],
+      "root_errors": 30,
+      "label": "high",
+      "score": 0.846,
+      "signals": {
+        "evidence": 1.0,
+        "dominance": 1.0,
+        "relevance": 0.383
+      },
+      "activity": "ongoing",
+      "confidence_reason": null,
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "se-02",
+      "category": "stray_error",
+      "split": "tune",
+      "mode": "specific",
+      "question": "What is wrong with db-pool?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "db-pool"
+        ],
+        "primary_root": "db-pool",
+        "chain": [
+          "db-pool"
+        ],
+        "label": "high",
+        "activity": "ongoing",
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "specific",
+        "answer_type": "incident",
+        "roots": [
+          "db-pool"
+        ],
+        "primary_root": "db-pool",
+        "chain": [
+          "db-pool"
+        ],
+        "label": "high",
+        "score": 0.846,
+        "signals": {
+          "evidence": 1.0,
+          "dominance": 1.0,
+          "relevance": 0.383
+        },
+        "activity": "ongoing",
+        "last_error_age_s": 5.0,
+        "competing_candidates": [],
+        "confidence_reason": null,
+        "failing_services": [
+          "db-pool",
+          "payment-service"
+        ],
+        "root": "db-pool",
+        "candidates": [
+          "db-pool"
+        ],
+        "symptoms": [
+          "payment-service"
+        ],
+        "root_errors": 30
+      },
+      "match": true,
+      "verdict": "correct and confident",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "db-pool",
+        "payment-service"
+      ],
+      "root": "db-pool",
+      "candidates": [
+        "db-pool"
+      ],
+      "symptoms": [
+        "payment-service"
+      ],
+      "root_errors": 30,
+      "label": "high",
+      "score": 0.846,
+      "signals": {
+        "evidence": 1.0,
+        "dominance": 1.0,
+        "relevance": 0.383
+      },
+      "activity": "ongoing",
+      "confidence_reason": null,
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "se-03",
+      "category": "stray_error",
+      "split": "tune",
+      "mode": "general",
+      "question": "What is happening in the system right now?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "notify-worker",
+          "payment-service"
+        ],
+        "primary_root": "payment-service",
+        "chain": null,
+        "label": "high",
+        "activity": "ongoing",
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "general",
+        "answer_type": "incident",
+        "roots": [
+          "notify-worker",
+          "payment-service"
+        ],
+        "primary_root": "payment-service",
+        "chain": null,
+        "label": "high",
+        "score": 0.882,
+        "signals": {
+          "evidence": 1.0,
+          "dominance": 1.0,
+          "relevance": 0.527
+        },
+        "activity": "ongoing",
+        "last_error_age_s": 5.0,
+        "competing_candidates": [],
+        "confidence_reason": null,
+        "failing_services": [
+          "payment-service"
+        ],
+        "root": "payment-service",
+        "candidates": [
+          "payment-service"
+        ],
+        "symptoms": [],
+        "root_errors": 30
+      },
+      "match": true,
+      "verdict": "correct and confident",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "payment-service"
+      ],
+      "root": "payment-service",
+      "candidates": [
+        "payment-service"
+      ],
+      "symptoms": [],
+      "root_errors": 30,
+      "label": "high",
+      "score": 0.882,
+      "signals": {
+        "evidence": 1.0,
+        "dominance": 1.0,
+        "relevance": 0.527
+      },
+      "activity": "ongoing",
+      "confidence_reason": null,
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "sf-bug1-01",
+      "category": "single_fault",
+      "split": "test",
+      "mode": "general",
+      "question": "What is happening in the system right now?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "payment-service"
+        ],
+        "primary_root": "payment-service",
+        "chain": null,
+        "label": "high",
+        "activity": "ongoing",
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "general",
+        "answer_type": "incident",
+        "roots": [
+          "payment-service"
+        ],
+        "primary_root": "payment-service",
+        "chain": null,
+        "label": "high",
+        "score": 0.882,
+        "signals": {
+          "evidence": 1.0,
+          "dominance": 1.0,
+          "relevance": 0.527
+        },
+        "activity": "ongoing",
+        "last_error_age_s": 8.0,
+        "competing_candidates": [],
+        "confidence_reason": null,
+        "failing_services": [
+          "payment-service"
+        ],
+        "root": "payment-service",
+        "candidates": [
+          "payment-service"
+        ],
+        "symptoms": [],
+        "root_errors": 30
+      },
+      "match": true,
+      "verdict": "correct and confident",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "payment-service"
+      ],
+      "root": "payment-service",
+      "candidates": [
+        "payment-service"
+      ],
+      "symptoms": [],
+      "root_errors": 30,
+      "label": "high",
+      "score": 0.882,
+      "signals": {
+        "evidence": 1.0,
+        "dominance": 1.0,
+        "relevance": 0.527
+      },
+      "activity": "ongoing",
+      "confidence_reason": null,
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "sf-bug1-02",
+      "category": "single_fault",
+      "split": "tune",
+      "mode": "general",
+      "question": "What is happening in the system right now?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "payment-service"
+        ],
+        "primary_root": "payment-service",
+        "chain": null,
+        "label": "high",
+        "activity": "ongoing",
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "general",
+        "answer_type": "incident",
+        "roots": [
+          "payment-service"
+        ],
+        "primary_root": "payment-service",
+        "chain": null,
+        "label": "high",
+        "score": 0.842,
+        "signals": {
+          "evidence": 0.9,
+          "dominance": 1.0,
+          "relevance": 0.527
+        },
+        "activity": "ongoing",
+        "last_error_age_s": 20.0,
+        "competing_candidates": [],
+        "confidence_reason": null,
+        "failing_services": [
+          "payment-service"
+        ],
+        "root": "payment-service",
+        "candidates": [
+          "payment-service"
+        ],
+        "symptoms": [],
+        "root_errors": 18
+      },
+      "match": true,
+      "verdict": "correct and confident",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "payment-service"
+      ],
+      "root": "payment-service",
+      "candidates": [
+        "payment-service"
+      ],
+      "symptoms": [],
+      "root_errors": 18,
+      "label": "high",
+      "score": 0.842,
+      "signals": {
+        "evidence": 0.9,
+        "dominance": 1.0,
+        "relevance": 0.527
+      },
+      "activity": "ongoing",
+      "confidence_reason": null,
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "sf-bug1-03",
+      "category": "single_fault",
+      "split": "test",
+      "mode": "specific",
+      "question": "What is wrong with payment-service?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "payment-service"
+        ],
+        "primary_root": "payment-service",
+        "chain": [
+          "payment-service"
+        ],
+        "label": "high",
+        "activity": "ongoing",
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "specific",
+        "answer_type": "incident",
+        "roots": [
+          "payment-service"
+        ],
+        "primary_root": "payment-service",
+        "chain": [
+          "payment-service"
+        ],
+        "label": "high",
+        "score": 0.882,
+        "signals": {
+          "evidence": 1.0,
+          "dominance": 1.0,
+          "relevance": 0.527
+        },
+        "activity": "ongoing",
+        "last_error_age_s": 3.0,
+        "competing_candidates": [],
+        "confidence_reason": null,
+        "failing_services": [
+          "payment-service"
+        ],
+        "root": "payment-service",
+        "candidates": [
+          "payment-service"
+        ],
+        "symptoms": [],
+        "root_errors": 45
+      },
+      "match": true,
+      "verdict": "correct and confident",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "payment-service"
+      ],
+      "root": "payment-service",
+      "candidates": [
+        "payment-service"
+      ],
+      "symptoms": [],
+      "root_errors": 45,
+      "label": "high",
+      "score": 0.882,
+      "signals": {
+        "evidence": 1.0,
+        "dominance": 1.0,
+        "relevance": 0.527
+      },
+      "activity": "ongoing",
+      "confidence_reason": null,
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "sf-bug2-01",
+      "category": "single_fault",
+      "split": "test",
+      "mode": "general",
+      "question": "What is happening in the system right now?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "db-pool"
+        ],
+        "primary_root": "db-pool",
+        "chain": null,
+        "label": "high",
+        "activity": "ongoing",
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "general",
+        "answer_type": "incident",
+        "roots": [
+          "db-pool"
+        ],
+        "primary_root": "db-pool",
+        "chain": null,
+        "label": "high",
+        "score": 0.846,
+        "signals": {
+          "evidence": 1.0,
+          "dominance": 1.0,
+          "relevance": 0.383
+        },
+        "activity": "ongoing",
+        "last_error_age_s": 6.0,
+        "competing_candidates": [],
+        "confidence_reason": null,
+        "failing_services": [
+          "db-pool",
+          "ledger-worker",
+          "orders-service",
+          "payment-service"
+        ],
+        "root": "db-pool",
+        "candidates": [
+          "db-pool"
+        ],
+        "symptoms": [
+          "ledger-worker",
+          "orders-service",
+          "payment-service"
+        ],
+        "root_errors": 32
+      },
+      "match": true,
+      "verdict": "correct and confident",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "db-pool",
+        "ledger-worker",
+        "orders-service",
+        "payment-service"
+      ],
+      "root": "db-pool",
+      "candidates": [
+        "db-pool"
+      ],
+      "symptoms": [
+        "ledger-worker",
+        "orders-service",
+        "payment-service"
+      ],
+      "root_errors": 32,
+      "label": "high",
+      "score": 0.846,
+      "signals": {
+        "evidence": 1.0,
+        "dominance": 1.0,
+        "relevance": 0.383
+      },
+      "activity": "ongoing",
+      "confidence_reason": null,
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "sf-bug2-02",
+      "category": "single_fault",
+      "split": "tune",
+      "mode": "specific",
+      "question": "What is wrong with db-pool?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "db-pool"
+        ],
+        "primary_root": "db-pool",
+        "chain": [
+          "db-pool"
+        ],
+        "label": "high",
+        "activity": "ongoing",
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "specific",
+        "answer_type": "incident",
+        "roots": [
+          "db-pool"
+        ],
+        "primary_root": "db-pool",
+        "chain": [
+          "db-pool"
+        ],
+        "label": "high",
+        "score": 0.766,
+        "signals": {
+          "evidence": 0.8,
+          "dominance": 1.0,
+          "relevance": 0.383
+        },
+        "activity": "ongoing",
+        "last_error_age_s": 25.0,
+        "competing_candidates": [],
+        "confidence_reason": null,
+        "failing_services": [
+          "db-pool",
+          "ledger-worker",
+          "orders-service",
+          "payment-service"
+        ],
+        "root": "db-pool",
+        "candidates": [
+          "db-pool"
+        ],
+        "symptoms": [
+          "ledger-worker",
+          "orders-service",
+          "payment-service"
+        ],
+        "root_errors": 16
+      },
+      "match": true,
+      "verdict": "correct and confident",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "db-pool",
+        "ledger-worker",
+        "orders-service",
+        "payment-service"
+      ],
+      "root": "db-pool",
+      "candidates": [
+        "db-pool"
+      ],
+      "symptoms": [
+        "ledger-worker",
+        "orders-service",
+        "payment-service"
+      ],
+      "root_errors": 16,
+      "label": "high",
+      "score": 0.766,
+      "signals": {
+        "evidence": 0.8,
+        "dominance": 1.0,
+        "relevance": 0.383
+      },
+      "activity": "ongoing",
+      "confidence_reason": null,
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "sf-bug2-03",
+      "category": "single_fault",
+      "split": "tune",
+      "mode": "general",
+      "question": "What is happening in the system right now?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "db-pool"
+        ],
+        "primary_root": "db-pool",
+        "chain": null,
+        "label": "high",
+        "activity": "ongoing",
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "general",
+        "answer_type": "incident",
+        "roots": [
+          "db-pool"
+        ],
+        "primary_root": "db-pool",
+        "chain": null,
+        "label": "high",
+        "score": 0.846,
+        "signals": {
+          "evidence": 1.0,
+          "dominance": 1.0,
+          "relevance": 0.383
+        },
+        "activity": "ongoing",
+        "last_error_age_s": 2.0,
+        "competing_candidates": [],
+        "confidence_reason": null,
+        "failing_services": [
+          "db-pool",
+          "ledger-worker",
+          "orders-service",
+          "payment-service"
+        ],
+        "root": "db-pool",
+        "candidates": [
+          "db-pool"
+        ],
+        "symptoms": [
+          "ledger-worker",
+          "orders-service",
+          "payment-service"
+        ],
+        "root_errors": 40
+      },
+      "match": true,
+      "verdict": "correct and confident",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "db-pool",
+        "ledger-worker",
+        "orders-service",
+        "payment-service"
+      ],
+      "root": "db-pool",
+      "candidates": [
+        "db-pool"
+      ],
+      "symptoms": [
+        "ledger-worker",
+        "orders-service",
+        "payment-service"
+      ],
+      "root_errors": 40,
+      "label": "high",
+      "score": 0.846,
+      "signals": {
+        "evidence": 1.0,
+        "dominance": 1.0,
+        "relevance": 0.383
+      },
+      "activity": "ongoing",
+      "confidence_reason": null,
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "sfc-01",
+      "category": "subfloor_competitor",
+      "split": "test",
+      "mode": "general",
+      "question": "What is happening in the system right now?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "notify-worker",
+          "payment-service"
+        ],
+        "primary_root": "payment-service",
+        "chain": null,
+        "label": "high",
+        "activity": "ongoing",
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "general",
+        "answer_type": "incident",
+        "roots": [
+          "notify-worker",
+          "payment-service"
+        ],
+        "primary_root": "payment-service",
+        "chain": null,
+        "label": "high",
+        "score": 0.882,
+        "signals": {
+          "evidence": 1.0,
+          "dominance": 1.0,
+          "relevance": 0.527
+        },
+        "activity": "ongoing",
+        "last_error_age_s": 4.0,
+        "competing_candidates": [],
+        "confidence_reason": null,
+        "failing_services": [
+          "orders-service",
+          "payment-service"
+        ],
+        "root": "payment-service",
+        "candidates": [
+          "payment-service"
+        ],
+        "symptoms": [
+          "orders-service"
+        ],
+        "root_errors": 394
+      },
+      "match": true,
+      "verdict": "correct and confident",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "orders-service",
+        "payment-service"
+      ],
+      "root": "payment-service",
+      "candidates": [
+        "payment-service"
+      ],
+      "symptoms": [
+        "orders-service"
+      ],
+      "root_errors": 394,
+      "label": "high",
+      "score": 0.882,
+      "signals": {
+        "evidence": 1.0,
+        "dominance": 1.0,
+        "relevance": 0.527
+      },
+      "activity": "ongoing",
+      "confidence_reason": null,
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "sfc-02",
+      "category": "subfloor_competitor",
+      "split": "test",
+      "mode": "specific",
+      "question": "What is wrong with payment-service?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "payment-service"
+        ],
+        "primary_root": "payment-service",
+        "chain": [
+          "payment-service"
+        ],
+        "label": "high",
+        "activity": "ongoing",
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "specific",
+        "answer_type": "incident",
+        "roots": [
+          "payment-service"
+        ],
+        "primary_root": "payment-service",
+        "chain": [
+          "payment-service"
+        ],
+        "label": "high",
+        "score": 0.882,
+        "signals": {
+          "evidence": 1.0,
+          "dominance": 1.0,
+          "relevance": 0.527
+        },
+        "activity": "ongoing",
+        "last_error_age_s": 4.0,
+        "competing_candidates": [],
+        "confidence_reason": null,
+        "failing_services": [
+          "orders-service",
+          "payment-service"
+        ],
+        "root": "payment-service",
+        "candidates": [
+          "payment-service"
+        ],
+        "symptoms": [
+          "orders-service"
+        ],
+        "root_errors": 394
+      },
+      "match": true,
+      "verdict": "correct and confident",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "orders-service",
+        "payment-service"
+      ],
+      "root": "payment-service",
+      "candidates": [
+        "payment-service"
+      ],
+      "symptoms": [
+        "orders-service"
+      ],
+      "root_errors": 394,
+      "label": "high",
+      "score": 0.882,
+      "signals": {
+        "evidence": 1.0,
+        "dominance": 1.0,
+        "relevance": 0.527
+      },
+      "activity": "ongoing",
+      "confidence_reason": null,
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "sfc-03",
+      "category": "subfloor_competitor",
+      "split": "tune",
+      "mode": "specific",
+      "question": "What is wrong with notify-worker?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "notify-worker"
+        ],
+        "primary_root": "notify-worker",
+        "chain": [
+          "notify-worker"
+        ],
+        "label": "low",
+        "activity": "ongoing",
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "specific",
+        "answer_type": "incident",
+        "roots": [
+          "notify-worker"
+        ],
+        "primary_root": "notify-worker",
+        "chain": [
+          "notify-worker"
+        ],
+        "label": "low",
+        "score": 0.531,
+        "signals": {
+          "evidence": 0.1,
+          "dominance": 1.0,
+          "relevance": 0.563
+        },
+        "activity": "ongoing",
+        "last_error_age_s": 30.0,
+        "competing_candidates": [],
+        "confidence_reason": "notify-worker had only 2 errors, below the 20 needed for full evidence weight.",
+        "failing_services": [
+          "notify-worker"
+        ],
+        "root": "notify-worker",
+        "candidates": [
+          "notify-worker"
+        ],
+        "symptoms": [],
+        "root_errors": 2
+      },
+      "match": true,
+      "verdict": "correctly uncertain",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "notify-worker"
+      ],
+      "root": "notify-worker",
+      "candidates": [
+        "notify-worker"
+      ],
+      "symptoms": [],
+      "root_errors": 2,
+      "label": "low",
+      "score": 0.531,
+      "signals": {
+        "evidence": 0.1,
+        "dominance": 1.0,
+        "relevance": 0.563
+      },
+      "activity": "ongoing",
+      "confidence_reason": "notify-worker had only 2 errors, below the 20 needed for full evidence weight.",
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "sl-01",
+      "category": "stale_logs",
+      "split": "tune",
+      "mode": "general",
+      "question": "What is happening in the system right now?",
+      "expected": {
+        "answer_type": "healthy",
+        "roots": [],
+        "primary_root": null,
+        "chain": null,
+        "label": null,
+        "activity": null,
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "general",
+        "answer_type": "healthy",
+        "roots": [],
+        "primary_root": null,
+        "chain": null,
+        "label": null,
+        "score": 0.0,
+        "signals": {
+          "evidence": 0.0,
+          "dominance": 0.0,
+          "relevance": 0.0
+        },
+        "activity": null,
+        "last_error_age_s": null,
+        "competing_candidates": [],
+        "confidence_reason": "No errors were found in the last 5 minutes.",
+        "failing_services": [],
+        "root": null,
+        "candidates": [],
+        "symptoms": [],
+        "root_errors": 0
+      },
+      "match": true,
+      "verdict": "correct abstention",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [],
+      "root": null,
+      "candidates": [],
+      "symptoms": [],
+      "root_errors": 0,
+      "label": null,
+      "score": 0.0,
+      "signals": {
+        "evidence": 0.0,
+        "dominance": 0.0,
+        "relevance": 0.0
+      },
+      "activity": null,
+      "confidence_reason": "No errors were found in the last 5 minutes.",
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "sl-02",
+      "category": "stale_logs",
+      "split": "tune",
+      "mode": "specific",
+      "question": "What is wrong with payment-service?",
+      "expected": {
+        "answer_type": "healthy",
+        "roots": [],
+        "primary_root": null,
+        "chain": null,
+        "label": null,
+        "activity": null,
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "specific",
+        "answer_type": "healthy",
+        "roots": [],
+        "primary_root": null,
+        "chain": null,
+        "label": null,
+        "score": 0.0,
+        "signals": {
+          "evidence": 0.0,
+          "dominance": 0.0,
+          "relevance": 0.0
+        },
+        "activity": null,
+        "last_error_age_s": null,
+        "competing_candidates": [],
+        "confidence_reason": "No errors were found in the last 5 minutes.",
+        "failing_services": [],
+        "root": null,
+        "candidates": [],
+        "symptoms": [],
+        "root_errors": 0
+      },
+      "match": true,
+      "verdict": "correct abstention",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [],
+      "root": null,
+      "candidates": [],
+      "symptoms": [],
+      "root_errors": 0,
+      "label": null,
+      "score": 0.0,
+      "signals": {
+        "evidence": 0.0,
+        "dominance": 0.0,
+        "relevance": 0.0
+      },
+      "activity": null,
+      "confidence_reason": "No errors were found in the last 5 minutes.",
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "sl-03",
+      "category": "stale_logs",
+      "split": "test",
+      "mode": "general",
+      "question": "What is happening in the system right now?",
+      "expected": {
+        "answer_type": "healthy",
+        "roots": [],
+        "primary_root": null,
+        "chain": null,
+        "label": null,
+        "activity": null,
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "general",
+        "answer_type": "healthy",
+        "roots": [],
+        "primary_root": null,
+        "chain": null,
+        "label": null,
+        "score": 0.0,
+        "signals": {
+          "evidence": 0.0,
+          "dominance": 0.0,
+          "relevance": 0.0
+        },
+        "activity": null,
+        "last_error_age_s": null,
+        "competing_candidates": [],
+        "confidence_reason": "No errors were found in the last 5 minutes.",
+        "failing_services": [],
+        "root": null,
+        "candidates": [],
+        "symptoms": [],
+        "root_errors": 0
+      },
+      "match": true,
+      "verdict": "correct abstention",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [],
+      "root": null,
+      "candidates": [],
+      "symptoms": [],
+      "root_errors": 0,
+      "label": null,
+      "score": 0.0,
+      "signals": {
+        "evidence": 0.0,
+        "dominance": 0.0,
+        "relevance": 0.0
+      },
+      "activity": null,
+      "confidence_reason": "No errors were found in the last 5 minutes.",
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "tuf-general-01",
+      "category": "two_unrelated_faults",
+      "split": "tune",
+      "mode": "general",
+      "question": "What is happening in the system right now?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "ledger-worker",
+          "notify-worker"
+        ],
+        "primary_root": "ledger-worker",
+        "chain": null,
+        "label": "high",
+        "activity": "ongoing",
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "general",
+        "answer_type": "incident",
+        "roots": [
+          "ledger-worker",
+          "notify-worker"
+        ],
+        "primary_root": "ledger-worker",
+        "chain": null,
+        "label": "high",
+        "score": 0.898,
+        "signals": {
+          "evidence": 1.0,
+          "dominance": 1.0,
+          "relevance": 0.594
+        },
+        "activity": "ongoing",
+        "last_error_age_s": 12.0,
+        "competing_candidates": [],
+        "confidence_reason": null,
+        "failing_services": [
+          "ledger-worker"
+        ],
+        "root": "ledger-worker",
+        "candidates": [
+          "ledger-worker"
+        ],
+        "symptoms": [],
+        "root_errors": 30
+      },
+      "match": true,
+      "verdict": "correct and confident",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "ledger-worker"
+      ],
+      "root": "ledger-worker",
+      "candidates": [
+        "ledger-worker"
+      ],
+      "symptoms": [],
+      "root_errors": 30,
+      "label": "high",
+      "score": 0.898,
+      "signals": {
+        "evidence": 1.0,
+        "dominance": 1.0,
+        "relevance": 0.594
+      },
+      "activity": "ongoing",
+      "confidence_reason": null,
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "tuf-general-02",
+      "category": "two_unrelated_faults",
+      "split": "test",
+      "mode": "general",
+      "question": "What is happening in the system right now?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "ledger-worker",
+          "notify-worker"
+        ],
+        "primary_root": "ledger-worker",
+        "chain": null,
+        "label": "high",
+        "activity": "ongoing",
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "general",
+        "answer_type": "incident",
+        "roots": [
+          "ledger-worker",
+          "notify-worker"
+        ],
+        "primary_root": "ledger-worker",
+        "chain": null,
+        "label": "high",
+        "score": 0.898,
+        "signals": {
+          "evidence": 1.0,
+          "dominance": 1.0,
+          "relevance": 0.594
+        },
+        "activity": "ongoing",
+        "last_error_age_s": 12.0,
+        "competing_candidates": [],
+        "confidence_reason": null,
+        "failing_services": [
+          "ledger-worker"
+        ],
+        "root": "ledger-worker",
+        "candidates": [
+          "ledger-worker"
+        ],
+        "symptoms": [],
+        "root_errors": 22
+      },
+      "match": true,
+      "verdict": "correct and confident",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "ledger-worker"
+      ],
+      "root": "ledger-worker",
+      "candidates": [
+        "ledger-worker"
+      ],
+      "symptoms": [],
+      "root_errors": 22,
+      "label": "high",
+      "score": 0.898,
+      "signals": {
+        "evidence": 1.0,
+        "dominance": 1.0,
+        "relevance": 0.594
+      },
+      "activity": "ongoing",
+      "confidence_reason": null,
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "tuf-specific-01",
+      "category": "two_unrelated_faults",
+      "split": "test",
+      "mode": "specific",
+      "question": "What is wrong with notify-worker?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "notify-worker"
+        ],
+        "primary_root": "notify-worker",
+        "chain": [
+          "notify-worker"
+        ],
+        "label": "high",
+        "activity": "ongoing",
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "specific",
+        "answer_type": "incident",
+        "roots": [
+          "notify-worker"
+        ],
+        "primary_root": "notify-worker",
+        "chain": [
+          "notify-worker"
+        ],
+        "label": "high",
+        "score": 0.891,
+        "signals": {
+          "evidence": 1.0,
+          "dominance": 1.0,
+          "relevance": 0.563
+        },
+        "activity": "ongoing",
+        "last_error_age_s": 6.0,
+        "competing_candidates": [],
+        "confidence_reason": null,
+        "failing_services": [
+          "notify-worker"
+        ],
+        "root": "notify-worker",
+        "candidates": [
+          "notify-worker"
+        ],
+        "symptoms": [],
+        "root_errors": 30
+      },
+      "match": true,
+      "verdict": "correct and confident",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "notify-worker"
+      ],
+      "root": "notify-worker",
+      "candidates": [
+        "notify-worker"
+      ],
+      "symptoms": [],
+      "root_errors": 30,
+      "label": "high",
+      "score": 0.891,
+      "signals": {
+        "evidence": 1.0,
+        "dominance": 1.0,
+        "relevance": 0.563
+      },
+      "activity": "ongoing",
+      "confidence_reason": null,
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "tur-01",
+      "category": "two_upstream_roots",
+      "split": "tune",
+      "mode": "general",
+      "question": "What is happening in the system right now?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "payment-service"
+        ],
+        "primary_root": "payment-service",
+        "chain": null,
+        "label": "low",
+        "activity": "ongoing",
+        "competing": [
+          "notify-worker",
+          "payment-service"
+        ],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "general",
+        "answer_type": "incident",
+        "roots": [
+          "payment-service"
+        ],
+        "primary_root": "payment-service",
+        "chain": null,
+        "label": "low",
+        "score": 0.707,
+        "signals": {
+          "evidence": 1.0,
+          "dominance": 0.5,
+          "relevance": 0.527
+        },
+        "activity": "ongoing",
+        "last_error_age_s": 8.0,
+        "competing_candidates": [
+          "payment-service",
+          "notify-worker"
+        ],
+        "confidence_reason": "payment-service (30 errors) and notify-worker (28 errors) are both plausible root causes, so ARGUS cannot tell which one started this.",
+        "failing_services": [
+          "orders-service",
+          "payment-service"
+        ],
+        "root": "payment-service",
+        "candidates": [
+          "payment-service",
+          "notify-worker"
+        ],
+        "symptoms": [
+          "orders-service"
+        ],
+        "root_errors": 30
+      },
+      "match": true,
+      "verdict": "correctly uncertain",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "orders-service",
+        "payment-service"
+      ],
+      "root": "payment-service",
+      "candidates": [
+        "payment-service",
+        "notify-worker"
+      ],
+      "symptoms": [
+        "orders-service"
+      ],
+      "root_errors": 30,
+      "label": "low",
+      "score": 0.707,
+      "signals": {
+        "evidence": 1.0,
+        "dominance": 0.5,
+        "relevance": 0.527
+      },
+      "activity": "ongoing",
+      "confidence_reason": "payment-service (30 errors) and notify-worker (28 errors) are both plausible root causes, so ARGUS cannot tell which one started this.",
+      "competing_candidates": [
+        "payment-service",
+        "notify-worker"
+      ],
+      "is_eval": true
+    },
+    {
+      "id": "tur-02",
+      "category": "two_upstream_roots",
+      "split": "test",
+      "mode": "general",
+      "question": "What is happening in the system right now?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "payment-service"
+        ],
+        "primary_root": "payment-service",
+        "chain": null,
+        "label": "low",
+        "activity": "ongoing",
+        "competing": [
+          "notify-worker",
+          "payment-service"
+        ],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "general",
+        "answer_type": "incident",
+        "roots": [
+          "payment-service"
+        ],
+        "primary_root": "payment-service",
+        "chain": null,
+        "label": "low",
+        "score": 0.707,
+        "signals": {
+          "evidence": 1.0,
+          "dominance": 0.5,
+          "relevance": 0.527
+        },
+        "activity": "ongoing",
+        "last_error_age_s": 5.0,
+        "competing_candidates": [
+          "payment-service",
+          "notify-worker"
+        ],
+        "confidence_reason": "payment-service (40 errors) and notify-worker (12 errors) are both plausible root causes, so ARGUS cannot tell which one started this.",
+        "failing_services": [
+          "orders-service",
+          "payment-service"
+        ],
+        "root": "payment-service",
+        "candidates": [
+          "payment-service",
+          "notify-worker"
+        ],
+        "symptoms": [
+          "orders-service"
+        ],
+        "root_errors": 40
+      },
+      "match": true,
+      "verdict": "correctly uncertain",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "orders-service",
+        "payment-service"
+      ],
+      "root": "payment-service",
+      "candidates": [
+        "payment-service",
+        "notify-worker"
+      ],
+      "symptoms": [
+        "orders-service"
+      ],
+      "root_errors": 40,
+      "label": "low",
+      "score": 0.707,
+      "signals": {
+        "evidence": 1.0,
+        "dominance": 0.5,
+        "relevance": 0.527
+      },
+      "activity": "ongoing",
+      "confidence_reason": "payment-service (40 errors) and notify-worker (12 errors) are both plausible root causes, so ARGUS cannot tell which one started this.",
+      "competing_candidates": [
+        "payment-service",
+        "notify-worker"
+      ],
+      "is_eval": true
+    },
+    {
+      "id": "tur-specific-01",
+      "category": "two_upstream_roots",
+      "split": "test",
+      "mode": "specific",
+      "question": "What is wrong with orders-service?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "payment-service"
+        ],
+        "primary_root": "payment-service",
+        "chain": null,
+        "label": "low",
+        "activity": "ongoing",
+        "competing": [
+          "notify-worker",
+          "payment-service"
+        ],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "specific",
+        "answer_type": "incident",
+        "roots": [
+          "payment-service"
+        ],
+        "primary_root": "payment-service",
+        "chain": null,
+        "label": "low",
+        "score": 0.707,
+        "signals": {
+          "evidence": 1.0,
+          "dominance": 0.5,
+          "relevance": 0.527
+        },
+        "activity": "ongoing",
+        "last_error_age_s": 8.0,
+        "competing_candidates": [
+          "payment-service",
+          "notify-worker"
+        ],
+        "confidence_reason": "payment-service (30 errors) and notify-worker (28 errors) are both plausible root causes, so ARGUS cannot tell which one started this.",
+        "failing_services": [
+          "orders-service",
+          "payment-service"
+        ],
+        "root": "payment-service",
+        "candidates": [
+          "payment-service",
+          "notify-worker"
+        ],
+        "symptoms": [
+          "orders-service"
+        ],
+        "root_errors": 30
+      },
+      "match": true,
+      "verdict": "correctly uncertain",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "orders-service",
+        "payment-service"
+      ],
+      "root": "payment-service",
+      "candidates": [
+        "payment-service",
+        "notify-worker"
+      ],
+      "symptoms": [
+        "orders-service"
+      ],
+      "root_errors": 30,
+      "label": "low",
+      "score": 0.707,
+      "signals": {
+        "evidence": 1.0,
+        "dominance": 0.5,
+        "relevance": 0.527
+      },
+      "activity": "ongoing",
+      "confidence_reason": "payment-service (30 errors) and notify-worker (28 errors) are both plausible root causes, so ARGUS cannot tell which one started this.",
+      "competing_candidates": [
+        "payment-service",
+        "notify-worker"
+      ],
+      "is_eval": true
+    },
+    {
+      "id": "tur3-01",
+      "category": "three_upstream_roots",
+      "split": "tune",
+      "mode": "general",
+      "question": "What is happening in the system right now?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "payment-service"
+        ],
+        "primary_root": "payment-service",
+        "chain": null,
+        "label": "low",
+        "activity": "ongoing",
+        "competing": [
+          "ledger-worker",
+          "notify-worker",
+          "payment-service"
+        ],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "general",
+        "answer_type": "incident",
+        "roots": [
+          "payment-service"
+        ],
+        "primary_root": "payment-service",
+        "chain": null,
+        "label": "low",
+        "score": 0.648,
+        "signals": {
+          "evidence": 1.0,
+          "dominance": 0.333,
+          "relevance": 0.527
+        },
+        "activity": "ongoing",
+        "last_error_age_s": 5.0,
+        "competing_candidates": [
+          "payment-service",
+          "notify-worker",
+          "ledger-worker"
+        ],
+        "confidence_reason": "payment-service (394 errors), notify-worker (180 errors) and ledger-worker (150 errors) are all plausible root causes, so ARGUS cannot tell which one started this.",
+        "failing_services": [
+          "orders-service",
+          "payment-service"
+        ],
+        "root": "payment-service",
+        "candidates": [
+          "payment-service",
+          "notify-worker",
+          "ledger-worker"
+        ],
+        "symptoms": [
+          "orders-service"
+        ],
+        "root_errors": 394
+      },
+      "match": true,
+      "verdict": "correctly uncertain",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "orders-service",
+        "payment-service"
+      ],
+      "root": "payment-service",
+      "candidates": [
+        "payment-service",
+        "notify-worker",
+        "ledger-worker"
+      ],
+      "symptoms": [
+        "orders-service"
+      ],
+      "root_errors": 394,
+      "label": "low",
+      "score": 0.648,
+      "signals": {
+        "evidence": 1.0,
+        "dominance": 0.333,
+        "relevance": 0.527
+      },
+      "activity": "ongoing",
+      "confidence_reason": "payment-service (394 errors), notify-worker (180 errors) and ledger-worker (150 errors) are all plausible root causes, so ARGUS cannot tell which one started this.",
+      "competing_candidates": [
+        "payment-service",
+        "notify-worker",
+        "ledger-worker"
+      ],
+      "is_eval": true
+    },
+    {
+      "id": "tur3-02",
+      "category": "three_upstream_roots",
+      "split": "tune",
+      "mode": "general",
+      "question": "What is happening in the system right now?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "payment-service"
+        ],
+        "primary_root": "payment-service",
+        "chain": null,
+        "label": "low",
+        "activity": "ongoing",
+        "competing": [
+          "ledger-worker",
+          "notify-worker",
+          "payment-service"
+        ],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "general",
+        "answer_type": "incident",
+        "roots": [
+          "payment-service"
+        ],
+        "primary_root": "payment-service",
+        "chain": null,
+        "label": "low",
+        "score": 0.648,
+        "signals": {
+          "evidence": 1.0,
+          "dominance": 0.333,
+          "relevance": 0.527
+        },
+        "activity": "ongoing",
+        "last_error_age_s": 5.0,
+        "competing_candidates": [
+          "payment-service",
+          "notify-worker",
+          "ledger-worker"
+        ],
+        "confidence_reason": "payment-service (300 errors), notify-worker (120 errors) and ledger-worker (100 errors) are all plausible root causes, so ARGUS cannot tell which one started this.",
+        "failing_services": [
+          "orders-service",
+          "payment-service"
+        ],
+        "root": "payment-service",
+        "candidates": [
+          "payment-service",
+          "notify-worker",
+          "ledger-worker"
+        ],
+        "symptoms": [
+          "orders-service"
+        ],
+        "root_errors": 300
+      },
+      "match": true,
+      "verdict": "correctly uncertain",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "orders-service",
+        "payment-service"
+      ],
+      "root": "payment-service",
+      "candidates": [
+        "payment-service",
+        "notify-worker",
+        "ledger-worker"
+      ],
+      "symptoms": [
+        "orders-service"
+      ],
+      "root_errors": 300,
+      "label": "low",
+      "score": 0.648,
+      "signals": {
+        "evidence": 1.0,
+        "dominance": 0.333,
+        "relevance": 0.527
+      },
+      "activity": "ongoing",
+      "confidence_reason": "payment-service (300 errors), notify-worker (120 errors) and ledger-worker (100 errors) are all plausible root causes, so ARGUS cannot tell which one started this.",
+      "competing_candidates": [
+        "payment-service",
+        "notify-worker",
+        "ledger-worker"
+      ],
+      "is_eval": true
+    },
+    {
+      "id": "tur3-03",
+      "category": "three_upstream_roots",
+      "split": "test",
+      "mode": "specific",
+      "question": "What is wrong with payment-service?",
+      "expected": {
+        "answer_type": "incident",
+        "roots": [
+          "payment-service"
+        ],
+        "primary_root": "payment-service",
+        "chain": null,
+        "label": "low",
+        "activity": "ongoing",
+        "competing": [
+          "ledger-worker",
+          "notify-worker",
+          "payment-service"
+        ],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "specific",
+        "answer_type": "incident",
+        "roots": [
+          "payment-service"
+        ],
+        "primary_root": "payment-service",
+        "chain": null,
+        "label": "low",
+        "score": 0.648,
+        "signals": {
+          "evidence": 1.0,
+          "dominance": 0.333,
+          "relevance": 0.527
+        },
+        "activity": "ongoing",
+        "last_error_age_s": 5.0,
+        "competing_candidates": [
+          "payment-service",
+          "notify-worker",
+          "ledger-worker"
+        ],
+        "confidence_reason": "payment-service (394 errors), notify-worker (180 errors) and ledger-worker (150 errors) are all plausible root causes, so ARGUS cannot tell which one started this.",
+        "failing_services": [
+          "orders-service",
+          "payment-service"
+        ],
+        "root": "payment-service",
+        "candidates": [
+          "payment-service",
+          "notify-worker",
+          "ledger-worker"
+        ],
+        "symptoms": [
+          "orders-service"
+        ],
+        "root_errors": 394
+      },
+      "match": true,
+      "verdict": "correctly uncertain",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [
+        "orders-service",
+        "payment-service"
+      ],
+      "root": "payment-service",
+      "candidates": [
+        "payment-service",
+        "notify-worker",
+        "ledger-worker"
+      ],
+      "symptoms": [
+        "orders-service"
+      ],
+      "root_errors": 394,
+      "label": "low",
+      "score": 0.648,
+      "signals": {
+        "evidence": 1.0,
+        "dominance": 0.333,
+        "relevance": 0.527
+      },
+      "activity": "ongoing",
+      "confidence_reason": "payment-service (394 errors), notify-worker (180 errors) and ledger-worker (150 errors) are all plausible root causes, so ARGUS cannot tell which one started this.",
+      "competing_candidates": [
+        "payment-service",
+        "notify-worker",
+        "ledger-worker"
+      ],
+      "is_eval": true
+    },
+    {
+      "id": "usq-01",
+      "category": "unknown_service_question",
+      "split": "tune",
+      "mode": "specific",
+      "question": "What is wrong with shipping-service?",
+      "expected": {
+        "answer_type": "unknown_service",
+        "roots": [],
+        "primary_root": null,
+        "chain": null,
+        "label": null,
+        "activity": null,
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "unknown_service",
+        "answer_type": "unknown_service",
+        "roots": [],
+        "primary_root": null,
+        "chain": null,
+        "label": null,
+        "score": 0.0,
+        "signals": {
+          "evidence": 0.0,
+          "dominance": 0.0,
+          "relevance": 0.0
+        },
+        "activity": null,
+        "last_error_age_s": null,
+        "competing_candidates": [],
+        "confidence_reason": "No errors were found in the last 5 minutes.",
+        "failing_services": [],
+        "root": null,
+        "candidates": [],
+        "symptoms": [],
+        "root_errors": 0
+      },
+      "match": true,
+      "verdict": "correct abstention",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [],
+      "root": null,
+      "candidates": [],
+      "symptoms": [],
+      "root_errors": 0,
+      "label": null,
+      "score": 0.0,
+      "signals": {
+        "evidence": 0.0,
+        "dominance": 0.0,
+        "relevance": 0.0
+      },
+      "activity": null,
+      "confidence_reason": "No errors were found in the last 5 minutes.",
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "usq-02",
+      "category": "unknown_service_question",
+      "split": "test",
+      "mode": "specific",
+      "question": "What is wrong with cache-pool?",
+      "expected": {
+        "answer_type": "unknown_service",
+        "roots": [],
+        "primary_root": null,
+        "chain": null,
+        "label": null,
+        "activity": null,
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "unknown_service",
+        "answer_type": "unknown_service",
+        "roots": [],
+        "primary_root": null,
+        "chain": null,
+        "label": null,
+        "score": 0.0,
+        "signals": {
+          "evidence": 0.0,
+          "dominance": 0.0,
+          "relevance": 0.0
+        },
+        "activity": null,
+        "last_error_age_s": null,
+        "competing_candidates": [],
+        "confidence_reason": "No errors were found in the last 5 minutes.",
+        "failing_services": [],
+        "root": null,
+        "candidates": [],
+        "symptoms": [],
+        "root_errors": 0
+      },
+      "match": true,
+      "verdict": "correct abstention",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [],
+      "root": null,
+      "candidates": [],
+      "symptoms": [],
+      "root_errors": 0,
+      "label": null,
+      "score": 0.0,
+      "signals": {
+        "evidence": 0.0,
+        "dominance": 0.0,
+        "relevance": 0.0
+      },
+      "activity": null,
+      "confidence_reason": "No errors were found in the last 5 minutes.",
+      "competing_candidates": [],
+      "is_eval": true
+    },
+    {
+      "id": "usq-03",
+      "category": "unknown_service_question",
+      "split": "tune",
+      "mode": "specific",
+      "question": "What is wrong with auth-worker?",
+      "expected": {
+        "answer_type": "unknown_service",
+        "roots": [],
+        "primary_root": null,
+        "chain": null,
+        "label": null,
+        "activity": null,
+        "competing": [],
+        "borderline": false
+      },
+      "actual": {
+        "mode": "unknown_service",
+        "answer_type": "unknown_service",
+        "roots": [],
+        "primary_root": null,
+        "chain": null,
+        "label": null,
+        "score": 0.0,
+        "signals": {
+          "evidence": 0.0,
+          "dominance": 0.0,
+          "relevance": 0.0
+        },
+        "activity": null,
+        "last_error_age_s": null,
+        "competing_candidates": [],
+        "confidence_reason": "No errors were found in the last 5 minutes.",
+        "failing_services": [],
+        "root": null,
+        "candidates": [],
+        "symptoms": [],
+        "root_errors": 0
+      },
+      "match": true,
+      "verdict": "correct abstention",
+      "consistency": true,
+      "activity_correct": true,
+      "failing_services": [],
+      "root": null,
+      "candidates": [],
+      "symptoms": [],
+      "root_errors": 0,
+      "label": null,
+      "score": 0.0,
+      "signals": {
+        "evidence": 0.0,
+        "dominance": 0.0,
+        "relevance": 0.0
+      },
+      "activity": null,
+      "confidence_reason": "No errors were found in the last 5 minutes.",
+      "competing_candidates": [],
+      "is_eval": true
+    }
+  ],
+  "summary": {
+    "tune": {
+      "overall": {
+        "k": 26,
+        "n": 26,
+        "pct": 100.0
+      },
+      "per_category": {
+        "cascade": {
+          "k": 2,
+          "n": 2,
+          "pct": 100.0
+        },
+        "clean": {
+          "k": 2,
+          "n": 2,
+          "pct": 100.0
+        },
+        "healthy_service_question": {
+          "k": 1,
+          "n": 1,
+          "pct": 100.0
+        },
+        "low_volume": {
+          "k": 2,
+          "n": 2,
+          "pct": 100.0
+        },
+        "mixed_errors": {
+          "k": 1,
+          "n": 1,
+          "pct": 100.0
+        },
+        "noisy_warnings": {
+          "k": 1,
+          "n": 1,
+          "pct": 100.0
+        },
+        "recently_stopped": {
+          "k": 2,
+          "n": 2,
+          "pct": 100.0
+        },
+        "renamed_graph": {
+          "k": 1,
+          "n": 1,
+          "pct": 100.0
+        },
+        "single_fault": {
+          "k": 3,
+          "n": 3,
+          "pct": 100.0
+        },
+        "stale_logs": {
+          "k": 2,
+          "n": 2,
+          "pct": 100.0
+        },
+        "stray_error": {
+          "k": 2,
+          "n": 2,
+          "pct": 100.0
+        },
+        "subfloor_competitor": {
+          "k": 1,
+          "n": 1,
+          "pct": 100.0
+        },
+        "three_upstream_roots": {
+          "k": 2,
+          "n": 2,
+          "pct": 100.0
+        },
+        "two_unrelated_faults": {
+          "k": 1,
+          "n": 1,
+          "pct": 100.0
+        },
+        "two_upstream_roots": {
+          "k": 1,
+          "n": 1,
+          "pct": 100.0
+        },
+        "unknown_service_question": {
+          "k": 2,
+          "n": 2,
+          "pct": 100.0
+        }
+      },
+      "high_confidence_precision": {
+        "k": 12,
+        "n": 12,
+        "pct": 100.0
+      },
+      "false_confidence_rate": {
+        "k": 0,
+        "n": 12,
+        "pct": 0.0
+      },
+      "over_abstention": {
+        "k": 0,
+        "n": 12,
+        "pct": 0.0
+      },
+      "calibration": {
+        "<0.5": {
+          "k": 8,
+          "n": 8,
+          "pct": 100.0
+        },
+        "0.5-0.65": {
+          "k": 5,
+          "n": 5,
+          "pct": 100.0
+        },
+        "0.65-0.8": {
+          "k": 2,
+          "n": 2,
+          "pct": 100.0
+        },
+        ">0.8": {
+          "k": 11,
+          "n": 11,
+          "pct": 100.0
+        }
+      },
+      "consistency": {
+        "k": 26,
+        "n": 26,
+        "pct": 100.0
+      },
+      "activity_accuracy": {
+        "k": 18,
+        "n": 18,
+        "pct": 100.0
+      }
+    },
+    "test": {
+      "overall": {
+        "k": 26,
+        "n": 26,
+        "pct": 100.0
+      },
+      "per_category": {
+        "cascade": {
+          "k": 2,
+          "n": 2,
+          "pct": 100.0
+        },
+        "clean": {
+          "k": 1,
+          "n": 1,
+          "pct": 100.0
+        },
+        "healthy_service_question": {
+          "k": 2,
+          "n": 2,
+          "pct": 100.0
+        },
+        "low_volume": {
+          "k": 1,
+          "n": 1,
+          "pct": 100.0
+        },
+        "mixed_errors": {
+          "k": 2,
+          "n": 2,
+          "pct": 100.0
+        },
+        "noisy_warnings": {
+          "k": 2,
+          "n": 2,
+          "pct": 100.0
+        },
+        "recently_stopped": {
+          "k": 1,
+          "n": 1,
+          "pct": 100.0
+        },
+        "renamed_graph": {
+          "k": 2,
+          "n": 2,
+          "pct": 100.0
+        },
+        "single_fault": {
+          "k": 3,
+          "n": 3,
+          "pct": 100.0
+        },
+        "stale_logs": {
+          "k": 1,
+          "n": 1,
+          "pct": 100.0
+        },
+        "stray_error": {
+          "k": 1,
+          "n": 1,
+          "pct": 100.0
+        },
+        "subfloor_competitor": {
+          "k": 2,
+          "n": 2,
+          "pct": 100.0
+        },
+        "three_upstream_roots": {
+          "k": 1,
+          "n": 1,
+          "pct": 100.0
+        },
+        "two_unrelated_faults": {
+          "k": 2,
+          "n": 2,
+          "pct": 100.0
+        },
+        "two_upstream_roots": {
+          "k": 2,
+          "n": 2,
+          "pct": 100.0
+        },
+        "unknown_service_question": {
+          "k": 1,
+          "n": 1,
+          "pct": 100.0
+        }
+      },
+      "high_confidence_precision": {
+        "k": 15,
+        "n": 15,
+        "pct": 100.0
+      },
+      "false_confidence_rate": {
+        "k": 0,
+        "n": 15,
+        "pct": 0.0
+      },
+      "over_abstention": {
+        "k": 0,
+        "n": 15,
+        "pct": 0.0
+      },
+      "calibration": {
+        "<0.5": {
+          "k": 7,
+          "n": 7,
+          "pct": 100.0
+        },
+        "0.5-0.65": {
+          "k": 2,
+          "n": 2,
+          "pct": 100.0
+        },
+        "0.65-0.8": {
+          "k": 2,
+          "n": 2,
+          "pct": 100.0
+        },
+        ">0.8": {
+          "k": 15,
+          "n": 15,
+          "pct": 100.0
+        }
+      },
+      "consistency": {
+        "k": 26,
+        "n": 26,
+        "pct": 100.0
+      },
+      "activity_accuracy": {
+        "k": 19,
+        "n": 19,
+        "pct": 100.0
+      }
+    },
+    "baseline_gap": {
+      "sanitized": {
+        "k": 24,
+        "n": 24,
+        "pct": 100.0
+      },
+      "original": {
+        "k": 24,
+        "n": 24,
+        "pct": 100.0
+      },
+      "gap_pct": 0.0
+    }
+  }
+}
