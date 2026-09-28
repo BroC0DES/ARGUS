@@ -471,6 +471,7 @@ export default function ConsoleApp() {
           <IncidentReport
             incident={incident}
             onRootCauseClick={() => { setScreen("workspace"); setSelected(incident.service); }}
+            onServiceClick={(id) => { setScreen("workspace"); setSelected(id); }}
             onStatClick={(s) => s.sourceLogIds && s.sourceLogIds.length > 0 && (setScreen("workspace"), flash(s.sourceLogIds[0]))}
             onCitationClick={(e) => { setScreen("workspace"); flash(e.id); }}
             onCodeClick={() => { setScreen("workspace"); setSelected(incident.service); }}

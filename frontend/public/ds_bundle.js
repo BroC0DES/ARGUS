@@ -488,6 +488,155 @@ function ConfidenceTag({
 Object.assign(__ds_scope, { ConfidenceTag });
 })(); } catch (e) { __ds_ns.__errors.push({ path: "components/core/ConfidenceTag.jsx", error: String((e && e.message) || e) }); }
 
+// components/core/ActivityBadge.jsx
+try { (() => {
+function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
+/**
+ * Whether the underlying anomaly is still producing errors right now, or has
+ * gone quiet -- orthogonal to ConfidenceTag (which is about certainty, not
+ * recency), so it never touches the score's color or wording: a fixed
+ * neutral tone, distinguished only by the pulsing dot (DESIGN.md §9.13 --
+ * pulses only when something is happening right now). Renders nothing when
+ * there's no activity signal at all (no root cause to time).
+ */
+function ActivityBadge({
+  activity = null,
+  lastErrorAgeS = null,
+  style,
+  ...rest
+}) {
+  if (!activity) return null;
+  const minutes = Math.max(0, Math.round((lastErrorAgeS || 0) / 60));
+  const label = activity === "ongoing" ? "ongoing" : `stopped ${minutes} min ago`;
+  return /*#__PURE__*/React.createElement(__ds_scope.Badge, _extends({}, rest, {
+    tone: "neutral",
+    dot: true,
+    pulsing: activity === "ongoing",
+    style
+  }), label);
+}
+Object.assign(__ds_scope, { ActivityBadge });
+})(); } catch (e) { __ds_ns.__errors.push({ path: "components/core/ActivityBadge.jsx", error: String((e && e.message) || e) }); }
+
+// components/app/ConfidenceExplainer.jsx
+try { (() => {
+function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
+const fmtCount = n => String(Math.round(n * 100) / 100);
+
+/**
+ * "Why low confidence?" disclosure. Collapsed by default; shows the
+ * backend's own confidence_reason sentence verbatim, and -- only when
+ * ambiguity between candidates is the reason -- each competing candidate's
+ * raw numbers. Renders nothing when there's nothing to explain. Standalone
+ * and data-only (reason/competingCandidates/onCandidateClick are plain
+ * props) so other panels, e.g. the Validation tab, can reuse it against
+ * their own incident data.
+ */
+function ConfidenceExplainer({
+  reason = null,
+  competingCandidates = [],
+  onCandidateClick,
+  defaultOpen = false,
+  style,
+  ...rest
+}) {
+  const [open, setOpen] = React.useState(defaultOpen);
+  const [hoverId, setHoverId] = React.useState(null);
+  const panelId = React.useId();
+  if (!reason && competingCandidates.length === 0) return null;
+  return /*#__PURE__*/React.createElement("div", _extends({}, rest, {
+    style: {
+      display: "flex",
+      flexDirection: "column",
+      gap: "var(--space-xs)",
+      ...style
+    }
+  }), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    "aria-expanded": open,
+    "aria-controls": panelId,
+    onClick: () => setOpen(o => !o),
+    style: {
+      display: "inline-flex",
+      alignItems: "center",
+      gap: "var(--space-xxs)",
+      alignSelf: "flex-start",
+      padding: 0,
+      background: "none",
+      border: "none",
+      cursor: "pointer",
+      fontFamily: "var(--font-ui)",
+      fontSize: "var(--text-caption)",
+      color: "var(--ink-subtle)"
+    }
+  }, /*#__PURE__*/React.createElement(__ds_scope.Icon, {
+    name: "chevron-right",
+    size: 12,
+    style: {
+      transform: open ? "rotate(90deg)" : "none",
+      transition: "transform var(--dur-chrome) var(--ease)"
+    }
+  }), "Why low confidence?"), open && /*#__PURE__*/React.createElement("div", {
+    id: panelId,
+    style: {
+      display: "flex",
+      flexDirection: "column",
+      gap: "var(--space-sm)",
+      padding: "var(--space-sm) var(--space-md)",
+      background: "var(--surface-2)",
+      border: "1px solid var(--hairline)",
+      borderRadius: "var(--radius-sm)"
+    }
+  }, reason && /*#__PURE__*/React.createElement("p", {
+    style: {
+      margin: 0,
+      fontFamily: "var(--font-ui)",
+      fontSize: "var(--text-body-sm)",
+      color: "var(--ink-muted)"
+    }
+  }, reason), competingCandidates.length > 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      flexDirection: "column",
+      gap: "var(--space-xxs)"
+    }
+  }, competingCandidates.map(c => /*#__PURE__*/React.createElement("button", {
+    key: c.service,
+    type: "button",
+    onClick: () => onCandidateClick && onCandidateClick(c.service),
+    onMouseEnter: () => setHoverId(c.service),
+    onMouseLeave: () => setHoverId(prev => prev === c.service ? null : prev),
+    style: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      gap: "var(--space-sm)",
+      width: "100%",
+      textAlign: "left",
+      padding: "var(--space-xxs) var(--space-sm)",
+      background: hoverId === c.service ? "var(--surface-3)" : "transparent",
+      border: `1px solid ${hoverId === c.service ? "var(--hairline-strong)" : "var(--hairline)"}`,
+      borderRadius: "var(--radius-xs)",
+      cursor: "pointer"
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: "var(--font-mono)",
+      fontSize: "var(--text-mono)",
+      color: "var(--brand)"
+    }
+  }, c.service), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: "var(--font-ui)",
+      fontSize: "var(--text-caption)",
+      color: "var(--ink-subtle)",
+      whiteSpace: "nowrap"
+    }
+  }, `${fmtCount(c.weighted_errors)} errors · ${Math.round(c.share_of_top * 100)}% of top${c.label ? ` · ${c.label}` : ""}`))))));
+}
+Object.assign(__ds_scope, { ConfidenceExplainer });
+})(); } catch (e) { __ds_ns.__errors.push({ path: "components/app/ConfidenceExplainer.jsx", error: String((e && e.message) || e) }); }
+
 // components/app/IncidentReport.jsx
 try { (() => {
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
@@ -506,6 +655,7 @@ function IncidentReport({
   onCitationClick,
   onCodeClick,
   onExportPostmortem,
+  onServiceClick,
   style,
   ...rest
 }) {
@@ -546,6 +696,8 @@ function IncidentReport({
     }), " No active incidents"));
   }
   const noConfidentCause = incident.confidentCauseFound === false;
+  const lowConfidence = incident.confidence === "low";
+  const otherIncidents = (incident.incidents || []).filter(i => i.service && i.service !== incident.service);
   const handleExport = async () => {
     if (!onExportPostmortem) return;
     const ok = await onExportPostmortem(incident);
@@ -563,6 +715,13 @@ function IncidentReport({
       justifyContent: "space-between",
       gap: "var(--space-md)"
     }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: "var(--space-sm)",
+      flexWrap: "wrap"
+    }
   }, /*#__PURE__*/React.createElement("h2", {
     style: {
       margin: 0,
@@ -579,7 +738,10 @@ function IncidentReport({
   }, /*#__PURE__*/React.createElement(__ds_scope.Icon, {
     name: "alert-triangle",
     size: 24
-  }), noConfidentCause ? "INVESTIGATED — NO CONFIDENT CAUSE IDENTIFIED" : `INCIDENT — ${incident.service}`), onExportPostmortem && /*#__PURE__*/React.createElement(__ds_scope.Button, {
+  }), noConfidentCause ? "INVESTIGATED — NO CONFIDENT CAUSE IDENTIFIED" : `INCIDENT — ${incident.service}`), /*#__PURE__*/React.createElement(__ds_scope.ActivityBadge, {
+    activity: incident.activity,
+    lastErrorAgeS: incident.lastErrorAgeS
+  })), onExportPostmortem && /*#__PURE__*/React.createElement(__ds_scope.Button, {
     variant: "secondary",
     size: "sm",
     icon: /*#__PURE__*/React.createElement(__ds_scope.Icon, {
@@ -603,7 +765,83 @@ function IncidentReport({
   }), /*#__PURE__*/React.createElement(__ds_scope.StatGrid, {
     stats: incident.stats || [],
     onStatClick: onStatClick
-  }), !noConfidentCause && /*#__PURE__*/React.createElement("div", {
+  }), lowConfidence && /*#__PURE__*/React.createElement(__ds_scope.ConfidenceExplainer, {
+    reason: incident.confidenceReason,
+    competingCandidates: incident.competingCandidates || [],
+    onCandidateClick: onServiceClick
+  }), otherIncidents.length > 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      flexDirection: "column",
+      gap: "var(--space-xs)"
+    }
+  }, /*#__PURE__*/React.createElement("p", {
+    style: sectionLabel
+  }, "Also detected"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      flexDirection: "column",
+      gap: "var(--space-xxs)"
+    }
+  }, otherIncidents.map(inc => /*#__PURE__*/React.createElement("button", {
+    key: inc.service,
+    type: "button",
+    onClick: () => onServiceClick && onServiceClick(inc.service),
+    style: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      gap: "var(--space-sm)",
+      width: "100%",
+      textAlign: "left",
+      padding: "var(--space-xs) var(--space-sm)",
+      background: "var(--surface-2)",
+      border: "1px solid var(--hairline)",
+      borderRadius: "var(--radius-sm)",
+      cursor: "pointer",
+      opacity: inc.isMinor ? 0.7 : 1
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: "var(--space-xs)",
+      minWidth: 0
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: "var(--font-mono)",
+      fontSize: "var(--text-mono)",
+      color: inc.isMinor ? "var(--ink-subtle)" : "var(--brand)",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap"
+    }
+  }, inc.service), inc.isMinor && /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: "var(--font-ui)",
+      fontSize: "var(--text-caption)",
+      color: "var(--ink-tertiary)"
+    }
+  }, "minor")), /*#__PURE__*/React.createElement("span", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: "var(--space-xs)",
+      flex: "0 0 auto"
+    }
+  }, /*#__PURE__*/React.createElement(__ds_scope.ConfidenceTag, {
+    level: inc.confidence || "high"
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: "var(--font-mono)",
+      fontSize: "var(--text-caption)",
+      color: "var(--ink-subtle)"
+    }
+  }, inc.score != null ? inc.score.toFixed(2) : ""), /*#__PURE__*/React.createElement(__ds_scope.ActivityBadge, {
+    activity: inc.activity,
+    lastErrorAgeS: inc.lastErrorAgeS
+  })))))), !noConfidentCause && /*#__PURE__*/React.createElement("div", {
     style: {
       display: "flex",
       flexDirection: "column",
@@ -2673,6 +2911,8 @@ __ds_ns.ChatPanel = __ds_scope.ChatPanel;
 
 __ds_ns.IncidentReport = __ds_scope.IncidentReport;
 
+__ds_ns.ConfidenceExplainer = __ds_scope.ConfidenceExplainer;
+
 __ds_ns.IncidentTimeline = __ds_scope.IncidentTimeline;
 
 __ds_ns.LogStream = __ds_scope.LogStream;
@@ -2696,6 +2936,8 @@ __ds_ns.CitationChip = __ds_scope.CitationChip;
 __ds_ns.CodeBlock = __ds_scope.CodeBlock;
 
 __ds_ns.ConfidenceTag = __ds_scope.ConfidenceTag;
+
+__ds_ns.ActivityBadge = __ds_scope.ActivityBadge;
 
 __ds_ns.Icon = __ds_scope.Icon;
 

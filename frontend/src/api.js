@@ -81,6 +81,7 @@ export function usePoll(fn, ms) {
 /** Map a /query response onto the incident shape the report components render. */
 export function toIncident(r) {
   const ext = r.relevant_code ? r.relevant_code.filename.split(".").pop() : "";
+  const d = r.diagnosis || {};
   return {
     service: r.root_cause_service,
     summary: r.summary,
@@ -97,5 +98,22 @@ export function toIncident(r) {
     affected: r.affected_nodes,
     code: r.relevant_code && { filename: r.relevant_code.filename, startLine: r.relevant_code.start_line, lines: r.relevant_code.lines, language: ext },
     fix: r.recommended_fix,
+    // Activity + confidence-explanation fields, straight from the primary incident's
+    // diagnosis block -- no recomputation, just renamed to camelCase for the components.
+    activity: d.activity ?? null,
+    lastErrorAgeS: d.last_error_age_s ?? null,
+    confidenceReason: d.confidence_reason ?? null,
+    competingCandidates: d.competing_candidates || [],
+    // Every other incident the backend found this turn (see /query's `incidents`),
+    // for the "Also detected" list -- the primary is filtered out in the component
+    // by comparing `service`, since IncidentReport already renders it above.
+    incidents: (r.incidents || []).map((inc) => ({
+      service: inc.root,
+      confidence: inc.confidence_label,
+      score: inc.score,
+      isMinor: inc.is_minor,
+      activity: inc.activity,
+      lastErrorAgeS: inc.last_error_age_s,
+    })),
   };
 }
