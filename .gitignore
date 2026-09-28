@@ -26,6 +26,10 @@ dist/
 .DS_Store
 Thumbs.db
 
+# Launch ARGUS.bat / Stop ARGUS.bat runtime state (tracked PIDs of the
+# processes they started) -- regenerated every launch, never committed
+scripts/.run/
+
 # --- wip-validation / eval scratch: never commit (see CLAUDE.md) ---
 eval/_sanitized/
 eval/blind/

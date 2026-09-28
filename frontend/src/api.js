@@ -50,6 +50,10 @@ export const postQuery = (question) => request("/query", { method: "POST", body:
 // Scenario replay itself is instant (it just rewrites the log file) -- generous
 // timeout only in case the backend is briefly busy with something else.
 export const setScenario = (name) => request("/scenario", { method: "POST", body: { name }, timeoutMs: 15000 });
+// Toggles mock-codebase2's traffic simulator process on/off -- see
+// backend/traffic_control.py. Instant either way (just starting/killing a
+// process), so a short timeout is fine.
+export const setTraffic = (action) => request("/traffic", { method: "POST", body: { action }, timeoutMs: 10000 });
 
 /**
  * Poll `fn` every `ms`. A failed poll keeps the last-known-good data (never

@@ -20,6 +20,7 @@ from code_indexer import CodeIndexer, display_name  # noqa: E402  (after load_do
 from log_analyzer import LogAnalyzer, WINDOW_S  # noqa: E402
 from query_pipeline import QueryError, run_query  # noqa: E402
 import scenario_sim  # noqa: E402
+import traffic_control  # noqa: E402
 
 REPO_PATH = os.environ.get("REPO_PATH") or str((HERE.parent / "sample_repo"))
 LOG_PATH = os.environ.get("LOG_PATH") or str(HERE / "logs" / "app.log")
@@ -73,12 +74,30 @@ def warm_model_on_startup() -> None:
     threading.Thread(target=_warm_ollama, daemon=True).start()
 
 
+@app.on_event("startup")
+def start_traffic_on_startup() -> None:
+    # Best-effort: a missing `node` on PATH (or mock-codebase2 not installed)
+    # shows up as traffic_running=false in /health, not a startup crash --
+    # the rest of ARGUS works fine without live traffic, it just has nothing
+    # new to react to.
+    traffic_control.start()
+
+
+@app.on_event("shutdown")
+def stop_traffic_on_shutdown() -> None:
+    traffic_control.stop()
+
+
 class QueryBody(BaseModel):
     question: str = Field(default="", max_length=2000)
 
 
 class ScenarioBody(BaseModel):
     name: str = Field(max_length=64)
+
+
+class TrafficBody(BaseModel):
+    action: str = Field(max_length=8)  # "start" | "stop"
 
 
 @app.get("/health")
@@ -89,7 +108,20 @@ def health():
         "active_scenario": active_scenario,
         "available_scenarios": sorted(scenario_sim.SCENARIOS),
         "model_warm": warmup_state["done"], "warmup_error": warmup_state["error"],
+        "traffic_running": traffic_control.is_running(),
+        "traffic_error": traffic_control.last_error(),
     }
+
+
+@app.post("/traffic")
+def set_traffic(body: TrafficBody):
+    if body.action == "start":
+        ok = traffic_control.start()
+    elif body.action == "stop":
+        ok = traffic_control.stop()
+    else:
+        raise HTTPException(status_code=400, detail="action must be 'start' or 'stop'")
+    return {"running": traffic_control.is_running(), "ok": ok, "error": traffic_control.last_error()}
 
 
 @app.post("/scenario")

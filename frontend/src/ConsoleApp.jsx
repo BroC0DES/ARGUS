@@ -1,5 +1,5 @@
 import React from "react";
-import { getGraph, getLogs, getHealth, postQuery, setScenario, usePoll, toIncident } from "./api.js";
+import { getGraph, getLogs, getHealth, postQuery, setScenario, setTraffic, usePoll, toIncident } from "./api.js";
 import { GUIDE } from "./guide.js";
 import DetailsModal from "./DetailsModal.jsx";
 
@@ -87,6 +87,25 @@ export default function ConsoleApp() {
   const [scenarioBusy, setScenarioBusy] = React.useState(null); // name currently switching to, or null
   const [scenarioError, setScenarioError] = React.useState(null);
   const [scenarioNote, setScenarioNote] = React.useState(null);
+
+  // ---- traffic simulator on/off: state comes from the same health poll already
+  // running above; backend starts it automatically, this button just toggles it ----
+  const trafficRunning = healthPoll.data ? healthPoll.data.traffic_running : null;
+  const [trafficBusy, setTrafficBusy] = React.useState(false);
+  const [trafficError, setTrafficError] = React.useState(null);
+  const onToggleTraffic = async () => {
+    if (trafficBusy || trafficRunning == null) return;
+    setTrafficBusy(true);
+    setTrafficError(null);
+    try {
+      const r = await setTraffic(trafficRunning ? "stop" : "start");
+      if (!r.ok && r.error) setTrafficError(r.error);
+    } catch (e) {
+      setTrafficError(e.message);
+    } finally {
+      setTrafficBusy(false);
+    }
+  };
   const onSelectScenario = async (name) => {
     if (scenarioBusy || name === activeScenario) return;
     setScenarioBusy(name);
@@ -410,6 +429,17 @@ export default function ConsoleApp() {
       {screen === "workspace" && (
         <main style={{ flex: 1, minHeight: 0, display: "flex", gap: "var(--gap-zone)", padding: "var(--space-lg)" }}>
           <section style={{ flex: "1 1 60%", minWidth: 0, display: "flex", flexDirection: "column", gap: "var(--gap-zone)" }}>
+            <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: "var(--space-sm)" }}>
+              <span className="argus-caption" style={{ color: "var(--ink-subtle)" }}>Traffic simulator:</span>
+              <Button
+                variant={trafficRunning ? "primary" : "secondary"}
+                size="sm"
+                disabled={trafficBusy || trafficRunning == null}
+                icon={<Icon name={trafficRunning ? "pause" : "play"} size={14} />}
+                onClick={onToggleTraffic}
+              >{trafficBusy ? "Working…" : trafficRunning ? "Traffic: ON" : "Traffic: OFF"}</Button>
+              {trafficError && <span className="argus-caption" style={{ color: "var(--critical)" }}>{trafficError}</span>}
+            </div>
             {availableScenarios.length > 0 && (
               <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: "var(--space-sm)" }}>
                 <span className="argus-caption" style={{ color: "var(--ink-subtle)" }}>Demo scenario:</span>

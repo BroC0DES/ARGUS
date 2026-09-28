@@ -10,10 +10,19 @@ mock-codebase2/   alternate REPO_PATH: a TypeScript codebase with two planted, c
                   bugs and 3 scenario log fixtures — see "Demo scenarios" below
 ```
 
+## Quick start (Windows, after one-time setup below)
+Double-click **`Launch ARGUS.bat`** in the repo root — it starts the backend,
+all 6 mock services, the frontend, and opens your browser. Traffic starts
+automatically with the backend; toggle it with the **Traffic ON/OFF** button
+in the app instead of a terminal. Double-click **`Stop ARGUS.bat`** to shut
+everything down cleanly. See `scripts/launch-argus.ps1` for what it actually
+runs. This still needs the one-time setup and Ollama steps below first.
+
 ## Setup
 ```
 cd backend  && pip install -r requirements.txt && cp .env.example .env
 cd frontend && npm install && cp .env.example .env.local                 # sets VITE_API_URL (env files are git-ignored)
+cd mock-codebase2 && npm install                                         # needed by Launch ARGUS.bat / the mock services
 ```
 
 ## LLM: local Ollama (no API key)
