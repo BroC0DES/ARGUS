@@ -1,16 +1,24 @@
 """POST /query pipeline:
 
   Log Analyzer (current anomalies)
-    -> Code Indexer (retrieval + dependency graph)
+    -> deterministic root-cause classification (plain code, dependency graph)
+    -> Code Indexer (retrieval, for citing code + a relevance signal)
     -> bundle context
-    -> local Ollama model (schema-constrained JSON = structured report)
-    -> validate against what was actually computed this request
+    -> local Ollama model (schema-constrained JSON = explanation text only)
+    -> validate the model's text against what the code already decided
     -> response
 
-The model chooses the diagnosis. Everything checkable is checked or computed
-here: evidence ids must exist in the bundle, the service must be in the graph,
-code chunks come from disk, and trace path / blast radius / timeline / stats are
-derived from the graph and logs, never from the model.
+The model never chooses the diagnosis. WHICH service is the root cause is
+decided entirely by _classify_incident() below, from real error counts and the
+real dependency graph -- the model cannot override it, and its own self-rated
+confidence is never consulted. The model's only job is to write the
+explanation, and even that is checked afterward: if its text doesn't name the
+code-chosen root (or claims a symptom is the cause), the text is discarded and
+a deterministic fallback sentence is used instead. Confidence is likewise
+computed from measurable signals (see compute_confidence), never asked of the
+model. Evidence ids must exist in the bundle, the service must be in the
+graph, code chunks come from disk, and trace path / blast radius / timeline /
+stats are derived from the graph and logs, never from the model.
 """
 from __future__ import annotations
 
@@ -38,25 +46,30 @@ class QueryError(Exception):
 
 REPORT_TOOL = {
     "name": "report_incident",
-    "description": "Report the result of the investigation. Cite only ids that appear in the provided context.",
+    "description": (
+        "Write up the investigation. WHICH service is the root cause has already been "
+        "decided by the system (given in the context as ROOT SERVICE / CANDIDATE "
+        "SERVICES) -- you cannot change it. Your job is to verify it against the actual "
+        "logs and code and explain it. Cite only ids that appear in the provided context."
+    ),
     "input_schema": {
         "type": "object",
         "properties": {
-            "answer": {"type": "string", "description": "ONE plain-language sentence that directly answers the engineer's question, stated as fact. No hedging words."},
-            "confident_cause_found": {"type": "boolean", "description": "True only if the logs and code together clearly identify one root cause. False if the signal is weak, contradictory, or absent."},
-            "confidence": {"type": "string", "enum": ["high", "low"]},
-            "root_cause_service": {"type": "string", "description": "Exact service name from the services list. Best candidate even when not confident."},
-            "root_cause_function": {"type": "string", "description": "Function name, e.g. charge_card()"},
-            "failure_type": {"type": "string", "description": "One or two words, e.g. 'timeout', 'pool exhaustion'"},
-            "root_cause_line": {"type": "string", "description": "Short label like 'payment-service · charge() gateway timeout'"},
-            "evidence_log_ids": {"type": "array", "items": {"type": "string"}, "description": "Ids of the log lines that prove the diagnosis (or, if not confident, the lines that were reviewed)."},
-            "code_chunk_id": {"type": "string", "description": "Id of the code chunk where the cause lives. Omit if not confident."},
+            # root_service and evidence_summary are listed first on purpose: the model
+            # commits to naming the (already-decided) service before it starts writing
+            # prose, instead of reasoning its way toward a different one across a bunch
+            # of other fields first.
+            "root_service": {"type": "string", "description": "Copy the ROOT SERVICE (or, if the context lists CANDIDATE SERVICES instead, whichever one of those you investigated) exactly as given. Do not name any other service here, even if you suspect it."},
+            "evidence_summary": {"type": "string", "description": "1-3 sentences, stated as fact, no hedging words. Must explicitly name root_service. Must NOT claim a SYMPTOM service (also given in the context) is the cause -- symptoms are affected BY the root cause, they are not it."},
+            "root_cause_function": {"type": "string", "description": "Function name in root_service's own code, e.g. charge_card(). Omit if its code doesn't clearly show the failure."},
+            "failure_type": {"type": "string", "description": "One or two words, e.g. 'timeout', 'pool exhaustion'."},
+            "evidence_log_ids": {"type": "array", "items": {"type": "string"}, "description": "Ids of the log lines that show root_service's own failure."},
+            "code_chunk_id": {"type": "string", "description": "Id of the code chunk (from CODE CHUNKS) that belongs to root_service and shows the failure. Omit if none of the retrieved chunks are root_service's own code."},
             "fix": {
                 "type": "array",
-                "description": "Diff against the chunk: each line has kind remove|add|context. 'remove' and 'context' lines must be copied verbatim from the chunk.",
+                "description": "Diff against the chunk: each line has kind remove|add|context. 'remove' and 'context' lines must be copied verbatim from the chunk. Omit entirely if you didn't cite a code_chunk_id.",
                 "items": {"type": "object", "properties": {"kind": {"type": "string", "enum": ["remove", "add", "context"]}, "text": {"type": "string"}}, "required": ["kind", "text"]},
             },
-            "ruled_out": {"type": "string", "description": "If not confident: what was checked and why no candidate cleared the bar, 1-2 sentences. Else empty."},
             "node_details": {
                 "type": "array",
                 "description": "For each service on the trace path that has a relevant chunk: why its code and logs belong together.",
@@ -72,19 +85,18 @@ REPORT_TOOL = {
                 },
             },
         },
-        "required": ["answer", "confident_cause_found", "confidence", "root_cause_service", "evidence_log_ids"],
+        "required": ["root_service", "evidence_summary", "evidence_log_ids"],
     },
 }
 
 SYSTEM = """You are ARGUS, an incident investigation agent. You are given live log lines, the service dependency graph, and code retrieved from the indexed repository. Diagnose using ONLY that context.
 
 Rules:
-- Answer the engineer's actual question; if it concerns a specific service or symptom, scope the investigation to it.
+- WHICH service is the root cause has already been decided by the system (ROOT SERVICE, or CANDIDATE SERVICES if there's more than one) -- your job is to verify and explain it, not to pick a different one, however loud its error count is. If none of the retrieved code chunks belong to that service, say so plainly in evidence_summary rather than switching to a service that happens to have a matching chunk.
 - Cite only log ids and code chunk ids that appear in the context. Never invent ids, functions, or numbers.
-- A cause is confident only when specific log lines AND specific code line(s) support it. If the evidence is thin, ambiguous, or the logs look healthy, set confident_cause_found=false, confidence=low, and explain in ruled_out what you checked.
-- Symptoms propagate up the dependency graph: an upstream caller's errors often come from a downstream dependency. Prefer the deepest service whose own code produced the error.
+- The context may also list SYMPTOM services -- these fail only because they depend on the root cause. Never name a symptom as the cause.
 - For fixes, copy 'remove' and 'context' lines verbatim from the chunk; keep the diff minimal.
-- State findings as facts, no hedging words like 'possibly'. Uncertainty is expressed only through confidence."""
+- State findings as facts, no hedging words like 'possibly'."""
 
 
 def _service_ids(indexer: CodeIndexer) -> dict[str, str]:
@@ -110,11 +122,116 @@ def _bundle(question: str, logs: LogAnalyzer, indexer: CodeIndexer, now: datetim
         for n in indexer.callees(sid):
             boost[n] = max(boost.get(n, 1.0), 1.2)
     query = question + " " + " ".join(l.message for a in anomalies for l in a["lines"][-6:])
-    chunks = indexer.search(query, k=MAX_CHUNKS, boost=boost)
-    return anomalies, lines, chunks
+    return anomalies, lines, boost, query
 
 
-def _render_context(question, services, edges, anomalies, lines, chunks, stats) -> str:
+def _classify_incident(anomalies: list[dict], indexer: CodeIndexer, services: dict[str, str]) -> dict:
+    """Part A: deterministic root-cause selection. Plain code, no LLM involved --
+    this is the ONLY place that decides which service is the root cause; nothing
+    downstream (including the model) is allowed to change it.
+
+    failing_services: every service with real errors (>0) in the last 5 min.
+    A failing service is a ROOT CANDIDATE only if none of its own dependencies
+    (callees -- what it calls) are ALSO failing: it's the bottom of the failure
+    chain, not just inheriting an error from something downstream of it.
+    Everything else failing is a SYMPTOM of some candidate.
+
+    - Exactly one candidate -> that's the root cause (label "single").
+    - Several unrelated candidates -> ambiguous: no single root, list them all
+      (label "ambiguous"; `root` is still set, to the earliest one, so the graph
+      has somewhere to point, but confidence is capped low by compute_confidence
+      regardless -- see the dominance signal).
+    - No candidates (nothing failing, or every failing service's failure chain
+      loops back on itself) -> label "none", root is None, and the graph stays
+      fully neutral.
+    """
+    failing = [a for a in anomalies if a["errors"] > 0]
+    by_name = {a["service"]: a for a in failing}
+    failing_ids = {services[a["service"]] for a in failing if a["service"] in services}
+
+    def is_candidate(a: dict) -> bool:
+        sid = services.get(a["service"])
+        return sid is not None and not (indexer.callees(sid) & failing_ids)
+
+    candidates = [a["service"] for a in failing if is_candidate(a)]
+    candidates.sort(key=lambda n: by_name[n]["first_error"] or by_name[n]["first_seen"])
+
+    if len(candidates) == 1:
+        label = "single"
+    elif len(candidates) > 1:
+        label = "ambiguous"
+    else:
+        label = "none"
+    root = candidates[0] if candidates else None
+    symptoms = [a["service"] for a in failing if a["service"] not in candidates]
+
+    return {
+        "failing_services": [a["service"] for a in failing],
+        "candidates": candidates,
+        "root": root,
+        "symptoms": symptoms,
+        "root_errors": by_name[root]["errors"] if root else 0,
+        "label": label,
+    }
+
+
+def _compute_confidence(diag: dict, top_relevance: float) -> dict:
+    """Part B: confidence computed entirely from measurable signals -- never from
+    the model's own self-report, which (see wip-validation notes) doesn't
+    reliably track actual evidence strength: it flipped between runs on
+    identical-shaped data, and separately stayed "low" on textbook-clear
+    cascading failures because the model second-guessed a correct code-chosen
+    root. Removing it from the decision fixes both.
+
+    - Grounding gate: no root (label "none"), or the root somehow has zero
+      errors, forces low/0 -- there is nothing to be confident ABOUT.
+    - evidence: min(root_errors / 20, 1.0) -- more corroborating error lines
+      from the root itself, more confidence, capped so one very noisy service
+      can't alone max this out.
+    - relevance: the top TF-IDF retrieval score this query got (post-boost,
+      clamped to 0..1) -- how well the retrieved code actually matches the
+      failure signature. A relevance score, not a probability of correctness.
+    - dominance: 1.0 with exactly one root candidate, 1/N with N unrelated
+      candidates (more ambiguity, less confidence), 0 with none.
+    Weighted 0.4 evidence + 0.25 relevance + 0.35 dominance (dominance weighted
+    heaviest: whether we structurally know WHO is responsible matters more
+    than how many lines happen to be in the log window). >= 0.65 -> high.
+    """
+    relevance = round(max(0.0, min(top_relevance, 1.0)), 3)
+    if diag["label"] == "none" or diag["root"] is None or diag["root_errors"] <= 0:
+        return {"label": "low", "score": 0.0, "signals": {"evidence": 0.0, "dominance": 0.0, "relevance": relevance}}
+    evidence = round(min(diag["root_errors"] / 20.0, 1.0), 3)
+    dominance = round(1.0 / len(diag["candidates"]), 3) if diag["candidates"] else 0.0
+    score = round(0.4 * evidence + 0.25 * relevance + 0.35 * dominance, 3)
+    return {"label": "high" if score >= 0.65 else "low", "score": score, "signals": {"evidence": evidence, "dominance": dominance, "relevance": relevance}}
+
+
+def _fallback_narrative(diag: dict) -> str:
+    """The deterministic sentence used whenever the model's own text fails
+    validation (see _narrative_ok) -- or always, for label "none", since there's
+    nothing for the model to legitimately narrate there."""
+    root, candidates, symptoms, label = diag["root"], diag["candidates"], diag["symptoms"], diag["label"]
+    if label == "single":
+        tail = f" {', '.join(symptoms)} {'is' if len(symptoms) == 1 else 'are'} affected because {'it depends' if len(symptoms) == 1 else 'they depend'} on it." if symptoms else ""
+        return f"{root} is the root cause.{tail}"
+    if label == "ambiguous":
+        tail = f" {', '.join(symptoms)} {'is' if len(symptoms) == 1 else 'are'} affected because {'it depends' if len(symptoms) == 1 else 'they depend'} on one or more of them." if symptoms else ""
+        return f"{', '.join(candidates)} are failing independently, with no single common cause between them.{tail}"
+    return "No service currently has real errors in the lookback window; there is nothing to diagnose."
+
+
+def _narrative_ok(model_root_field: str, evidence_summary: str, diag: dict) -> bool:
+    """The model's text is trusted only if BOTH hold: its own root_service field
+    names one of the code-chosen candidates (never a symptom, never something
+    invented), AND its prose actually names that service. label "none" has no
+    legitimate candidate to name, so it never passes -- _fallback_narrative's
+    fixed sentence is used unconditionally there."""
+    if diag["label"] == "none" or model_root_field not in diag["candidates"]:
+        return False
+    return model_root_field.lower() in (evidence_summary or "").lower()
+
+
+def _render_context(question, services, edges, anomalies, lines, chunks, stats, diag) -> str:
     out = [f"QUESTION: {question}", "", "SERVICES: " + ", ".join(sorted(services))]
     out.append("DEPENDENCIES (A -> B means A calls B): " + "; ".join(f"{display_name(a)} -> {display_name(b)}" for a, b in edges))
     out += ["", f"STATUS (last {WINDOW_S // 60} min):"]
@@ -122,6 +239,12 @@ def _render_context(question, services, edges, anomalies, lines, chunks, stats) 
         out.append(f"  {svc}: {s['errors']} errors, {s['warns']} warnings, {s['health']}")
     if not anomalies:
         out.append("  (no warnings or errors in the lookback window)")
+    if diag["label"] == "single":
+        out.append(f"  ROOT SERVICE (decided by the system, not you): {diag['root']}")
+    elif diag["label"] == "ambiguous":
+        out.append(f"  CANDIDATE SERVICES (decided by the system, not you -- pick whichever you can verify with code): {', '.join(diag['candidates'])}")
+    if diag["symptoms"]:
+        out.append(f"  SYMPTOM SERVICES (affected BY the root cause, never the cause themselves): {', '.join(diag['symptoms'])}")
     out += ["", "LOG LINES (id | time | severity | service | message):"]
     out += [f"  {l.id} | {l.to_dict()['time']} | {l.severity} | {l.service} | {l.message}" for l in lines]
     out += ["", "CODE CHUNKS:"]
@@ -170,37 +293,65 @@ def run_query(question: str, logs: LogAnalyzer, indexer: CodeIndexer) -> dict:
     services = _service_ids(indexer)  # display -> id
     _, edges = indexer.graph()
     stats = logs.stats(now)
-    anomalies, lines, chunks = _bundle(question, logs, indexer, now)
-    ctx = _render_context(question, list(services), edges, anomalies, lines, chunks, stats)
+    anomalies, lines, boost, retrieval_query = _bundle(question, logs, indexer, now)
+
+    # ---- A: decide the root cause, in code, before the model ever runs ----
+    diag = _classify_incident(anomalies, indexer, services)
+
+    # Retrieval happens after classification (not before) so the top score used by
+    # compute_confidence's relevance signal, and the chunks shown to the model, can be
+    # boosted toward whatever the classifier actually picked as well as any other
+    # anomalous service -- boost itself is unchanged (still keyed off all anomalies).
+    scored_chunks = indexer.search_scored(retrieval_query, k=MAX_CHUNKS, boost=boost)
+    chunks = [ch for _, ch in scored_chunks]
+    top_relevance = scored_chunks[0][0] if scored_chunks else 0.0
+
+    ctx = _render_context(question, list(services), edges, anomalies, lines, chunks, stats, diag)
     r = _call_model(ctx)
 
     line_by_id = {l.id: l for l in lines}
     chunk_by_id = {f"c{i}": ch for i, ch in enumerate(chunks, 1)}
 
-    # ---- validate the model's claims against what was computed this request ----
-    root_display = r.get("root_cause_service", "")
-    if root_display not in services:
-        raise QueryError(502, f"The model named an unknown service: {root_display!r}.")
+    # ---- validate the model's TEXT only -- it cannot change the root ----
+    model_root_field = r.get("root_service", "")
+    evidence_summary = r.get("evidence_summary", "")
+    narrative_ok = _narrative_ok(model_root_field, evidence_summary, diag)
+    final_summary = evidence_summary if narrative_ok else _fallback_narrative(diag)
+
     evidence_ids = [i for i in dict.fromkeys(r.get("evidence_log_ids", [])) if i in line_by_id]
     chunk = chunk_by_id.get(r.get("code_chunk_id", ""))
-    confident = bool(r.get("confident_cause_found")) and bool(evidence_ids) and chunk is not None
-    confidence = "high" if confident and r.get("confidence") == "high" else "low"
-    if chunk is not None and display_name(chunk.service) != root_display and confident:
-        confidence = "low"  # cited code isn't in the service blamed
+    # Code/fix are only ever surfaced for a clean single root, and only when the
+    # model's own citation actually belongs to that root's service -- otherwise we'd be
+    # showing "relevant code" for a service nobody decided was responsible.
+    chunk_matches_root = chunk is not None and diag["label"] == "single" and display_name(chunk.service) == diag["root"]
     fix_lines = [
         {"kind": f["kind"], "text": f["text"]} for f in (r.get("fix") or [])
         if f.get("kind") in ("add", "remove", "context") and isinstance(f.get("text"), str)
     ]
     chunk_text = {t.strip() for t in chunk.lines} if chunk else set()
-    if confident and any(f["kind"] != "add" and f["text"].strip() not in chunk_text for f in fix_lines):
-        confidence = "low"  # fix claims to edit code that isn't in the chunk
+    fix_valid = chunk_matches_root and fix_lines and all(f["kind"] == "add" or f["text"].strip() in chunk_text for f in fix_lines)
 
-    # ---- computed (not model-provided) fields ----
-    root_id = services[root_display]
-    # No confident cause -> no real candidate to point at. Leave the trace empty so the
-    # graph highlights nothing (the model's "best guess" service is not a finding).
-    trace_path = [display_name(s) for s in indexer.path_to(root_id)] if confident else []
-    affected_ids = (indexer.callers(root_id) | indexer.callees(root_id)) - {root_id} if confident else set()
+    # ---- B: confidence, computed, never asked of the model ----
+    confidence = _compute_confidence(diag, top_relevance)
+
+    # ---- C: everything that explains the decision -- returned AND printed ----
+    print(
+        "[ARGUS diagnosis] "
+        + json.dumps({
+            "failing_services": diag["failing_services"], "root": diag["root"], "candidates": diag["candidates"],
+            "symptoms": diag["symptoms"], "root_errors": diag["root_errors"], "label": diag["label"],
+            "confidence_label": confidence["label"], "confidence_score": confidence["score"], "signals": confidence["signals"],
+            "narrative_ok": narrative_ok, "model_named": model_root_field,
+        }, indent=2)
+    )
+
+    has_incident = diag["label"] != "none"
+    root_display = diag["root"]  # None only when label == "none"
+
+    # ---- computed (not model-provided) graph fields ----
+    root_id = services[root_display] if root_display else None
+    trace_path = [display_name(s) for s in indexer.path_to(root_id)] if root_id else []
+    affected_ids = (indexer.callers(root_id) | indexer.callees(root_id)) - {root_id} if root_id else set()
     affected = []
     for sid in sorted(affected_ids, key=lambda s: (s not in indexer.callers(root_id), s)):
         d = display_name(sid)
@@ -217,15 +368,19 @@ def run_query(question: str, logs: LogAnalyzer, indexer: CodeIndexer) -> dict:
         timeline.append({"time": root_lines[0].to_dict()["time"][:8], "label": "First anomaly", "severity": "warn" if root_lines[0].severity == "warn" else "error"})
     if root_errors and (not root_lines or root_errors[0].id != root_lines[0].id):
         timeline.append({"time": root_errors[0].to_dict()["time"][:8], "label": "Escalated", "severity": "error"})
-    timeline.append({"time": now.strftime("%H:%M:%S"), "label": "Root cause identified" if confident else "Investigation closed", "severity": "info"})
+    timeline.append({
+        "time": now.strftime("%H:%M:%S"),
+        "label": {"single": "Root cause identified", "ambiguous": "Anomaly detected"}.get(diag["label"], "Investigation closed"),
+        "severity": "info",
+    })
 
-    rs = stats.get(root_display, {"errors": 0, "warns": 0})
+    rs = stats.get(root_display, {"errors": 0, "warns": 0}) if root_display else {"errors": 0, "warns": 0}
     cited = [line_by_id[i] for i in evidence_ids]
     stat_list = [
         {"label": "Errors (5m)", "value": f"{rs['errors']:,}", "tone": "critical" if rs["errors"] else None, "sourceLogIds": [root_errors[-1].id] if root_errors else evidence_ids[:1]},
         {"label": "Warnings (5m)", "value": f"{rs['warns']:,}", "sourceLogIds": [next((l.id for l in reversed(root_lines) if l.severity == "warn"), (evidence_ids or [None])[0])]},
         {"label": "First seen", "value": root_lines[0].to_dict()["time"][:8] if root_lines else "—", "sourceLogIds": [root_lines[0].id] if root_lines else []},
-        {"label": "Services touched", "value": str(len(affected) + 1 if confident else len(anomalies)), "sourceLogIds": evidence_ids[:1]},
+        {"label": "Services touched", "value": str(len(affected) + 1 if has_incident else 0), "sourceLogIds": evidence_ids[:1]},
     ]
     for s_ in stat_list:
         s_["sourceLogIds"] = [i for i in s_["sourceLogIds"] if i]
@@ -245,21 +400,28 @@ def run_query(question: str, logs: LogAnalyzer, indexer: CodeIndexer) -> dict:
 
     return {
         "question": question,
-        "summary": r.get("answer", ""),
-        "confident_cause_found": confident,
-        "confidence": confidence,
-        "root_cause": r.get("root_cause_line") or f"{root_display} · {r.get('root_cause_function', '')} {r.get('failure_type', '')}".strip(),
-        "root_cause_service": root_display,
-        "root_cause_function": r.get("root_cause_function", ""),
-        "failure_type": r.get("failure_type", ""),
+        "summary": final_summary,
+        "confident_cause_found": diag["label"] == "single",
+        "has_incident": has_incident,
+        "confidence": confidence["label"],
+        "root_cause": (f"{root_display} · {r.get('root_cause_function', '')} {r.get('failure_type', '')}".strip(" ·")
+                       if narrative_ok and root_display else final_summary if root_display else ""),
+        "root_cause_service": root_display or "",
+        "root_cause_function": r.get("root_cause_function", "") if narrative_ok else "",
+        "failure_type": r.get("failure_type", "") if narrative_ok else "",
         "evidence_logs": [l.to_dict() for l in cited],
-        "relevant_code": {"filename": chunk.file, "start_line": chunk.start_line, "lines": chunk.lines} if chunk and confident else None,
-        "recommended_fix": {"filename": chunk.file, "lines": fix_lines} if chunk and confident and fix_lines else None,
-        "ruled_out": r.get("ruled_out", "") if not confident else "",
+        "relevant_code": {"filename": chunk.file, "start_line": chunk.start_line, "lines": chunk.lines} if fix_valid or chunk_matches_root else None,
+        "recommended_fix": {"filename": chunk.file, "lines": fix_lines} if fix_valid else None,
+        "ruled_out": "" if diag["label"] == "single" else _fallback_narrative(diag),
         "trace_path": trace_path,
         "node_ids": list(dict.fromkeys(trace_path + [a["service"] for a in anomalies])),
         "affected_nodes": affected,
         "timeline": timeline,
         "stats": stat_list,
         "node_details": node_details,
+        "diagnosis": {  # Part C -- everything the decision was based on, for inspection
+            "failing_services": diag["failing_services"], "root": diag["root"], "candidates": diag["candidates"],
+            "symptoms": diag["symptoms"], "root_errors": diag["root_errors"], "label": diag["label"],
+            "confidence_label": confidence["label"], "score": confidence["score"], "signals": confidence["signals"],
+        },
     }

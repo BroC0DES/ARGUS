@@ -1,7 +1,11 @@
 """ARGUS backend. Run:  uvicorn main:app --reload --port 8000"""
 from __future__ import annotations
 
+import json
 import os
+import threading
+import urllib.error
+import urllib.request
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -19,6 +23,12 @@ import scenario_sim  # noqa: E402
 
 REPO_PATH = os.environ.get("REPO_PATH") or str((HERE.parent / "sample_repo"))
 LOG_PATH = os.environ.get("LOG_PATH") or str(HERE / "logs" / "app.log")
+# Canned demo scenarios (payment-timeout, db-exhaustion, cascading-failure) now replay
+# into their OWN file instead of overwriting LOG_PATH -- see set_scenario() below. This
+# means live traffic (traffic_sim2.mjs / real mock-codebase2 services) can keep writing
+# to LOG_PATH the whole time without corrupting whichever scenario fixture is on screen,
+# and switching back to "Live traffic" needs no cleanup.
+SCENARIO_LOG_PATH = os.environ.get("SCENARIO_LOG_PATH") or str(Path(LOG_PATH).parent / "scenario_active.log")
 
 indexer = CodeIndexer(REPO_PATH)
 logs = LogAnalyzer(LOG_PATH)
@@ -33,6 +43,35 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+warmup_state = {"done": False, "error": None}
+
+
+def _warm_ollama() -> None:
+    """Fire one throwaway completion at Ollama so the model is already loaded into
+    memory before a real user query arrives. On this kind of setup (local CPU-only
+    Ollama, no GPU), the FIRST call after the Ollama server starts (or after the
+    model has been idle) pays a one-off cost to load the weights into RAM -- 100s+
+    is normal for a few-billion-parameter model -- on top of normal generation
+    time. Without this, that cost lands on whichever demo query happens to be
+    first. Runs in a background thread so it never blocks startup; best-effort,
+    so any failure here (Ollama not running yet, wrong model name, etc.) is left
+    for the first real /query call to report properly instead of crashing here."""
+    try:
+        url = os.environ.get("OLLAMA_URL", "http://localhost:11434").rstrip("/")
+        model = os.environ.get("OLLAMA_MODEL", "mistral")
+        body = json.dumps({"model": model, "stream": False, "messages": [{"role": "user", "content": "ping"}]}).encode()
+        req = urllib.request.Request(f"{url}/api/chat", data=body, headers={"Content-Type": "application/json"})
+        with urllib.request.urlopen(req, timeout=280):
+            pass
+        warmup_state["done"] = True
+    except (urllib.error.URLError, TimeoutError, ConnectionError) as e:
+        warmup_state["error"] = str(e)
+
+
+@app.on_event("startup")
+def warm_model_on_startup() -> None:
+    threading.Thread(target=_warm_ollama, daemon=True).start()
+
 
 class QueryBody(BaseModel):
     question: str = Field(default="", max_length=2000)
@@ -45,30 +84,33 @@ class ScenarioBody(BaseModel):
 @app.get("/health")
 def health():
     return {
-        "ok": True, "repo": REPO_PATH, "log": LOG_PATH, "llm": "ollama",
+        "ok": True, "repo": REPO_PATH, "log": str(logs.path), "llm": "ollama",
         "ollama_model": os.environ.get("OLLAMA_MODEL", "mistral"),
         "active_scenario": active_scenario,
         "available_scenarios": sorted(scenario_sim.SCENARIOS),
+        "model_warm": warmup_state["done"], "warmup_error": warmup_state["error"],
     }
 
 
 @app.post("/scenario")
 def set_scenario(body: ScenarioBody):
-    """Switch the log file being watched to a scenario fixture, without restarting
-    anything -- replays it into LOG_PATH with timestamps shifted to "now" (see
-    scenario_sim.py) so the existing Log Analyzer picks it up as a live incident.
-    name="none" is a special case: it doesn't touch LOG_PATH at all, it just marks
-    no scenario as active (LOG_PATH keeps showing whatever traffic_sim.py, or
-    nothing, is actually writing to it)."""
+    """Switch which file the Log Analyzer reads: a scenario fixture, replayed with
+    timestamps shifted to "now" (see scenario_sim.py), or LOG_PATH (live traffic).
+    Canned scenarios replay into SCENARIO_LOG_PATH -- a dedicated file, never
+    LOG_PATH itself -- so live traffic (traffic_sim2.mjs / real mock-codebase2
+    services) can keep writing the whole time without corrupting the fixture
+    that's on screen, and flipping back to "Live traffic" needs no cleanup."""
     global active_scenario
     if body.name == "none":
         active_scenario = "none"
+        logs.path = Path(LOG_PATH)
         return {"active_scenario": active_scenario, "lines_written": 0, "backed_up_to": None}
     try:
-        n, backup_path = scenario_sim.replay(body.name, LOG_PATH)
+        n, backup_path = scenario_sim.replay(body.name, SCENARIO_LOG_PATH)
     except scenario_sim.ScenarioError as e:
         raise HTTPException(status_code=400, detail=str(e))
     active_scenario = body.name
+    logs.path = Path(SCENARIO_LOG_PATH)
     return {"active_scenario": active_scenario, "lines_written": n, "backed_up_to": backup_path}
 
 

@@ -40,8 +40,13 @@ async function request(path, { method = "GET", body, timeoutMs = 10000 } = {}) {
 export const getGraph = () => request("/graph");
 export const getHealth = () => request("/health");
 export const getLogs = (n = 60) => request(`/logs?n=${n}`).then((r) => r.lines);
-// /query runs retrieval + an LLM call, so it gets a much longer timeout than polls.
-export const postQuery = (question) => request("/query", { method: "POST", body: { question }, timeoutMs: 60000 });
+// /query runs retrieval + an LLM call on a local model, so it gets a much longer
+// timeout than polls -- kept just above the backend's own OLLAMA_TIMEOUT (180s,
+// see backend/query_pipeline.py) so the frontend never gives up before the
+// backend would have. A cold/unloaded Ollama model can take 100s+ just to load
+// into memory on its first call; main.py fires a warmup ping at backend startup
+// to avoid that happening mid-demo, but this margin covers it either way.
+export const postQuery = (question) => request("/query", { method: "POST", body: { question }, timeoutMs: 200000 });
 // Scenario replay itself is instant (it just rewrites the log file) -- generous
 // timeout only in case the backend is briefly busy with something else.
 export const setScenario = (name) => request("/scenario", { method: "POST", body: { name }, timeoutMs: 15000 });

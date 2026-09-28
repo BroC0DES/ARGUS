@@ -259,7 +259,13 @@ export default function ConsoleApp() {
     return extra.concat(recent).sort((a, b) => logNum(a.id) - logNum(b.id));
   }, [detail, detailInfo, logs]);
 
-  const blastRadiusIds = resolved && response.confident_cause_found ? incident.affected.map((a) => a.id) : [];
+  // Gated on has_incident (any real anomaly the log/graph data itself supports), not on
+  // confident_cause_found (the LLM's self-rated certainty about a full code-level
+  // diagnosis) -- so the trace line and blast radius show up whenever something is
+  // genuinely wrong, even on a run where the model hedges. lowConfidence still reflects
+  // the model's own certainty, just as a badge rather than as a gate on the graph.
+  const hasIncident = resolved && (response.has_incident || response.confident_cause_found);
+  const blastRadiusIds = hasIncident ? incident.affected.map((a) => a.id) : [];
   const lowConfidence = resolved && (!response.confident_cause_found || response.confidence === "low");
 
   // ---- postmortem export --------------------------------------------------------
@@ -477,7 +483,7 @@ export default function ConsoleApp() {
       {screen === "blast" && (
         <main style={{ flex: 1, minHeight: 0, overflow: "auto", padding: "var(--space-lg)" }}>
           <div style={{ maxWidth: 560, margin: "0 auto", display: "flex", flexDirection: "column", gap: "var(--space-md)" }}>
-            {resolved && response.confident_cause_found ? (
+            {hasIncident ? (
               incident.affected.length ? (
                 <>
                   <p className="argus-body" style={{ margin: 0 }}>

@@ -314,6 +314,12 @@ class CodeIndexer:
 
     # ---- retrieval --------------------------------------------------------
     def search(self, query: str, k: int = 6, boost: dict[str, float] | None = None) -> list[Chunk]:
+        return [ch for _, ch in self.search_scored(query, k=k, boost=boost)]
+
+    def search_scored(self, query: str, k: int = 6, boost: dict[str, float] | None = None) -> list[tuple[float, Chunk]]:
+        """Same ranking as search(), but keeps the raw cosine similarity (post-boost)
+        alongside each chunk -- callers that need retrieval confidence, not just the
+        chunks themselves, use this instead of stripping the score."""
         ix = self.index()
         q = Counter(tokenize(query))
         if not q or not ix.chunks:
@@ -329,4 +335,4 @@ class CodeIndexer:
             score = dot / (qnorm * cnorm) * (boost or {}).get(ch.service, 1.0)
             scored.append((score, ch))
         scored.sort(key=lambda x: -x[0])
-        return [c for _, c in scored[:k]]
+        return scored[:k]
